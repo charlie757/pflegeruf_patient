@@ -1,8 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:patient/providers/change_password_provider.dart';
+import 'package:patient/providers/dashboard_provider.dart';
+import 'package:patient/providers/email_verification_provider.dart';
+import 'package:patient/providers/forgot_password_provider.dart';
+import 'package:patient/providers/login_provider.dart';
+import 'package:patient/providers/onboarding_provider.dart';
+import 'package:patient/providers/required_question_provider.dart';
+import 'package:patient/providers/signup_provider.dart';
 import 'package:patient/screens/splash_screen.dart';
 import 'package:patient/utils/utils.dart';
+import 'package:provider/provider.dart';
 
 void main() {
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
   runApp(const MyApp());
 }
 
@@ -12,15 +26,27 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      navigatorKey: navigatorKey,
-      title: 'Pflegeruf Patient',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => OnboardingProvider()),
+        ChangeNotifierProvider(create: (_) => LoginProvider()),
+        ChangeNotifierProvider(create: (_) => SignupProvider()),
+        ChangeNotifierProvider(create: (_) => ForgotPasswordProvider()),
+        ChangeNotifierProvider(create: (_) => EmailVerificationProvider()),
+        ChangeNotifierProvider(create: (_) => ChangePasswordProvider()),
+        ChangeNotifierProvider(create: (_) => DashboardProvider()),
+        ChangeNotifierProvider(create: (_) => RequiredQuestionProvider()),
+      ],
+      child: MaterialApp(
+        navigatorKey: navigatorKey,
+        title: 'Pflegeruf Patient',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        debugShowCheckedModeBanner: false,
+        home: const SplashSCreen(),
       ),
-      debugShowCheckedModeBanner: false,
-      home: SplashSCreen(),
     );
   }
 }

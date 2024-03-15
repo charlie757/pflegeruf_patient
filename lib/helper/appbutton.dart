@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:patient/helper/fontfamily.dart';
 import 'package:patient/helper/getText.dart';
 
 class AppButton extends StatefulWidget {
@@ -9,6 +10,7 @@ class AppButton extends StatefulWidget {
   final Color textColor;
   final Function() onTap;
   const AppButton({
+    super.key,
     required this.title,
     required this.height,
     required this.width,
@@ -27,7 +29,6 @@ class _AppButtonState extends State<AppButton> {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
           primary: widget.buttonColor,
-          // primary:widget.isLoading?AppColor.greyColor.withOpacity(.9): AppColor.lightblackColor,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
       onPressed: widget.onTap,
@@ -37,10 +38,10 @@ class _AppButtonState extends State<AppButton> {
         width: widget.width,
         child: getText(
             title: widget.title,
-            size: 18,
-            fontFamily: 'latoRegular',
+            size: 16,
+            fontFamily: FontFamily.poppinsSemiBold,
             color: widget.textColor,
-            fontWeight: FontWeight.w700),
+            fontWeight: FontWeight.w600),
       ),
     );
   }

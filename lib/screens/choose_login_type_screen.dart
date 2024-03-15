@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:patient/config/approutes.dart';
 import 'package:patient/helper/appbutton.dart';
 import 'package:patient/helper/appcolor.dart';
 import 'package:patient/helper/appimages.dart';
+import 'package:patient/helper/fontfamily.dart';
 import 'package:patient/helper/getText.dart';
 import 'package:patient/helper/screensize.dart';
 import 'package:patient/languages/string_key.dart';
+import 'package:patient/screens/auth/login_screen.dart';
+import 'package:patient/screens/auth/signup_screen.dart';
 
 class ChooseLoginTypeScreen extends StatefulWidget {
   const ChooseLoginTypeScreen({super.key});
@@ -34,7 +38,7 @@ class _ChooseLoginTypeScreenState extends State<ChooseLoginTypeScreen> {
               getText(
                   title: StringKey.letsGetIn,
                   size: 22,
-                  fontFamily: '',
+                  fontFamily: FontFamily.poppinsSemiBold,
                   color: AppColor.whiteColor,
                   fontWeight: FontWeight.w600),
               const Spacer(),
@@ -46,7 +50,11 @@ class _ChooseLoginTypeScreenState extends State<ChooseLoginTypeScreen> {
                     width: double.infinity,
                     buttonColor: AppColor.whiteColor,
                     textColor: AppColor.blackColor,
-                    onTap: () {}),
+                    onTap: () {
+                      AppRoutes.pushCupertinoNavigation(const SignupScreen(
+                        routes: 'fromLoginType',
+                      ));
+                    }),
               ),
               ScreenSize.height(20),
               Padding(
@@ -57,7 +65,11 @@ class _ChooseLoginTypeScreenState extends State<ChooseLoginTypeScreen> {
                     width: double.infinity,
                     buttonColor: AppColor.whiteColor,
                     textColor: AppColor.blackColor,
-                    onTap: () {}),
+                    onTap: () {
+                      AppRoutes.pushCupertinoNavigation(const LoginScreen(
+                        route: 'fromLoginType',
+                      ));
+                    }),
               ),
               const Spacer(),
             ],

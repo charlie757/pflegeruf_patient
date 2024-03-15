@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:patient/config/approutes.dart';
 import 'package:patient/helper/appbutton.dart';
 import 'package:patient/helper/appcolor.dart';
-import 'package:patient/helper/appimages.dart';
+import 'package:patient/helper/fontfamily.dart';
 import 'package:patient/helper/getText.dart';
 import 'package:patient/helper/screensize.dart';
 import 'package:patient/languages/string_key.dart';
-import 'package:patient/screens/choose_login_type_screen.dart';
+import 'package:patient/providers/onboarding_provider.dart';
+import 'package:provider/provider.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -16,49 +16,22 @@ class OnboardingScreen extends StatefulWidget {
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
-  List onboardingList = [
-    {
-      'img': AppImages.onboarding1Image,
-      'title': StringKey.findYourNurse,
-      'subTitle':
-          'Lorem Ipsum is simply dummy text of the printing and for typesetting industry. '
-    },
-    {
-      'img': AppImages.onboarding2Image,
-      'title': StringKey.chooseBestNurse,
-      'subTitle':
-          'Lorem Ipsum is simply dummy text of the printing and for typesetting industry. '
-    },
-    {
-      'img': AppImages.onboarding3Image,
-      'title': StringKey.smartBookingSystem,
-      'subTitle':
-          'Lorem Ipsum is simply dummy text of the printing and for typesetting industry. '
-    },
-  ];
-
-  int currentIndex = 0;
-  String title = '';
-  String subTitle = '';
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: SafeArea(
-            child: Column(
-      children: [
-        SizedBox(
-          height: MediaQuery.of(context).size.height / 2,
-          child: PageView.builder(
-              itemCount: onboardingList.length,
-              itemBuilder: (context, index) {
-                currentIndex = index;
-                title = onboardingList[index]['title'];
-                subTitle = onboardingList[index]['subTitle'];
-                return Image.asset(onboardingList[index]['img']);
-              }),
-        ),
-        Expanded(
-          child: Container(
+    return Scaffold(body:
+        Consumer<OnboardingProvider>(builder: (context, myProvier, child) {
+      return SafeArea(
+          child: Column(
+        children: [
+          Expanded(
+            child: AnimatedContainer(
+                duration: const Duration(milliseconds: 150),
+                curve: Curves.easeInOut,
+                height: MediaQuery.of(context).size.height / 2,
+                child: Image.asset(
+                    myProvier.onboardingList[myProvier.currentIndex]['img'])),
+          ),
+          Container(
               height: MediaQuery.of(context).size.height / 2,
               width: double.infinity,
               decoration: BoxDecoration(
@@ -67,47 +40,52 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       topLeft: Radius.circular(30),
                       topRight: Radius.circular(30))),
               padding: const EdgeInsets.only(
-                  left: 30, right: 30, top: 30, bottom: 35),
+                  left: 30, right: 30, top: 60, bottom: 40),
               child: Column(
                 children: [
                   getText(
-                      title: title,
+                      title: myProvier.onboardingList[myProvier.currentIndex]
+                          ['title'],
                       size: 23,
-                      fontFamily: '',
+                      fontFamily: FontFamily.poppinsMedium,
                       color: AppColor.whiteColor,
                       fontWeight: FontWeight.w700),
-                  ScreenSize.height(30),
+                  ScreenSize.height(28),
                   getText(
-                    title: subTitle,
+                    title: myProvier.onboardingList[myProvier.currentIndex]
+                        ['subTitle'],
                     size: 18,
-                    fontFamily: '',
+                    fontFamily: FontFamily.poppinsLight,
                     color: AppColor.whiteColor,
-                    fontWeight: FontWeight.w400,
+                    fontWeight: FontWeight.w500,
                     textAlign: TextAlign.center,
                   ),
-                  ScreenSize.height(40),
+                  ScreenSize.height(35),
                   Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: List.generate(onboardingList.length, (index) {
-                        return currentIndex == index
+                      children: List.generate(myProvier.onboardingList.length,
+                          (index) {
+                        return myProvier.currentIndex == index
                             ? indicator(false)
                             : indicator(true);
                       })),
                   const Spacer(),
                   AppButton(
-                      title: StringKey.getStarted,
+                      title: myProvier.currentIndex == 2
+                          ? StringKey.getStarted
+                          : StringKey.next,
                       height: 54,
                       width: double.infinity,
                       buttonColor: AppColor.whiteColor,
                       textColor: AppColor.blackColor,
                       onTap: () {
-                        AppRoutes.pushNavigation(ChooseLoginTypeScreen());
+                        myProvier.checkValidation();
                       })
                 ],
-              )),
-        )
-      ],
-    )));
+              ))
+        ],
+      ));
+    }));
   }
 
   Widget indicator(bool isActive) {
@@ -116,8 +94,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 150),
         margin: const EdgeInsets.symmetric(horizontal: 4.0),
-        height: isActive ? 10 : 10.0,
-        width: isActive ? 12 : 10.0,
+        height: isActive ? 10 : 9.0,
+        width: isActive ? 10 : 9.0,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: !isActive
