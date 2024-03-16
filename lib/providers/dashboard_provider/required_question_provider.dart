@@ -10,4 +10,26 @@ class RequiredQuestionProvider extends ChangeNotifier {
   final birthDateController = TextEditingController();
   bool privateInsurance = false;
   bool nationalInsurance = false;
+
+  clearValues() {
+    nameController.clear();
+    addressController.clear();
+    postalCodeController.clear();
+    streetController.clear();
+    cityController.clear();
+    insuranceController.clear();
+    birthDateController.clear();
+    privateInsurance = false;
+    nationalInsurance = false;
+  }
+
+  updatePrivateInsurance(value) {
+    privateInsurance = value;
+    notifyListeners();
+  }
+
+  updateNiationalInsurance(value) {
+    nationalInsurance = value;
+    notifyListeners();
+  }
 }

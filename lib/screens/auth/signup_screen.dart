@@ -9,8 +9,9 @@ import 'package:patient/helper/fontfamily.dart';
 import 'package:patient/helper/getText.dart';
 import 'package:patient/helper/screensize.dart';
 import 'package:patient/languages/string_key.dart';
-import 'package:patient/providers/signup_provider.dart';
+import 'package:patient/providers/auth_provider/signup_provider.dart';
 import 'package:patient/screens/auth/login_screen.dart';
+import 'package:patient/screens/dashboard/dashboard_screen.dart';
 import 'package:provider/provider.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -37,7 +38,7 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.whiteColor,
-      appBar: appBar(StringKey.signup),
+      appBar: appBar(StringKey.signup, false),
       body: Consumer<SignupProvider>(builder: (context, myProvider, child) {
         return SingleChildScrollView(
           child: Padding(
@@ -172,7 +173,10 @@ class _SignupScreenState extends State<SignupScreen> {
                         height: 54,
                         width: double.infinity,
                         buttonColor: AppColor.appTheme,
-                        onTap: () {}),
+                        onTap: () {
+                          AppRoutes.pushCupertinoNavigation(
+                              const DashboardScreen());
+                        }),
                   ),
                   ScreenSize.height(30),
                   Align(

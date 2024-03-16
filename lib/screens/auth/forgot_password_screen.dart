@@ -8,7 +8,7 @@ import 'package:patient/helper/fontfamily.dart';
 import 'package:patient/helper/getText.dart';
 import 'package:patient/helper/screensize.dart';
 import 'package:patient/languages/string_key.dart';
-import 'package:patient/providers/forgot_password_provider.dart';
+import 'package:patient/providers/auth_provider/forgot_password_provider.dart';
 import 'package:patient/screens/auth/email_verification_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -37,7 +37,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: AppColor.whiteColor,
-      appBar: appBar(StringKey.forgotPassword),
+      appBar: appBar(StringKey.forgotPassword, false),
       body: Consumer<ForgotPasswordProvider>(
           builder: (context, myProvider, child) {
         return Padding(

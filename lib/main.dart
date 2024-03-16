@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:patient/providers/change_password_provider.dart';
-import 'package:patient/providers/dashboard_provider.dart';
-import 'package:patient/providers/email_verification_provider.dart';
-import 'package:patient/providers/forgot_password_provider.dart';
-import 'package:patient/providers/login_provider.dart';
+import 'package:patient/providers/auth_provider/change_password_provider.dart';
+import 'package:patient/providers/dashboard_provider/bookings_provider.dart';
+import 'package:patient/providers/dashboard_provider/dashboard_provider.dart';
+import 'package:patient/providers/auth_provider/email_verification_provider.dart';
+import 'package:patient/providers/auth_provider/forgot_password_provider.dart';
+import 'package:patient/providers/auth_provider/login_provider.dart';
+import 'package:patient/providers/dashboard_provider/profile_provider.dart';
+import 'package:patient/providers/dashboard_provider/view_booking_provider.dart';
 import 'package:patient/providers/onboarding_provider.dart';
-import 'package:patient/providers/required_question_provider.dart';
-import 'package:patient/providers/signup_provider.dart';
+import 'package:patient/providers/dashboard_provider/required_question_provider.dart';
+import 'package:patient/providers/auth_provider/signup_provider.dart';
 import 'package:patient/screens/splash_screen.dart';
 import 'package:patient/utils/utils.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -36,6 +40,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ChangePasswordProvider()),
         ChangeNotifierProvider(create: (_) => DashboardProvider()),
         ChangeNotifierProvider(create: (_) => RequiredQuestionProvider()),
+        ChangeNotifierProvider(create: (_) => ProfileProvider()),
+        ChangeNotifierProvider(create: (_) => BookingsProvier()),
+        ChangeNotifierProvider(create: (_) => ViewBookingProvider()),
       ],
       child: MaterialApp(
         navigatorKey: navigatorKey,

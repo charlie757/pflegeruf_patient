@@ -9,9 +9,10 @@ import 'package:patient/helper/fontfamily.dart';
 import 'package:patient/helper/getText.dart';
 import 'package:patient/helper/screensize.dart';
 import 'package:patient/languages/string_key.dart';
-import 'package:patient/providers/login_provider.dart';
+import 'package:patient/providers/auth_provider/login_provider.dart';
 import 'package:patient/screens/auth/forgot_password_screen.dart';
 import 'package:patient/screens/auth/signup_screen.dart';
+import 'package:patient/screens/dashboard/dashboard_screen.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -39,7 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: AppColor.whiteColor,
-      appBar: appBar(StringKey.logIn),
+      appBar: appBar(StringKey.logIn, false),
       body: Consumer<LoginProvider>(builder: (context, myProvider, child) {
         return Padding(
           padding: const EdgeInsets.only(top: 71, left: 20, right: 20),
@@ -59,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               ScreenSize.height(25),
               getText(
-                  title: StringKey.email,
+                  title: StringKey.password,
                   size: 14,
                   fontFamily: FontFamily.poppinsSemiBold,
                   color: AppColor.textBlackColor,
@@ -117,7 +118,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 54,
                   width: double.infinity,
                   buttonColor: AppColor.appTheme,
-                  onTap: () {}),
+                  onTap: () {
+                    AppRoutes.pushCupertinoNavigation(const DashboardScreen());
+                  }),
               ScreenSize.height(30),
               Align(
                 alignment: Alignment.center,

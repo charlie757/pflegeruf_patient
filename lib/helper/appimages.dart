@@ -7,4 +7,9 @@ class AppImages {
   static const bottomIcon1 = 'assets/icons/bottomIcon1.png';
   static const bottomIcon2 = 'assets/icons/bottomIcon2.png';
   static const bottomIcon3 = 'assets/icons/bottomIcon3.png';
+  static const checkImage = "assets/images/checkImage.png";
+  static const closeIcon = 'assets/icons/closeIcon.png';
+  static const notificationIcon = 'assets/icons/notificationIcon.png';
+  static const bellIcon = 'assets/icons/bellIcon.png';
+  static const calendarIcon = 'assets/icons/calendar.png';
 }

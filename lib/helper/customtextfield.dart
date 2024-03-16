@@ -7,12 +7,14 @@ class CustomTextfield extends StatelessWidget {
   final TextEditingController controller;
   final icon;
   final isObscureText;
+  final isReadOnly;
   const CustomTextfield(
       {super.key,
       this.hintText,
       required this.controller,
       this.icon,
-      this.isObscureText = false});
+      this.isObscureText = false,
+      this.isReadOnly = false});
 
   @override
   Widget build(BuildContext context) {
@@ -22,21 +24,22 @@ class CustomTextfield extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
           boxShadow: [
             BoxShadow(
-                blurRadius: 20,
+                blurRadius: 15,
                 spreadRadius: 0,
                 offset: const Offset(0, 2),
-                color: Color(0xff504DE4).withOpacity(.2)
+                color: AppColor.shadowColor
                 //  AppColor.blackColor.withOpacity(.2)
                 )
           ]),
       child: TextFormField(
         controller: controller,
+        readOnly: isReadOnly,
         cursorColor: AppColor.appTheme,
         obscureText: isObscureText,
         style: TextStyle(
             fontSize: 14,
             color: AppColor.textBlackColor,
-            fontWeight: FontWeight.w400,
+            fontWeight: FontWeight.w500,
             fontFamily: FontFamily.poppinsMedium),
         decoration: InputDecoration(
             suffixIcon: icon,

@@ -8,8 +8,8 @@ import 'package:patient/helper/fontfamily.dart';
 import 'package:patient/helper/getText.dart';
 import 'package:patient/helper/screensize.dart';
 import 'package:patient/languages/string_key.dart';
-import 'package:patient/providers/change_password_provider.dart';
-import 'package:patient/screens/dashboard/home/required_question_screen.dart';
+import 'package:patient/providers/auth_provider/change_password_provider.dart';
+import 'package:patient/screens/dashboard/dashboard_screen.dart';
 import 'package:provider/provider.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
@@ -37,7 +37,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     return Scaffold(
       backgroundColor: AppColor.whiteColor,
       resizeToAvoidBottomInset: false,
-      appBar: appBar(StringKey.changePassword),
+      appBar: appBar(StringKey.changePassword, false),
       body: Consumer<ChangePasswordProvider>(
           builder: (context, myProvider, child) {
         return Padding(
@@ -107,7 +107,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       buttonColor: AppColor.appTheme,
                       onTap: () {
                         AppRoutes.pushCupertinoNavigation(
-                            const RequiredQuestionScreen());
+                            const DashboardScreen());
                       }),
                 )
               ],
