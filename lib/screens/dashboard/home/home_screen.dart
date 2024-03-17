@@ -7,8 +7,10 @@ import 'package:patient/helper/fontfamily.dart';
 import 'package:patient/helper/getText.dart';
 import 'package:patient/helper/screensize.dart';
 import 'package:patient/languages/string_key.dart';
+import 'package:patient/providers/dashboard_provider/home_provider.dart';
 import 'package:patient/screens/dashboard/home/notification_screen.dart';
 import 'package:patient/screens/dashboard/home/view_service_screen.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -18,34 +20,28 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List serviceList = [
-    {'img': 'assets/images/bandaged-finger 1.png', 'title': 'Wound care'},
-    {'img': 'assets/images/leg 1.png', 'title': 'Compression stockings'},
-    {'img': 'assets/images/catheter 1.png', 'title': 'Catheter supply'},
-    {'img': 'assets/images/abdominal-pain 1.png', 'title': 'Stoma care'},
-    {'img': 'assets/images/medicine 1.png', 'title': 'Weekly Box'},
-    {'img': 'assets/images/syringe 1.png', 'title': 'Injections'},
-  ];
-  List imgList = [
-    'assets/images/slider1.png',
-    'assets/images/slider2.png',
-  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: 40),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [headerWidget(), ScreenSize.height(40), serviceWidget()],
+      body: Consumer<HomeProvider>(builder: (context, myProvider, child) {
+        return SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 40),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                headerWidget(myProvider),
+                ScreenSize.height(40),
+                serviceWidget(myProvider)
+              ],
+            ),
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 
-  headerWidget() {
+  headerWidget(HomeProvider provider) {
     return Container(
       // height: MediaQuery.of(context).size.height / 2,
       decoration: BoxDecoration(
@@ -53,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
           borderRadius: const BorderRadius.only(
               bottomLeft: Radius.circular(30),
               bottomRight: Radius.circular(30))),
-      padding: const EdgeInsets.only(top: 55, bottom: 60),
+      padding: const EdgeInsets.only(top: 55, bottom: 33),
       child: Column(
         children: [
           Padding(
@@ -121,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
             height: 168,
             // color: Colors.red,
             child: CarouselSlider.builder(
-              itemCount: imgList.length,
+              itemCount: provider.imgList.length,
               itemBuilder:
                   (BuildContext context, int itemIndex, int pageViewIndex) {
                 return Container(
@@ -129,31 +125,41 @@ class _HomeScreenState extends State<HomeScreen> {
                     right: 15,
                   ),
                   child: Image.asset(
-                    imgList[itemIndex],
+                    provider.imgList[itemIndex],
                     fit: BoxFit.fill,
                   ),
                 );
               },
               options: CarouselOptions(
-                autoPlay: true,
-                scrollDirection: Axis.horizontal,
-                // enlargeCenterPage: true,
-                viewportFraction: .9,
-                aspectRatio: 2.0,
-                initialPage: 0,
-                autoPlayCurve: Curves.ease,
-                enableInfiniteScroll: true,
-                autoPlayAnimationDuration: const Duration(milliseconds: 400),
-                autoPlayInterval: const Duration(seconds: 2),
-              ),
+                  autoPlay: true,
+                  scrollDirection: Axis.horizontal,
+                  // enlargeCenterPage: true,
+                  viewportFraction: .9,
+                  aspectRatio: 2.0,
+                  initialPage: 0,
+                  autoPlayCurve: Curves.ease,
+                  enableInfiniteScroll: true,
+                  autoPlayAnimationDuration: const Duration(milliseconds: 400),
+                  autoPlayInterval: const Duration(seconds: 2),
+                  onPageChanged: (val, _) {
+                    provider.updateSliderIndex(val);
+                  }),
             ),
-          )
+          ),
+          ScreenSize.height(20),
+          Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(provider.imgList.length, (index) {
+                return provider.currentSliderIndex == index
+                    ? indicator(true)
+                    : indicator(false);
+              })),
         ],
       ),
     );
   }
 
-  serviceWidget() {
+  serviceWidget(HomeProvider provider) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -175,7 +181,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisCount: 3,
                 mainAxisSpacing: 24,
                 crossAxisSpacing: 20),
-            itemCount: serviceList.length,
+            itemCount: provider.serviceList.length,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
@@ -199,14 +205,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           ]),
                       alignment: Alignment.center,
                       child: Image.asset(
-                        serviceList[index]['img'],
+                        provider.serviceList[index]['img'],
                         height: 40,
                         width: 40,
                       ),
                     ),
                     ScreenSize.height(8),
                     Text(
-                      serviceList[index]['title'],
+                      provider.serviceList[index]['title'],
                       textAlign: TextAlign.center,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
@@ -222,6 +228,23 @@ class _HomeScreenState extends State<HomeScreen> {
               );
             })
       ],
+    );
+  }
+
+  Widget indicator(bool isActive) {
+    return SizedBox(
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 150),
+        margin: const EdgeInsets.symmetric(horizontal: 3.0),
+        height: isActive ? 5 : 7.0,
+        width: isActive ? 25 : 7.0,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5),
+          color: isActive
+              ? AppColor.whiteColor
+              : AppColor.whiteColor.withOpacity(.5),
+        ),
+      ),
     );
   }
 }

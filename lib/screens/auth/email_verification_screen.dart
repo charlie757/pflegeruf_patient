@@ -119,7 +119,11 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
             controller: provider.otp1Controller,
             focusNode: provider.controller1Focus,
             showUnderline: provider.showUnderlineOtp1,
-            onTap: () {},
+            onTap: () {
+              /// to disable tap on start and mid on input value
+              provider.otp1Controller.selection = TextSelection.collapsed(
+                  offset: provider.otp1Controller.text.length);
+            },
             onChanged: (val) {
               if (val.length >= 1) {
                 provider.showUnderlineOtp1 = true;
@@ -135,7 +139,12 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
             showUnderline: provider.showUnderlineOtp2,
             onTap: () {
               if (provider.otp1Controller.text.isEmpty) {
+                /// to request the foucs
                 FocusScope.of(context).requestFocus(provider.controller1Focus);
+              } else {
+                /// to disable tap on start and mid on input value
+                provider.otp2Controller.selection = TextSelection.collapsed(
+                    offset: provider.otp2Controller.text.length);
               }
             },
             onChanged: (val) {
@@ -158,6 +167,10 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                 FocusScope.of(context).requestFocus(provider.controller1Focus);
               } else if (provider.otp2Controller.text.isEmpty) {
                 FocusScope.of(context).requestFocus(provider.controller2Focus);
+              } else {
+                /// to disable tap on start and mid on input value
+                provider.otp3Controller.selection = TextSelection.collapsed(
+                    offset: provider.otp3Controller.text.length);
               }
             },
             onChanged: (val) {
@@ -181,6 +194,10 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                 FocusScope.of(context).requestFocus(provider.controller2Focus);
               } else if (provider.otp3Controller.text.isEmpty) {
                 FocusScope.of(context).requestFocus(provider.controller3Focus);
+              } else {
+                /// to disable tap on start and mid on input value
+                provider.otp4Controller.selection = TextSelection.collapsed(
+                    offset: provider.otp4Controller.text.length);
               }
             },
             onChanged: (val) {

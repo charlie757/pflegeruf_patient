@@ -6,6 +6,7 @@ import 'package:patient/providers/dashboard_provider/dashboard_provider.dart';
 import 'package:patient/providers/auth_provider/email_verification_provider.dart';
 import 'package:patient/providers/auth_provider/forgot_password_provider.dart';
 import 'package:patient/providers/auth_provider/login_provider.dart';
+import 'package:patient/providers/dashboard_provider/home_provider.dart';
 import 'package:patient/providers/dashboard_provider/profile_provider.dart';
 import 'package:patient/providers/dashboard_provider/view_booking_provider.dart';
 import 'package:patient/providers/onboarding_provider.dart';
@@ -43,6 +44,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ProfileProvider()),
         ChangeNotifierProvider(create: (_) => BookingsProvier()),
         ChangeNotifierProvider(create: (_) => ViewBookingProvider()),
+        ChangeNotifierProvider(create: (_) => HomeProvider()),
       ],
       child: MaterialApp(
         navigatorKey: navigatorKey,
