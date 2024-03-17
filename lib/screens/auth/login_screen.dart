@@ -13,7 +13,9 @@ import 'package:patient/providers/auth_provider/login_provider.dart';
 import 'package:patient/screens/auth/forgot_password_screen.dart';
 import 'package:patient/screens/auth/signup_screen.dart';
 import 'package:patient/screens/dashboard/dashboard_screen.dart';
+import 'package:patient/utils/app_validation.dart';
 import 'package:provider/provider.dart';
+import 'package:get/get.dart';
 
 class LoginScreen extends StatefulWidget {
   final route;
@@ -40,115 +42,132 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: AppColor.whiteColor,
-      appBar: appBar(StringKey.logIn, false),
+      appBar: appBar(StringKey.logIn.tr, false),
       body: Consumer<LoginProvider>(builder: (context, myProvider, child) {
         return Padding(
           padding: const EdgeInsets.only(top: 71, left: 20, right: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              getText(
-                  title: StringKey.email,
-                  size: 14,
-                  fontFamily: FontFamily.poppinsSemiBold,
-                  color: AppColor.textBlackColor,
-                  fontWeight: FontWeight.w500),
-              ScreenSize.height(5),
-              CustomTextfield(
-                controller: myProvider.emailController,
-                hintText: StringKey.enterYourEmail,
-              ),
-              ScreenSize.height(25),
-              getText(
-                  title: StringKey.password,
-                  size: 14,
-                  fontFamily: FontFamily.poppinsSemiBold,
-                  color: AppColor.textBlackColor,
-                  fontWeight: FontWeight.w500),
-              ScreenSize.height(5),
-              CustomTextfield(
-                controller: myProvider.passwordController,
-                hintText: StringKey.enterYourPasword,
-                isObscureText: myProvider.isVisiblePassword,
-                icon: GestureDetector(
-                  onTap: () {
-                    if (myProvider.isVisiblePassword) {
-                      myProvider.updateIsVisiblePassword(false);
-                    } else {
-                      myProvider.updateIsVisiblePassword(true);
-                    }
+          child: Form(
+            key: myProvider.formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                getText(
+                    title: StringKey.email.tr,
+                    size: 14,
+                    fontFamily: FontFamily.poppinsSemiBold,
+                    color: AppColor.textBlackColor,
+                    fontWeight: FontWeight.w500),
+                ScreenSize.height(5),
+                CustomTextfield(
+                  controller: myProvider.emailController,
+                  hintText: StringKey.enterYourEmail.tr,
+                  errorMsg: myProvider.emailValidationMsg,
+                  onChanged: (val) {
+                    myProvider.emailValidationMsg =
+                        AppValidation.emailValidator(val);
+                    setState(() {});
                   },
-                  child: Icon(
-                    myProvider.isVisiblePassword
-                        ? Icons.visibility_off_outlined
-                        : Icons.visibility_outlined,
-                    color: AppColor.textBlackColor.withOpacity(.3),
+                ),
+                ScreenSize.height(25),
+                getText(
+                    title: StringKey.password.tr,
+                    size: 14,
+                    fontFamily: FontFamily.poppinsSemiBold,
+                    color: AppColor.textBlackColor,
+                    fontWeight: FontWeight.w500),
+                ScreenSize.height(5),
+                CustomTextfield(
+                  controller: myProvider.passwordController,
+                  hintText: StringKey.enterYourPasword.tr,
+                  isObscureText: myProvider.isVisiblePassword,
+                  errorMsg: myProvider.passwordValidationMsg,
+                  onChanged: (val) {
+                    myProvider.passwordValidationMsg =
+                        AppValidation.passwordValidator(val);
+                    setState(() {});
+                  },
+                  icon: GestureDetector(
+                    onTap: () {
+                      if (myProvider.isVisiblePassword) {
+                        myProvider.updateIsVisiblePassword(false);
+                      } else {
+                        myProvider.updateIsVisiblePassword(true);
+                      }
+                    },
+                    child: Icon(
+                      myProvider.isVisiblePassword
+                          ? Icons.visibility_off_outlined
+                          : Icons.visibility_outlined,
+                      color: AppColor.textBlackColor.withOpacity(.3),
+                    ),
                   ),
                 ),
-              ),
-              ScreenSize.height(31),
-              Row(
-                children: [
-                  customRadioButton(myProvider),
-                  ScreenSize.width(9.5),
-                  getText(
-                      title: StringKey.keepMeSignIn,
-                      size: 12,
-                      fontFamily: FontFamily.poppinsSemiBold,
-                      color: AppColor.textBlackColor.withOpacity(.7),
-                      fontWeight: FontWeight.w500),
-                  const Spacer(),
-                  GestureDetector(
-                    onTap: () {
-                      AppRoutes.pushCupertinoNavigation(
-                          const ForgotPasswordScreen());
-                    },
-                    child: getText(
-                        title: "${StringKey.forgotPassword}?",
-                        size: 14,
-                        fontFamily: FontFamily.poppinsBold,
-                        color: AppColor.appTheme,
-                        fontWeight: FontWeight.w600),
-                  ),
-                ],
-              ),
-              ScreenSize.height(49),
-              AppButton(
-                  title: StringKey.logIn,
-                  height: 54,
-                  width: double.infinity,
-                  buttonColor: AppColor.appTheme,
-                  onTap: () {
-                    AppRoutes.pushCupertinoNavigation(const DashboardScreen());
-                  }),
-              ScreenSize.height(30),
-              Align(
-                alignment: Alignment.center,
-                child: Text.rich(TextSpan(
-                    text: StringKey.dontHaveAccount,
-                    style: TextStyle(
-                        fontSize: 12,
+                ScreenSize.height(31),
+                Row(
+                  children: [
+                    customRadioButton(myProvider),
+                    ScreenSize.width(9.5),
+                    getText(
+                        title: StringKey.keepMeSignIn.tr,
+                        size: 12,
                         fontFamily: FontFamily.poppinsSemiBold,
-                        color: AppColor.textBlackColor.withOpacity(.6),
-                        fontWeight: FontWeight.w300),
-                    children: [
-                      TextSpan(
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              widget.route == 'fromLoginType'
-                                  ? AppRoutes.pushCupertinoNavigation(
-                                      const SignupScreen())
-                                  : Navigator.pop(context);
-                            },
-                          text: " ${StringKey.signup}",
-                          style: TextStyle(
-                              fontSize: 14,
-                              fontFamily: FontFamily.poppinsBold,
-                              color: AppColor.appTheme,
-                              fontWeight: FontWeight.w600))
-                    ])),
-              ),
-            ],
+                        color: AppColor.textBlackColor.withOpacity(.7),
+                        fontWeight: FontWeight.w500),
+                    const Spacer(),
+                    GestureDetector(
+                      onTap: () {
+                        AppRoutes.pushCupertinoNavigation(
+                            const ForgotPasswordScreen());
+                      },
+                      child: getText(
+                          title: "${StringKey.forgotPassword.tr}?",
+                          size: 14,
+                          fontFamily: FontFamily.poppinsBold,
+                          color: AppColor.appTheme,
+                          fontWeight: FontWeight.w600),
+                    ),
+                  ],
+                ),
+                ScreenSize.height(49),
+                AppButton(
+                    title: StringKey.logIn.tr,
+                    height: 54,
+                    width: double.infinity,
+                    buttonColor: AppColor.appTheme,
+                    onTap: () {
+                      // myProvider.checkValidation();
+                      AppRoutes.pushCupertinoNavigation(
+                          const DashboardScreen());
+                    }),
+                ScreenSize.height(30),
+                Align(
+                  alignment: Alignment.center,
+                  child: Text.rich(TextSpan(
+                      text: StringKey.dontHaveAccount.tr,
+                      style: TextStyle(
+                          fontSize: 12,
+                          fontFamily: FontFamily.poppinsSemiBold,
+                          color: AppColor.textBlackColor.withOpacity(.6),
+                          fontWeight: FontWeight.w300),
+                      children: [
+                        TextSpan(
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                widget.route == 'fromLoginType'
+                                    ? AppRoutes.pushCupertinoNavigation(
+                                        const SignupScreen())
+                                    : Navigator.pop(context);
+                              },
+                            text: " ${StringKey.signup.tr}",
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontFamily: FontFamily.poppinsBold,
+                                color: AppColor.appTheme,
+                                fontWeight: FontWeight.w600))
+                      ])),
+                ),
+              ],
+            ),
           ),
         );
       }),

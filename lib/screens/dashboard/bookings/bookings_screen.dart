@@ -10,6 +10,7 @@ import 'package:patient/providers/dashboard_provider/bookings_provider.dart';
 import 'package:patient/screens/dashboard/bookings/view_booking_screen.dart';
 import 'package:patient/widgets/ratingwidget.dart';
 import 'package:provider/provider.dart';
+import 'package:get/get.dart';
 
 class BookingsScreen extends StatefulWidget {
   const BookingsScreen({super.key});
@@ -23,7 +24,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.whiteColor,
-      appBar: appBar(StringKey.bookings, false),
+      appBar: appBar(StringKey.bookings.tr, false),
       body: Consumer<BookingsProvier>(builder: (context, myProvider, child) {
         return Padding(
           padding: const EdgeInsets.only(top: 25),
@@ -56,7 +57,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
               child: Column(
                 children: [
                   getText(
-                      title: StringKey.active,
+                      title: StringKey.active.tr,
                       size: 14,
                       fontFamily: FontFamily.poppinsMedium,
                       color: provier.isSelectedTabBar == 0
@@ -84,7 +85,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
               child: Column(
                 children: [
                   getText(
-                      title: StringKey.pending,
+                      title: StringKey.pending.tr,
                       size: 14,
                       fontFamily: FontFamily.poppinsMedium,
                       color: provier.isSelectedTabBar == 1
@@ -162,10 +163,10 @@ class _BookingsScreenState extends State<BookingsScreen> {
                   ),
                   ScreenSize.height(20),
                   customRowDetailsWidget(
-                      title: StringKey.bookingDate, subTitle: '08 Dec 2022'),
+                      title: StringKey.bookingDate.tr, subTitle: '08 Dec 2022'),
                   ScreenSize.height(9),
                   customRowDetailsWidget(
-                      title: StringKey.serviceName, subTitle: 'Wound Care'),
+                      title: StringKey.serviceName.tr, subTitle: 'Wound Care'),
                 ],
               ),
             ),
@@ -198,16 +199,17 @@ class _BookingsScreenState extends State<BookingsScreen> {
             child: Column(
               children: [
                 customRowDetailsWidget(
-                    title: StringKey.bookingDate, subTitle: '08 Dec 2022'),
+                    title: StringKey.bookingDate.tr, subTitle: '08 Dec 2022'),
                 ScreenSize.height(14),
                 customRowDetailsWidget(
-                    title: StringKey.bookedFor, subTitle: 'Wound Care'),
+                    title: StringKey.bookedFor.tr, subTitle: 'Wound Care'),
                 ScreenSize.height(14),
                 customRowDetailsWidget(
-                    title: StringKey.patientName, subTitle: 'Alexandra Will'),
+                    title: StringKey.patientName.tr,
+                    subTitle: 'Alexandra Will'),
                 ScreenSize.height(14),
                 customRowDetailsWidget(
-                    title: StringKey.patientAddress,
+                    title: StringKey.patientAddress.tr,
                     subTitle: 'Berlin, Germany'),
               ],
             ),

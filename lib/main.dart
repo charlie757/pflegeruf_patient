@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:patient/languages/languages.dart';
 import 'package:patient/providers/auth_provider/change_password_provider.dart';
+import 'package:patient/providers/auth_provider/update_language_provider.dart';
 import 'package:patient/providers/dashboard_provider/bookings_provider.dart';
 import 'package:patient/providers/dashboard_provider/dashboard_provider.dart';
 import 'package:patient/providers/auth_provider/email_verification_provider.dart';
@@ -13,17 +16,21 @@ import 'package:patient/providers/onboarding_provider.dart';
 import 'package:patient/providers/dashboard_provider/required_question_provider.dart';
 import 'package:patient/providers/auth_provider/signup_provider.dart';
 import 'package:patient/screens/splash_screen.dart';
+import 'package:patient/utils/session_manager.dart';
 import 'package:patient/utils/utils.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await SessionManager().init();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
   runApp(const MyApp());
 }
+
+String selectedLanguage = 'en';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -45,10 +52,14 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => BookingsProvier()),
         ChangeNotifierProvider(create: (_) => ViewBookingProvider()),
         ChangeNotifierProvider(create: (_) => HomeProvider()),
+        ChangeNotifierProvider(create: (_) => UpdateLanguageProvider())
       ],
-      child: MaterialApp(
+      child: GetMaterialApp(
         navigatorKey: navigatorKey,
         title: 'Pflegeruf Patient',
+        translations: Languages(),
+        locale: Locale(selectedLanguage),
+        fallbackLocale: const Locale('en'),
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,

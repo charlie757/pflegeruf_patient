@@ -9,4 +9,5 @@ class AppColor {
   static Color borderColor = const Color(0xffEBECEE);
   static Color borderD9Color = const Color(0xffD9D9D9);
   static const lightTextColor = Color(0xff606573);
+  static const redColor = Colors.red;
 }

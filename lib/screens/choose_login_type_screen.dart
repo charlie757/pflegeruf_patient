@@ -9,6 +9,7 @@ import 'package:patient/helper/screensize.dart';
 import 'package:patient/languages/string_key.dart';
 import 'package:patient/screens/auth/login_screen.dart';
 import 'package:patient/screens/auth/signup_screen.dart';
+import 'package:get/get.dart';
 
 class ChooseLoginTypeScreen extends StatefulWidget {
   const ChooseLoginTypeScreen({super.key});
@@ -36,7 +37,7 @@ class _ChooseLoginTypeScreenState extends State<ChooseLoginTypeScreen> {
               ),
               ScreenSize.height(32),
               getText(
-                  title: StringKey.letsGetIn,
+                  title: StringKey.letsGetIn.tr,
                   size: 22,
                   fontFamily: FontFamily.poppinsSemiBold,
                   color: AppColor.whiteColor,
@@ -45,7 +46,7 @@ class _ChooseLoginTypeScreenState extends State<ChooseLoginTypeScreen> {
               Padding(
                 padding: const EdgeInsets.only(left: 35, right: 37),
                 child: AppButton(
-                    title: StringKey.createAccount,
+                    title: StringKey.createAccount.tr,
                     height: 54,
                     width: double.infinity,
                     buttonColor: AppColor.whiteColor,
@@ -60,7 +61,7 @@ class _ChooseLoginTypeScreenState extends State<ChooseLoginTypeScreen> {
               Padding(
                 padding: const EdgeInsets.only(left: 37, right: 37),
                 child: AppButton(
-                    title: StringKey.logIn,
+                    title: StringKey.logIn.tr,
                     height: 54,
                     width: double.infinity,
                     buttonColor: AppColor.whiteColor,

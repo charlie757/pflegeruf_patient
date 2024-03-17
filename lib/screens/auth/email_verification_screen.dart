@@ -11,6 +11,7 @@ import 'package:patient/providers/auth_provider/email_verification_provider.dart
 import 'package:patient/screens/auth/change_password_screen.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
+import 'package:get/get.dart';
 
 class EmailVerificationScreen extends StatefulWidget {
   const EmailVerificationScreen({super.key});
@@ -37,7 +38,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: appBar(StringKey.emailVerification, false),
+      appBar: appBar(StringKey.emailVerification.tr, false),
       body: Consumer<EmailVerificationProvider>(
           builder: (context, myProvider, child) {
         return Padding(
@@ -49,7 +50,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                 TextSpan(
                   children: <TextSpan>[
                     TextSpan(
-                        text: StringKey.enterOtpReceivedOnEmail,
+                        text: StringKey.enterOtpReceivedOnEmail.tr,
                         style: TextStyle(
                           fontSize: 12,
                           fontFamily: FontFamily.poppinsRegular,
@@ -72,7 +73,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
               customOtpTextfield(myProvider),
               ScreenSize.height(70),
               AppButton(
-                  title: StringKey.verify,
+                  title: StringKey.verify.tr,
                   height: 54,
                   width: double.infinity,
                   buttonColor: AppColor.appTheme,
@@ -85,7 +86,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                 TextSpan(
                   children: <TextSpan>[
                     TextSpan(
-                        text: StringKey.resendCode,
+                        text: StringKey.resendCode.tr,
                         style: TextStyle(
                           fontSize: 12,
                           fontFamily: FontFamily.poppinsSemiBold,

@@ -13,6 +13,7 @@ import 'package:patient/providers/auth_provider/signup_provider.dart';
 import 'package:patient/screens/auth/login_screen.dart';
 import 'package:patient/screens/dashboard/dashboard_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:get/get.dart';
 
 class SignupScreen extends StatefulWidget {
   final routes;
@@ -38,7 +39,7 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.whiteColor,
-      appBar: appBar(StringKey.signup, false),
+      appBar: appBar(StringKey.signup.tr, false),
       body: Consumer<SignupProvider>(builder: (context, myProvider, child) {
         return SingleChildScrollView(
           child: Padding(
@@ -48,7 +49,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   getText(
-                      title: StringKey.firstName,
+                      title: StringKey.firstName.tr,
                       size: 14,
                       fontFamily: FontFamily.poppinsSemiBold,
                       color: AppColor.textBlackColor,
@@ -56,11 +57,11 @@ class _SignupScreenState extends State<SignupScreen> {
                   ScreenSize.height(5),
                   CustomTextfield(
                     controller: myProvider.firstNameController,
-                    hintText: StringKey.enterFirstName,
+                    hintText: StringKey.enterFirstName.tr,
                   ),
                   ScreenSize.height(25),
                   getText(
-                      title: StringKey.lastName,
+                      title: StringKey.lastName.tr,
                       size: 14,
                       fontFamily: FontFamily.poppinsSemiBold,
                       color: AppColor.textBlackColor,
@@ -68,11 +69,11 @@ class _SignupScreenState extends State<SignupScreen> {
                   ScreenSize.height(5),
                   CustomTextfield(
                     controller: myProvider.lastNameController,
-                    hintText: StringKey.enterLastName,
+                    hintText: StringKey.enterLastName.tr,
                   ),
                   ScreenSize.height(25),
                   getText(
-                      title: StringKey.email,
+                      title: StringKey.email.tr,
                       size: 14,
                       fontFamily: FontFamily.poppinsSemiBold,
                       color: AppColor.textBlackColor,
@@ -80,11 +81,11 @@ class _SignupScreenState extends State<SignupScreen> {
                   ScreenSize.height(5),
                   CustomTextfield(
                     controller: myProvider.emailController,
-                    hintText: StringKey.enterYourEmail,
+                    hintText: StringKey.enterYourEmail.tr,
                   ),
                   ScreenSize.height(25),
                   getText(
-                      title: StringKey.phoneNumber,
+                      title: StringKey.phoneNumber.tr,
                       size: 14,
                       fontFamily: FontFamily.poppinsSemiBold,
                       color: AppColor.textBlackColor,
@@ -92,11 +93,11 @@ class _SignupScreenState extends State<SignupScreen> {
                   ScreenSize.height(5),
                   CustomTextfield(
                     controller: myProvider.phoneController,
-                    hintText: StringKey.enterYourPhonenUmber,
+                    hintText: StringKey.enterYourPhonenUmber.tr,
                   ),
                   ScreenSize.height(25),
                   getText(
-                      title: StringKey.password,
+                      title: StringKey.password.tr,
                       size: 14,
                       fontFamily: FontFamily.poppinsSemiBold,
                       color: AppColor.textBlackColor,
@@ -104,7 +105,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   ScreenSize.height(5),
                   CustomTextfield(
                     controller: myProvider.passwordController,
-                    hintText: StringKey.enterYourPasword,
+                    hintText: StringKey.enterYourPasword.tr,
                     isObscureText: myProvider.isVisiblePassword,
                     icon: GestureDetector(
                       onTap: () {
@@ -124,7 +125,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
                   ScreenSize.height(25),
                   getText(
-                      title: StringKey.reEnterPassword,
+                      title: StringKey.reEnterPassword.tr,
                       size: 14,
                       fontFamily: FontFamily.poppinsSemiBold,
                       color: AppColor.textBlackColor,
@@ -132,7 +133,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   ScreenSize.height(5),
                   CustomTextfield(
                     controller: myProvider.reEnterPasswordController,
-                    hintText: StringKey.reEnterYourPassword,
+                    hintText: StringKey.reEnterYourPassword.tr,
                     isObscureText: myProvider.isVisibleReEnterPassword,
                     icon: GestureDetector(
                       onTap: () {
@@ -157,7 +158,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       ScreenSize.width(10),
                       Flexible(
                         child: getText(
-                            title: StringKey.acceptTermsAndPrivacyPolicy,
+                            title: StringKey.acceptTermsAndPrivacyPolicy.tr,
                             size: 9,
                             fontFamily: FontFamily.poppinsMedium,
                             color: AppColor.textBlackColor.withOpacity(.7),
@@ -169,7 +170,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   Padding(
                     padding: const EdgeInsets.only(left: 17, right: 17),
                     child: AppButton(
-                        title: StringKey.signup,
+                        title: StringKey.signup.tr,
                         height: 54,
                         width: double.infinity,
                         buttonColor: AppColor.appTheme,
@@ -182,7 +183,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   Align(
                     alignment: Alignment.center,
                     child: Text.rich(TextSpan(
-                        text: StringKey.alredyHaveAccount,
+                        text: StringKey.alredyHaveAccount.tr,
                         style: TextStyle(
                             fontSize: 12,
                             fontFamily: FontFamily.poppinsSemiBold,
@@ -197,7 +198,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                           const LoginScreen())
                                       : Navigator.pop(context);
                                 },
-                              text: " ${StringKey.logIn}",
+                              text: " ${StringKey.logIn.tr}",
                               style: TextStyle(
                                   fontSize: 14,
                                   fontFamily: FontFamily.poppinsSemiBold,

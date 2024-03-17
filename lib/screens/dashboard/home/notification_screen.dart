@@ -5,6 +5,7 @@ import 'package:patient/helper/fontfamily.dart';
 import 'package:patient/helper/getText.dart';
 import 'package:patient/helper/screensize.dart';
 import 'package:patient/languages/string_key.dart';
+import 'package:get/get.dart';
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});
@@ -48,7 +49,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
         ),
         centerTitle: true,
         title: getText(
-            title: StringKey.notification,
+            title: StringKey.notification.tr,
             size: 20,
             fontFamily: FontFamily.poppinsSemiBold,
             color: AppColor.textBlackColor,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:patient/helper/appbutton.dart';
 import 'package:patient/helper/appcolor.dart';
 import 'package:patient/helper/fontfamily.dart';
@@ -25,6 +26,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         children: [
           Expanded(
             child: AnimatedContainer(
+                // color: Colors.red,
                 duration: const Duration(milliseconds: 150),
                 curve: Curves.easeInOut,
                 height: MediaQuery.of(context).size.height / 2,
@@ -72,8 +74,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   const Spacer(),
                   AppButton(
                       title: myProvier.currentIndex == 2
-                          ? StringKey.getStarted
-                          : StringKey.next,
+                          ? StringKey.getStarted.tr
+                          : StringKey.next.tr,
                       height: 54,
                       width: double.infinity,
                       buttonColor: AppColor.whiteColor,

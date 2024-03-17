@@ -7,6 +7,7 @@ import 'package:patient/helper/getText.dart';
 import 'package:patient/helper/screensize.dart';
 import 'package:patient/languages/string_key.dart';
 import 'package:patient/screens/dashboard/home/required_question_screen.dart';
+import 'package:get/get.dart';
 
 class ViewServiceScreen extends StatefulWidget {
   const ViewServiceScreen({super.key});
@@ -48,7 +49,7 @@ class _ViewServiceScreenState extends State<ViewServiceScreen> {
                           fontWeight: FontWeight.w400),
                       ScreenSize.height(27),
                       getText(
-                          title: StringKey.description,
+                          title: StringKey.description.tr,
                           size: 18,
                           fontFamily: FontFamily.poppinsRegular,
                           color: AppColor.appTheme,
@@ -69,7 +70,7 @@ class _ViewServiceScreenState extends State<ViewServiceScreen> {
                         padding: const EdgeInsets.only(
                             left: 7, right: 17, bottom: 40),
                         child: AppButton(
-                            title: StringKey.continueTitle,
+                            title: StringKey.continueTitle.tr,
                             height: 54,
                             width: double.infinity,
                             buttonColor: AppColor.appTheme,

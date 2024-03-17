@@ -10,6 +10,7 @@ import 'package:patient/helper/screensize.dart';
 import 'package:patient/languages/string_key.dart';
 import 'package:patient/providers/dashboard_provider/required_question_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:get/get.dart';
 
 class RequiredQuestionScreen extends StatefulWidget {
   const RequiredQuestionScreen({super.key});
@@ -38,7 +39,7 @@ class _RequiredQuestionScreenState extends State<RequiredQuestionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.whiteColor,
-      appBar: appBar(StringKey.requiredQuestion, true),
+      appBar: appBar(StringKey.requiredQuestion.tr, true),
       body: Consumer<RequiredQuestionProvider>(
           builder: (context, myProvider, child) {
         return SingleChildScrollView(
@@ -49,7 +50,7 @@ class _RequiredQuestionScreenState extends State<RequiredQuestionScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 getText(
-                    title: "1. ${StringKey.name}",
+                    title: "1. ${StringKey.name.tr}",
                     size: 14,
                     fontFamily: FontFamily.poppinsSemiBold,
                     color: AppColor.textBlackColor,
@@ -57,11 +58,11 @@ class _RequiredQuestionScreenState extends State<RequiredQuestionScreen> {
                 ScreenSize.height(5),
                 CustomTextfield(
                   controller: myProvider.nameController,
-                  hintText: StringKey.enterYourName,
+                  hintText: StringKey.enterYourName.tr,
                 ),
                 ScreenSize.height(20),
                 getText(
-                    title: "2. ${StringKey.address}",
+                    title: "2. ${StringKey.address.tr}",
                     size: 14,
                     fontFamily: FontFamily.poppinsSemiBold,
                     color: AppColor.textBlackColor,
@@ -69,11 +70,11 @@ class _RequiredQuestionScreenState extends State<RequiredQuestionScreen> {
                 ScreenSize.height(5),
                 CustomTextfield(
                   controller: myProvider.addressController,
-                  hintText: StringKey.enterYourAddress,
+                  hintText: StringKey.enterYourAddress.tr,
                 ),
                 ScreenSize.height(20),
                 getText(
-                    title: "3. ${StringKey.postalCode}",
+                    title: "3. ${StringKey.postalCode.tr}",
                     size: 14,
                     fontFamily: FontFamily.poppinsSemiBold,
                     color: AppColor.textBlackColor,
@@ -81,11 +82,11 @@ class _RequiredQuestionScreenState extends State<RequiredQuestionScreen> {
                 ScreenSize.height(5),
                 CustomTextfield(
                   controller: myProvider.postalCodeController,
-                  hintText: StringKey.enterYourPostalCode,
+                  hintText: StringKey.enterYourPostalCode.tr,
                 ),
                 ScreenSize.height(20),
                 getText(
-                    title: "4. ${StringKey.street}",
+                    title: "4. ${StringKey.street.tr}",
                     size: 14,
                     fontFamily: FontFamily.poppinsSemiBold,
                     color: AppColor.textBlackColor,
@@ -93,11 +94,11 @@ class _RequiredQuestionScreenState extends State<RequiredQuestionScreen> {
                 ScreenSize.height(5),
                 CustomTextfield(
                   controller: myProvider.streetController,
-                  hintText: StringKey.enterYourStreet,
+                  hintText: StringKey.enterYourStreet.tr,
                 ),
                 ScreenSize.height(20),
                 getText(
-                    title: "5. ${StringKey.city}",
+                    title: "5. ${StringKey.city.tr}",
                     size: 14,
                     fontFamily: FontFamily.poppinsSemiBold,
                     color: AppColor.textBlackColor,
@@ -105,11 +106,11 @@ class _RequiredQuestionScreenState extends State<RequiredQuestionScreen> {
                 ScreenSize.height(5),
                 CustomTextfield(
                   controller: myProvider.cityController,
-                  hintText: StringKey.enterYourCity,
+                  hintText: StringKey.enterYourCity.tr,
                 ),
                 ScreenSize.height(20),
                 getText(
-                    title: "5. ${StringKey.insurance}",
+                    title: "5. ${StringKey.insurance.tr}",
                     size: 14,
                     fontFamily: FontFamily.poppinsSemiBold,
                     color: AppColor.textBlackColor,
@@ -138,7 +139,7 @@ class _RequiredQuestionScreenState extends State<RequiredQuestionScreen> {
                               }),
                           ScreenSize.width(15),
                           getText(
-                              title: StringKey.private,
+                              title: StringKey.private.tr,
                               size: 16,
                               fontFamily: FontFamily.poppinsRegular,
                               color: AppColor.textBlackColor.withOpacity(.6),
@@ -163,7 +164,7 @@ class _RequiredQuestionScreenState extends State<RequiredQuestionScreen> {
                               }),
                           ScreenSize.width(15),
                           getText(
-                              title: StringKey.national,
+                              title: StringKey.national.tr,
                               size: 16,
                               fontFamily: FontFamily.poppinsRegular,
                               color: AppColor.textBlackColor.withOpacity(.6),
@@ -175,7 +176,7 @@ class _RequiredQuestionScreenState extends State<RequiredQuestionScreen> {
                 ),
                 ScreenSize.height(33),
                 getText(
-                    title: "7. ${StringKey.insuranceNo}",
+                    title: "7. ${StringKey.insuranceNo.tr}",
                     size: 14,
                     fontFamily: FontFamily.poppinsSemiBold,
                     color: AppColor.textBlackColor,
@@ -183,11 +184,11 @@ class _RequiredQuestionScreenState extends State<RequiredQuestionScreen> {
                 ScreenSize.height(5),
                 CustomTextfield(
                   controller: myProvider.insuranceController,
-                  hintText: StringKey.enterYourInsuranceNo,
+                  hintText: StringKey.enterYourInsuranceNo.tr,
                 ),
                 ScreenSize.height(20),
                 getText(
-                    title: "8. ${StringKey.birthDate}",
+                    title: "8. ${StringKey.birthDate.tr}",
                     size: 14,
                     fontFamily: FontFamily.poppinsSemiBold,
                     color: AppColor.textBlackColor,
@@ -195,7 +196,7 @@ class _RequiredQuestionScreenState extends State<RequiredQuestionScreen> {
                 ScreenSize.height(5),
                 CustomTextfield(
                   controller: myProvider.birthDateController,
-                  hintText: StringKey.enterYourBirthDate,
+                  hintText: StringKey.enterYourBirthDate.tr,
                   isReadOnly: true,
                   icon: GestureDetector(
                     onTap: () {
@@ -216,7 +217,7 @@ class _RequiredQuestionScreenState extends State<RequiredQuestionScreen> {
                 Padding(
                   padding: const EdgeInsets.only(left: 17, right: 17),
                   child: AppButton(
-                      title: StringKey.submit,
+                      title: StringKey.submit.tr,
                       height: 54,
                       width: double.infinity,
                       buttonColor: AppColor.appTheme,
@@ -319,7 +320,7 @@ class _RequiredQuestionScreenState extends State<RequiredQuestionScreen> {
                   ),
                   ScreenSize.height(42),
                   Text(
-                    StringKey.requestSentSuccessfully,
+                    StringKey.requestSentSuccessfully.tr,
                     style: TextStyle(
                         decoration: TextDecoration.none,
                         fontSize: 14,
@@ -332,7 +333,7 @@ class _RequiredQuestionScreenState extends State<RequiredQuestionScreen> {
                   Padding(
                     padding: const EdgeInsets.only(left: 7, right: 7),
                     child: AppButton(
-                        title: StringKey.backToHome,
+                        title: StringKey.backToHome.tr,
                         height: 50,
                         width: double.infinity,
                         buttonColor: AppColor.appTheme,

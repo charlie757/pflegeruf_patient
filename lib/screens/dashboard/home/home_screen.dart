@@ -11,6 +11,7 @@ import 'package:patient/providers/dashboard_provider/home_provider.dart';
 import 'package:patient/screens/dashboard/home/notification_screen.dart';
 import 'package:patient/screens/dashboard/home/view_service_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:get/get.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -63,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 ScreenSize.width(10),
                 getText(
-                    title: '${StringKey.welcome}, Alexandra',
+                    title: '${StringKey.welcome.tr}, Alexandra',
                     size: 16,
                     fontFamily: FontFamily.poppinsSemiBold,
                     color: AppColor.whiteColor,
@@ -166,7 +167,7 @@ class _HomeScreenState extends State<HomeScreen> {
         Padding(
           padding: const EdgeInsets.only(left: 20, right: 20),
           child: getText(
-              title: StringKey.serviceForYou,
+              title: StringKey.serviceForYou.tr,
               size: 22,
               fontFamily: FontFamily.poppinsSemiBold,
               color: AppColor.textBlackColor,

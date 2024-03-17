@@ -6,6 +6,7 @@ import 'package:patient/helper/getText.dart';
 import 'package:patient/helper/screensize.dart';
 import 'package:patient/languages/string_key.dart';
 import 'package:patient/widgets/ratingwidget.dart';
+import 'package:get/get.dart';
 
 class ViewBookingScreen extends StatefulWidget {
   const ViewBookingScreen({super.key});
@@ -36,7 +37,7 @@ class _ViewBookingScreenState extends State<ViewBookingScreen> {
                   Padding(
                     padding: const EdgeInsets.only(left: 38, right: 38),
                     child: AppButton(
-                        title: StringKey.giveReview,
+                        title: StringKey.giveReview.tr,
                         height: 54,
                         width: double.infinity,
                         buttonColor: AppColor.appTheme,
@@ -133,16 +134,16 @@ class _ViewBookingScreenState extends State<ViewBookingScreen> {
       child: Column(
         children: [
           customRowDetailsWidget(
-              title: StringKey.bookingDate, subTitle: '08 Dec 2022'),
+              title: StringKey.bookingDate.tr, subTitle: '08 Dec 2022'),
           ScreenSize.height(14),
           customRowDetailsWidget(
-              title: StringKey.bookedFor, subTitle: 'Wound Care'),
+              title: StringKey.bookedFor.tr, subTitle: 'Wound Care'),
           ScreenSize.height(14),
           customRowDetailsWidget(
-              title: StringKey.patientName, subTitle: 'Alexandra Will'),
+              title: StringKey.patientName.tr, subTitle: 'Alexandra Will'),
           ScreenSize.height(14),
           customRowDetailsWidget(
-              title: StringKey.patientAddress, subTitle: 'Berlin, Germany'),
+              title: StringKey.patientAddress.tr, subTitle: 'Berlin, Germany'),
         ],
       ),
     );
@@ -235,17 +236,17 @@ class _ViewBookingScreenState extends State<ViewBookingScreen> {
                   ),
                   ScreenSize.height(30),
                   getText(
-                      title: StringKey.leaveAReview,
+                      title: StringKey.leaveAReview.tr,
                       size: 22,
                       fontFamily: FontFamily.poppinsSemiBold,
                       color: AppColor.textBlackColor,
                       fontWeight: FontWeight.w600),
                   ScreenSize.height(6),
-                  const getText(
-                      title: StringKey.howYourRateAndExperience,
+                  getText(
+                      title: StringKey.howYourRateAndExperience.tr,
                       size: 13,
                       fontFamily: FontFamily.poppinsRegular,
-                      color: Color(0xff606573),
+                      color: const Color(0xff606573),
                       fontWeight: FontWeight.w400),
                   ScreenSize.height(19),
                   getText(
@@ -258,7 +259,7 @@ class _ViewBookingScreenState extends State<ViewBookingScreen> {
                   ratingWidget(33),
                   ScreenSize.height(35),
                   getText(
-                      title: StringKey.yourComment,
+                      title: StringKey.yourComment.tr,
                       size: 15,
                       fontFamily: FontFamily.poppinsSemiBold,
                       color: AppColor.appTheme,
@@ -272,7 +273,7 @@ class _ViewBookingScreenState extends State<ViewBookingScreen> {
                       right: 17,
                     ),
                     child: AppButton(
-                        title: StringKey.submitYourReview,
+                        title: StringKey.submitYourReview.tr,
                         height: 54,
                         width: double.infinity,
                         buttonColor: AppColor.appTheme,

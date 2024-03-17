@@ -11,6 +11,7 @@ import 'package:patient/languages/string_key.dart';
 import 'package:patient/providers/auth_provider/change_password_provider.dart';
 import 'package:patient/screens/dashboard/dashboard_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:get/get.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
   const ChangePasswordScreen({super.key});
@@ -37,7 +38,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     return Scaffold(
       backgroundColor: AppColor.whiteColor,
       resizeToAvoidBottomInset: false,
-      appBar: appBar(StringKey.changePassword, false),
+      appBar: appBar(StringKey.changePassword.tr, false),
       body: Consumer<ChangePasswordProvider>(
           builder: (context, myProvider, child) {
         return Padding(
@@ -47,7 +48,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 Align(
                   alignment: Alignment.center,
                   child: getText(
-                    title: StringKey.setNewPassword,
+                    title: StringKey.setNewPassword.tr,
                     size: 12,
                     fontFamily: FontFamily.poppinsRegular,
                     color: AppColor.textBlackColor.withOpacity(.7),
@@ -58,7 +59,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 ScreenSize.height(50),
                 CustomTextfield(
                   controller: myProvider.enterNewPassword,
-                  hintText: StringKey.enterNewPassword,
+                  hintText: StringKey.enterNewPassword.tr,
                   isObscureText: myProvider.isVisibleNewPassword,
                   icon: GestureDetector(
                     onTap: () {
@@ -79,7 +80,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 ScreenSize.height(20),
                 CustomTextfield(
                   controller: myProvider.reEnterNewPassword,
-                  hintText: StringKey.reenternewPassword,
+                  hintText: StringKey.reenternewPassword.tr,
                   isObscureText: myProvider.isVisibleReEnterPassword,
                   icon: GestureDetector(
                     onTap: () {
@@ -101,7 +102,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 Padding(
                   padding: const EdgeInsets.only(left: 17, right: 17),
                   child: AppButton(
-                      title: StringKey.save,
+                      title: StringKey.save.tr,
                       height: 54,
                       width: double.infinity,
                       buttonColor: AppColor.appTheme,

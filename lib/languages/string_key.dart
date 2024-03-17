@@ -1,105 +1,99 @@
 class StringKey {
-  static const findYourNurse = "Find Your Nurse Online";
-  static const chooseBestNurse = "Choose Best Nurses";
-  static const smartBookingSystem = "Smart Booking System";
-  static const next = "Next";
-  static const getStarted = "Get Started";
-  static const letsGetIn = "Let's get in";
-  static const createAccount = "Create an account";
-  static const logIn = "Log In";
-  static const email = "Email";
-  static const enterYourEmail = "Enter your email";
-  static const password = "Password";
-  static const enterYourPasword = "Enter your password";
-  static const keepMeSignIn = "Keep Me Signed In.";
-  static const forgotPassword = "Forget Password";
-  static const dontHaveAccount = "Don't have an account?";
-  static const signup = "Sign Up";
-  static const firstName = "First Name";
-  static const enterFirstName = "Enter first name";
-  static const lastName = "Last Name";
-  static const enterLastName = "Enter last name";
-  static const phoneNumber = "Phone Number";
-  static const enterYourPhonenUmber = "Enter your phone number";
-  static const reEnterPassword = "Re-enter Password";
-  static const reEnterYourPassword = "Re-enter your password";
-  static const acceptTermsAndPrivacyPolicy =
-      "I accept the general terms & conditions and the privacy policy.";
-  static const alredyHaveAccount = "Already have an account?";
-  static const enterEmailToCreateNewPassword =
-      "Please enter your email address. You will receive\na link to create a new password via email.";
-  static const enterEmailAddress = "Enter your email address";
-  static const send = 'Send';
-  static const enterOtpReceivedOnEmail =
-      "Please enter the four digit code you received on your email";
-  static const verify = "Verify";
-  static const resendCode = "Resend Code In";
-  static const emailVerification = "Email Verification";
-  static const changePassword = "Change Password";
-  static const setNewPassword =
-      "Set the new password for your account, so you\ncan login and access all the features";
-  static const reenternewPassword = "Re-enter your new password";
-  static const enterNewPassword = "Enter new pasword";
-  static const save = "Save";
-  static const welcome = "Welcome";
+  static const findYourNurse = "findYourNurse";
+  static const chooseBestNurse = "chooseBestNurse";
+  static const smartBookingSystem = "smartBookingSystem";
+  static const next = "next";
+  static const getStarted = "getStarted";
+  static const letsGetIn = "letsGetIn";
+  static const createAccount = "createAccount";
+  static const logIn = "logIn";
+  static const email = "email";
+  static const enterYourEmail = "enterYourEmail";
+  static const password = "password";
+  static const enterYourPasword = "enterYourPasword";
+  static const keepMeSignIn = "keepMeSignIn";
+  static const forgotPassword = "forgotPassword";
+  static const dontHaveAccount = "dontHaveAccount";
+  static const signup = "signup";
+  static const firstName = "firstName";
+  static const enterFirstName = "enterFirstName";
+  static const lastName = "lastName";
+  static const enterLastName = "enterLastName";
+  static const phoneNumber = "phoneNumber";
+  static const enterYourPhonenUmber = "enterYourPhonenUmber";
+  static const reEnterPassword = "reEnterPassword";
+  static const reEnterYourPassword = "reEnterYourPassword";
+  static const acceptTermsAndPrivacyPolicy = "acceptTermsAndPrivacyPolicy";
+  static const alredyHaveAccount = "alredyHaveAccount";
+  static const enterEmailToCreateNewPassword = "enterEmailToCreateNewPassword";
+  static const enterEmailAddress = "enterEmailAddress";
+  static const send = 'send';
+  static const enterOtpReceivedOnEmail = "enterOtpReceivedOnEmail";
+  static const verify = "verify";
+  static const resendCode = "resendCode";
+  static const emailVerification = "emailVerification";
+  static const changePassword = "changePassword";
+  static const setNewPassword = "setNewPassword";
+  static const reenternewPassword = "reenternewPassword";
+  static const enterNewPassword = "enterNewPassword";
+  static const save = "save";
+  static const welcome = "welcome";
 
   /// required question
-  static const requiredQuestion = "Required Question";
-  static const name = "Name";
-  static const enterYourName = "Enter your name";
-  static const address = "Address";
-  static const enterYourAddress = "Enter your address";
-  static const postalCode = "Postal Code";
-  static const enterYourPostalCode = "Enter your postal code";
-  static const street = "Street";
-  static const enterYourStreet = "Enter your street";
-  static const city = "City";
-  static const enterYourCity = "Enter your city";
-  static const insurance = "Insurance";
-  static const private = "Private";
-  static const national = "National";
-  static const insuranceNo = "Insurance No.";
-  static const enterYourInsuranceNo = "Enter your insurance no.";
-  static const birthDate = "Birth Date";
-  static const enterYourBirthDate = "Enter your birth date";
-  static const submit = "Submit";
-  static const requestSentSuccessfully =
-      "Your Request has been successfully sent";
-  static const backToHome = "Back to home";
+  static const requiredQuestion = "requiredQuestion";
+  static const name = "name";
+  static const enterYourName = "enterYourName";
+  static const address = "address";
+  static const enterYourAddress = "enterYourAddress";
+  static const postalCode = "postalCode";
+  static const enterYourPostalCode = "enterYourPostalCode";
+  static const street = "street";
+  static const enterYourStreet = "enterYourStreet";
+  static const city = "city";
+  static const enterYourCity = "enterYourCity";
+  static const insurance = "insurance";
+  static const private = "private";
+  static const national = "national";
+  static const insuranceNo = "insuranceNo";
+  static const enterYourInsuranceNo = "enterYourInsuranceNo";
+  static const birthDate = "birthDate";
+  static const enterYourBirthDate = "enterYourBirthDate";
+  static const submit = "submit";
+  static const requestSentSuccessfully = "requestSentSuccessfully";
+  static const backToHome = "backToHome";
 
   /// profile
-  static const profile = "Profile";
-  static const saveChanges = "Save Changes";
-  static const emailId = "Email Id";
-  static const logout = "Log Out";
-  static const deleteAccount = "Delete Account";
-  static const youWantToDeleteAccount =
-      "Are You Sure you want to Delete Your Account?";
-  static const youWantToLogout = "Are You Sure you want to Logout?";
-  static const no = "No";
-  static const yes = "Yes";
+  static const profile = "profile";
+  static const saveChanges = "saveChanges";
+  static const emailId = "emailId";
+  static const logout = "logout";
+  static const deleteAccount = "deleteAccount";
+  static const youWantToDeleteAccount = "youWantToDeleteAccount";
+  static const youWantToLogout = "youWantToLogout";
+  static const no = "no";
+  static const yes = "yes";
 
   /// booking
-  static const bookings = "Bookings";
-  static const active = "Active";
-  static const pending = "Pending";
-  static const bookingDate = "Booking Date";
-  static const serviceName = "Service Name";
-  static const bookedFor = "Booked For";
-  static const patientName = "Patient Name";
-  static const patientAddress = "Patient Address";
-  static const giveReview = "Give Review & Rating";
-  static const leaveAReview = "Leave a Review";
-  static const reviews = "Reviews";
-  static const howYourRateAndExperience = "How would you rate your experience?";
-  static const yourComment = "Your Comment";
-  static const submitYourReview = "Submit Review";
+  static const bookings = "bookings";
+  static const active = "active";
+  static const pending = "pending";
+  static const bookingDate = "bookingDate";
+  static const serviceName = "serviceName";
+  static const bookedFor = "bookedFor";
+  static const patientName = "patientName";
+  static const patientAddress = "patientAddress";
+  static const giveReview = "giveReview";
+  static const leaveAReview = "leaveAReview";
+  static const reviews = "reviews";
+  static const howYourRateAndExperience = "howYourRateAndExperience";
+  static const yourComment = "yourComment";
+  static const submitYourReview = "submitYourReview";
 
   /// notification
-  static const notification = "Notification";
+  static const notification = "notification";
 
   /// home
-  static const serviceForYou = "Services for you";
-  static const continueTitle = "Continue";
-  static const description = "Description";
+  static const serviceForYou = "serviceForYou";
+  static const continueTitle = "continueTitle";
+  static const description = "description";
 }

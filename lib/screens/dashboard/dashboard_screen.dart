@@ -62,6 +62,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         onTap: onTap,
         child: Container(
           width: double.infinity,
+          color: Colors.white,
           alignment: Alignment.center,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,

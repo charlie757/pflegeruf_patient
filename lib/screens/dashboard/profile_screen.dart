@@ -9,6 +9,7 @@ import 'package:patient/helper/screensize.dart';
 import 'package:patient/languages/string_key.dart';
 import 'package:patient/providers/dashboard_provider/profile_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:get/get.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -40,7 +41,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         scrolledUnderElevation: 0.0,
         centerTitle: true,
         title: getText(
-            title: StringKey.profile,
+            title: StringKey.profile.tr,
             size: 20,
             fontFamily: FontFamily.poppinsSemiBold,
             color: AppColor.textBlackColor,
@@ -73,7 +74,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 profileImageWidget(),
                 ScreenSize.height(27),
                 getText(
-                    title: StringKey.firstName,
+                    title: StringKey.firstName.tr,
                     size: 13,
                     fontFamily: FontFamily.poppinsRegular,
                     color: AppColor.textBlackColor.withOpacity(.6),
@@ -81,7 +82,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ScreenSize.height(5),
                 CustomTextfield(
                   controller: myProvider.firstNameController,
-                  hintText: StringKey.enterFirstName,
+                  hintText: StringKey.enterFirstName.tr,
                   icon: GestureDetector(
                     onTap: () {},
                     child: Icon(
@@ -93,7 +94,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 ScreenSize.height(20),
                 getText(
-                    title: StringKey.lastName,
+                    title: StringKey.lastName.tr,
                     size: 13,
                     fontFamily: FontFamily.poppinsRegular,
                     color: AppColor.textBlackColor.withOpacity(.6),
@@ -101,7 +102,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ScreenSize.height(5),
                 CustomTextfield(
                   controller: myProvider.lastNameController,
-                  hintText: StringKey.enterLastName,
+                  hintText: StringKey.enterLastName.tr,
                   icon: GestureDetector(
                     onTap: () {},
                     child: Icon(
@@ -113,7 +114,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 ScreenSize.height(20),
                 getText(
-                    title: StringKey.email,
+                    title: StringKey.email.tr,
                     size: 13,
                     fontFamily: FontFamily.poppinsRegular,
                     color: AppColor.textBlackColor.withOpacity(.6),
@@ -121,7 +122,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ScreenSize.height(5),
                 CustomTextfield(
                   controller: myProvider.emailController,
-                  hintText: StringKey.enterYourEmail,
+                  hintText: StringKey.enterYourEmail.tr,
                   icon: GestureDetector(
                     onTap: () {},
                     child: Icon(
@@ -133,7 +134,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 ScreenSize.height(20),
                 getText(
-                    title: StringKey.phoneNumber,
+                    title: StringKey.phoneNumber.tr,
                     size: 13,
                     fontFamily: FontFamily.poppinsRegular,
                     color: AppColor.textBlackColor.withOpacity(.6),
@@ -141,7 +142,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ScreenSize.height(5),
                 CustomTextfield(
                   controller: myProvider.phoneController,
-                  hintText: StringKey.enterYourPhonenUmber,
+                  hintText: StringKey.enterYourPhonenUmber.tr,
                   icon: GestureDetector(
                     onTap: () {},
                     child: Icon(
@@ -153,7 +154,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 ScreenSize.height(20),
                 getText(
-                    title: StringKey.password,
+                    title: StringKey.password.tr,
                     size: 13,
                     fontFamily: FontFamily.poppinsRegular,
                     color: AppColor.textBlackColor.withOpacity(.6),
@@ -161,7 +162,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ScreenSize.height(5),
                 CustomTextfield(
                   controller: myProvider.passwordController,
-                  hintText: StringKey.enterYourPasword,
+                  hintText: StringKey.enterYourPasword.tr,
                   isObscureText: myProvider.isVisiblePassword,
                   icon: GestureDetector(
                     onTap: () {
@@ -184,7 +185,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Padding(
                   padding: const EdgeInsets.only(left: 17, right: 17),
                   child: AppButton(
-                      title: StringKey.saveChanges,
+                      title: StringKey.saveChanges.tr,
                       height: 54,
                       width: double.infinity,
                       buttonColor: AppColor.appTheme,
@@ -247,7 +248,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   onTap: () {
                     openDialogBox(
                         isLogout: true,
-                        title: StringKey.youWantToLogout,
+                        title: StringKey.youWantToLogout.tr,
                         noTap: () {
                           Navigator.pop(context);
                         },
@@ -262,7 +263,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         getText(
-                            title: StringKey.logout,
+                            title: StringKey.logout.tr,
                             size: 16,
                             fontFamily: FontFamily.poppinsMedium,
                             color: AppColor.textBlackColor,
@@ -286,7 +287,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   onTap: () {
                     openDialogBox(
                         isLogout: false,
-                        title: StringKey.youWantToDeleteAccount,
+                        title: StringKey.youWantToDeleteAccount.tr,
                         noTap: () {
                           Navigator.pop(context);
                         },
@@ -300,7 +301,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         getText(
-                            title: StringKey.deleteAccount,
+                            title: StringKey.deleteAccount.tr,
                             size: 16,
                             fontFamily: FontFamily.poppinsMedium,
                             color: AppColor.textBlackColor,
@@ -362,7 +363,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         children: [
                           Flexible(
                             child: AppButton(
-                                title: StringKey.no,
+                                title: StringKey.no.tr,
                                 height: 50,
                                 width: double.infinity,
                                 buttonColor: AppColor.whiteColor,
@@ -372,7 +373,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ScreenSize.width(20),
                           Flexible(
                             child: AppButton(
-                                title: StringKey.yes,
+                                title: StringKey.yes.tr,
                                 height: 50,
                                 width: double.infinity,
                                 buttonColor: AppColor.appTheme,

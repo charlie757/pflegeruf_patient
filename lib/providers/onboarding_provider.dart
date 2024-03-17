@@ -3,24 +3,25 @@ import 'package:patient/config/approutes.dart';
 import 'package:patient/helper/appimages.dart';
 import 'package:patient/languages/string_key.dart';
 import 'package:patient/screens/choose_login_type_screen.dart';
+import 'package:get/get.dart';
 
 class OnboardingProvider extends ChangeNotifier {
   List onboardingList = [
     {
       'img': AppImages.onboarding1Image,
-      'title': StringKey.findYourNurse,
+      'title': StringKey.findYourNurse.tr,
       'subTitle':
           'Lorem Ipsum is simply dummy text of the printing and for typesetting industry. '
     },
     {
       'img': AppImages.onboarding2Image,
-      'title': StringKey.chooseBestNurse,
+      'title': StringKey.chooseBestNurse.tr,
       'subTitle':
           'Lorem Ipsum is simply dummy text of the printing and for typesetting industry. '
     },
     {
       'img': AppImages.onboarding3Image,
-      'title': StringKey.smartBookingSystem,
+      'title': StringKey.smartBookingSystem.tr,
       'subTitle':
           'Lorem Ipsum is simply dummy text of the printing and for typesetting industry. '
     },
