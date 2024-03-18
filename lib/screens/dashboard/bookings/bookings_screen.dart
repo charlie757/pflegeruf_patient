@@ -8,6 +8,7 @@ import 'package:patient/helper/screensize.dart';
 import 'package:patient/languages/string_key.dart';
 import 'package:patient/providers/dashboard_provider/bookings_provider.dart';
 import 'package:patient/screens/dashboard/bookings/view_booking_screen.dart';
+import 'package:patient/utils/utils.dart';
 import 'package:patient/widgets/ratingwidget.dart';
 import 'package:provider/provider.dart';
 import 'package:get/get.dart';
@@ -22,23 +23,26 @@ class BookingsScreen extends StatefulWidget {
 class _BookingsScreenState extends State<BookingsScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColor.whiteColor,
-      appBar: appBar(StringKey.bookings.tr, false),
-      body: Consumer<BookingsProvier>(builder: (context, myProvider, child) {
-        return Padding(
-          padding: const EdgeInsets.only(top: 25),
-          child: Column(
-            children: [
-              customTabBar(myProvider),
-              Expanded(
-                  child: myProvider.isSelectedTabBar == 0
-                      ? activeBookingsWidget()
-                      : pendingBookingsWidget())
-            ],
-          ),
-        );
-      }),
+    return MediaQuery(
+      data: mediaQuery,
+      child: Scaffold(
+        backgroundColor: AppColor.whiteColor,
+        appBar: appBar(StringKey.bookings.tr, false),
+        body: Consumer<BookingsProvier>(builder: (context, myProvider, child) {
+          return Padding(
+            padding: const EdgeInsets.only(top: 25),
+            child: Column(
+              children: [
+                customTabBar(myProvider),
+                Expanded(
+                    child: myProvider.isSelectedTabBar == 0
+                        ? activeBookingsWidget()
+                        : pendingBookingsWidget())
+              ],
+            ),
+          );
+        }),
+      ),
     );
   }
 

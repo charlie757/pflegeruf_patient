@@ -6,6 +6,7 @@ import 'package:patient/helper/getText.dart';
 import 'package:patient/helper/screensize.dart';
 import 'package:patient/languages/string_key.dart';
 import 'package:get/get.dart';
+import 'package:patient/utils/utils.dart';
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});
@@ -17,54 +18,57 @@ class NotificationScreen extends StatefulWidget {
 class _NotificationScreenState extends State<NotificationScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColor.whiteColor,
-      appBar: AppBar(
+    return MediaQuery(
+      data: mediaQuery,
+      child: Scaffold(
         backgroundColor: AppColor.whiteColor,
-        automaticallyImplyLeading: false,
-        elevation: 0.0,
-        scrolledUnderElevation: 0.0,
-        leading: Row(
-          children: [
-            GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Container(
-                margin: const EdgeInsets.only(left: 18),
-                alignment: Alignment.center,
-                height: 30,
-                width: 30,
-                decoration: BoxDecoration(
-                    color: AppColor.appTheme,
-                    borderRadius: BorderRadius.circular(100)),
-                child: Icon(
-                  Icons.arrow_back_ios_new_outlined,
-                  color: AppColor.whiteColor,
-                  size: 18,
+        appBar: AppBar(
+          backgroundColor: AppColor.whiteColor,
+          automaticallyImplyLeading: false,
+          elevation: 0.0,
+          scrolledUnderElevation: 0.0,
+          leading: Row(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Container(
+                  margin: const EdgeInsets.only(left: 18),
+                  alignment: Alignment.center,
+                  height: 30,
+                  width: 30,
+                  decoration: BoxDecoration(
+                      color: AppColor.appTheme,
+                      borderRadius: BorderRadius.circular(100)),
+                  child: Icon(
+                    Icons.arrow_back_ios_new_outlined,
+                    color: AppColor.whiteColor,
+                    size: 18,
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
+          centerTitle: true,
+          title: getText(
+              title: StringKey.notification.tr,
+              size: 20,
+              fontFamily: FontFamily.poppinsSemiBold,
+              color: AppColor.textBlackColor,
+              fontWeight: FontWeight.w600),
         ),
-        centerTitle: true,
-        title: getText(
-            title: StringKey.notification.tr,
-            size: 20,
-            fontFamily: FontFamily.poppinsSemiBold,
-            color: AppColor.textBlackColor,
-            fontWeight: FontWeight.w600),
+        body: ListView.separated(
+            separatorBuilder: (context, sp) {
+              return ScreenSize.height(25);
+            },
+            padding: const EdgeInsets.only(top: 15, bottom: 30),
+            itemCount: 5,
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              return notificationWidget();
+            }),
       ),
-      body: ListView.separated(
-          separatorBuilder: (context, sp) {
-            return ScreenSize.height(25);
-          },
-          padding: const EdgeInsets.only(top: 15, bottom: 30),
-          itemCount: 5,
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            return notificationWidget();
-          }),
     );
   }
 

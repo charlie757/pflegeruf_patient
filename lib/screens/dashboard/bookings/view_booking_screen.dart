@@ -5,6 +5,7 @@ import 'package:patient/helper/fontfamily.dart';
 import 'package:patient/helper/getText.dart';
 import 'package:patient/helper/screensize.dart';
 import 'package:patient/languages/string_key.dart';
+import 'package:patient/utils/utils.dart';
 import 'package:patient/widgets/ratingwidget.dart';
 import 'package:get/get.dart';
 
@@ -18,55 +19,58 @@ class ViewBookingScreen extends StatefulWidget {
 class _ViewBookingScreenState extends State<ViewBookingScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColor.whiteColor,
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 43),
-              child: Column(
-                children: [
-                  Image.asset(
-                    'assets/images/nurseProfile.png',
-                    fit: BoxFit.fitHeight,
-                  ),
-                  ScreenSize.height(34),
-                  userDetails(),
-                  ScreenSize.height(50),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 38, right: 38),
-                    child: AppButton(
-                        title: StringKey.giveReview.tr,
-                        height: 54,
-                        width: double.infinity,
-                        buttonColor: AppColor.appTheme,
-                        onTap: () {
-                          openRatingBottomSheet();
-                        }),
-                  )
-                ],
+    return MediaQuery(
+      data: mediaQuery,
+      child: Scaffold(
+        backgroundColor: AppColor.whiteColor,
+        body: Stack(
+          children: [
+            SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 43),
+                child: Column(
+                  children: [
+                    Image.asset(
+                      'assets/images/nurseProfile.png',
+                      fit: BoxFit.fitHeight,
+                    ),
+                    ScreenSize.height(34),
+                    userDetails(),
+                    ScreenSize.height(50),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 38, right: 38),
+                      child: AppButton(
+                          title: StringKey.giveReview.tr,
+                          height: 54,
+                          width: double.infinity,
+                          buttonColor: AppColor.appTheme,
+                          onTap: () {
+                            openRatingBottomSheet();
+                          }),
+                    )
+                  ],
+                ),
               ),
             ),
-          ),
-          GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Container(
-              height: 32,
-              width: 32,
-              margin: const EdgeInsets.only(left: 16, top: 45),
-              decoration: BoxDecoration(
-                  color: AppColor.whiteColor,
-                  borderRadius: BorderRadius.circular(16)),
-              child: const Icon(
-                Icons.arrow_back_ios_new_outlined,
-                size: 18,
+            GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Container(
+                height: 32,
+                width: 32,
+                margin: const EdgeInsets.only(left: 16, top: 45),
+                decoration: BoxDecoration(
+                    color: AppColor.whiteColor,
+                    borderRadius: BorderRadius.circular(16)),
+                child: const Icon(
+                  Icons.arrow_back_ios_new_outlined,
+                  size: 18,
+                ),
               ),
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }

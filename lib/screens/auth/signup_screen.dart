@@ -12,6 +12,7 @@ import 'package:patient/languages/string_key.dart';
 import 'package:patient/providers/auth_provider/signup_provider.dart';
 import 'package:patient/screens/auth/login_screen.dart';
 import 'package:patient/screens/dashboard/dashboard_screen.dart';
+import 'package:patient/utils/utils.dart';
 import 'package:provider/provider.dart';
 import 'package:get/get.dart';
 
@@ -37,179 +38,182 @@ class _SignupScreenState extends State<SignupScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColor.whiteColor,
-      appBar: appBar(StringKey.signup.tr, false),
-      body: Consumer<SignupProvider>(builder: (context, myProvider, child) {
-        return SingleChildScrollView(
-          child: Padding(
-              padding: const EdgeInsets.only(
-                  top: 71, left: 20, right: 20, bottom: 40),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  getText(
-                      title: StringKey.firstName.tr,
-                      size: 14,
-                      fontFamily: FontFamily.poppinsSemiBold,
-                      color: AppColor.textBlackColor,
-                      fontWeight: FontWeight.w500),
-                  ScreenSize.height(5),
-                  CustomTextfield(
-                    controller: myProvider.firstNameController,
-                    hintText: StringKey.enterFirstName.tr,
-                  ),
-                  ScreenSize.height(25),
-                  getText(
-                      title: StringKey.lastName.tr,
-                      size: 14,
-                      fontFamily: FontFamily.poppinsSemiBold,
-                      color: AppColor.textBlackColor,
-                      fontWeight: FontWeight.w500),
-                  ScreenSize.height(5),
-                  CustomTextfield(
-                    controller: myProvider.lastNameController,
-                    hintText: StringKey.enterLastName.tr,
-                  ),
-                  ScreenSize.height(25),
-                  getText(
-                      title: StringKey.email.tr,
-                      size: 14,
-                      fontFamily: FontFamily.poppinsSemiBold,
-                      color: AppColor.textBlackColor,
-                      fontWeight: FontWeight.w500),
-                  ScreenSize.height(5),
-                  CustomTextfield(
-                    controller: myProvider.emailController,
-                    hintText: StringKey.enterYourEmail.tr,
-                  ),
-                  ScreenSize.height(25),
-                  getText(
-                      title: StringKey.phoneNumber.tr,
-                      size: 14,
-                      fontFamily: FontFamily.poppinsSemiBold,
-                      color: AppColor.textBlackColor,
-                      fontWeight: FontWeight.w500),
-                  ScreenSize.height(5),
-                  CustomTextfield(
-                    controller: myProvider.phoneController,
-                    hintText: StringKey.enterYourPhonenUmber.tr,
-                  ),
-                  ScreenSize.height(25),
-                  getText(
-                      title: StringKey.password.tr,
-                      size: 14,
-                      fontFamily: FontFamily.poppinsSemiBold,
-                      color: AppColor.textBlackColor,
-                      fontWeight: FontWeight.w500),
-                  ScreenSize.height(5),
-                  CustomTextfield(
-                    controller: myProvider.passwordController,
-                    hintText: StringKey.enterYourPasword.tr,
-                    isObscureText: myProvider.isVisiblePassword,
-                    icon: GestureDetector(
-                      onTap: () {
-                        if (myProvider.isVisiblePassword) {
-                          myProvider.updateIsVisiblePassword(false);
-                        } else {
-                          myProvider.updateIsVisiblePassword(true);
-                        }
-                      },
-                      child: Icon(
-                        myProvider.isVisiblePassword
-                            ? Icons.visibility_off_outlined
-                            : Icons.visibility_outlined,
-                        color: AppColor.textBlackColor.withOpacity(.3),
-                      ),
+    return MediaQuery(
+      data: mediaQuery,
+      child: Scaffold(
+        backgroundColor: AppColor.whiteColor,
+        appBar: appBar(StringKey.signup.tr, false),
+        body: Consumer<SignupProvider>(builder: (context, myProvider, child) {
+          return SingleChildScrollView(
+            child: Padding(
+                padding: const EdgeInsets.only(
+                    top: 71, left: 20, right: 20, bottom: 40),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    getText(
+                        title: StringKey.firstName.tr,
+                        size: 14,
+                        fontFamily: FontFamily.poppinsSemiBold,
+                        color: AppColor.textBlackColor,
+                        fontWeight: FontWeight.w500),
+                    ScreenSize.height(5),
+                    CustomTextfield(
+                      controller: myProvider.firstNameController,
+                      hintText: StringKey.enterFirstName.tr,
                     ),
-                  ),
-                  ScreenSize.height(25),
-                  getText(
-                      title: StringKey.reEnterPassword.tr,
-                      size: 14,
-                      fontFamily: FontFamily.poppinsSemiBold,
-                      color: AppColor.textBlackColor,
-                      fontWeight: FontWeight.w500),
-                  ScreenSize.height(5),
-                  CustomTextfield(
-                    controller: myProvider.reEnterPasswordController,
-                    hintText: StringKey.reEnterYourPassword.tr,
-                    isObscureText: myProvider.isVisibleReEnterPassword,
-                    icon: GestureDetector(
-                      onTap: () {
-                        if (myProvider.isVisibleReEnterPassword) {
-                          myProvider.updateIsVisibleReEnterPassword(false);
-                        } else {
-                          myProvider.updateIsVisibleReEnterPassword(true);
-                        }
-                      },
-                      child: Icon(
-                        myProvider.isVisibleReEnterPassword
-                            ? Icons.visibility_off_outlined
-                            : Icons.visibility_outlined,
-                        color: AppColor.textBlackColor.withOpacity(.3),
-                      ),
+                    ScreenSize.height(25),
+                    getText(
+                        title: StringKey.lastName.tr,
+                        size: 14,
+                        fontFamily: FontFamily.poppinsSemiBold,
+                        color: AppColor.textBlackColor,
+                        fontWeight: FontWeight.w500),
+                    ScreenSize.height(5),
+                    CustomTextfield(
+                      controller: myProvider.lastNameController,
+                      hintText: StringKey.enterLastName.tr,
                     ),
-                  ),
-                  ScreenSize.height(20),
-                  Row(
-                    children: [
-                      customCheckBox(myProvider),
-                      ScreenSize.width(10),
-                      Flexible(
-                        child: getText(
-                            title: StringKey.acceptTermsAndPrivacyPolicy.tr,
-                            size: 9,
-                            fontFamily: FontFamily.poppinsMedium,
-                            color: AppColor.textBlackColor.withOpacity(.7),
-                            fontWeight: FontWeight.w500),
-                      )
-                    ],
-                  ),
-                  ScreenSize.height(60),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 17, right: 17),
-                    child: AppButton(
-                        title: StringKey.signup.tr,
-                        height: 54,
-                        width: double.infinity,
-                        buttonColor: AppColor.appTheme,
+                    ScreenSize.height(25),
+                    getText(
+                        title: StringKey.email.tr,
+                        size: 14,
+                        fontFamily: FontFamily.poppinsSemiBold,
+                        color: AppColor.textBlackColor,
+                        fontWeight: FontWeight.w500),
+                    ScreenSize.height(5),
+                    CustomTextfield(
+                      controller: myProvider.emailController,
+                      hintText: StringKey.enterYourEmail.tr,
+                    ),
+                    ScreenSize.height(25),
+                    getText(
+                        title: StringKey.phoneNumber.tr,
+                        size: 14,
+                        fontFamily: FontFamily.poppinsSemiBold,
+                        color: AppColor.textBlackColor,
+                        fontWeight: FontWeight.w500),
+                    ScreenSize.height(5),
+                    CustomTextfield(
+                      controller: myProvider.phoneController,
+                      hintText: StringKey.enterYourPhonenUmber.tr,
+                    ),
+                    ScreenSize.height(25),
+                    getText(
+                        title: StringKey.password.tr,
+                        size: 14,
+                        fontFamily: FontFamily.poppinsSemiBold,
+                        color: AppColor.textBlackColor,
+                        fontWeight: FontWeight.w500),
+                    ScreenSize.height(5),
+                    CustomTextfield(
+                      controller: myProvider.passwordController,
+                      hintText: StringKey.enterYourPasword.tr,
+                      isObscureText: myProvider.isVisiblePassword,
+                      icon: GestureDetector(
                         onTap: () {
-                          AppRoutes.pushCupertinoNavigation(
-                              const DashboardScreen());
-                        }),
-                  ),
-                  ScreenSize.height(30),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Text.rich(TextSpan(
-                        text: StringKey.alredyHaveAccount.tr,
-                        style: TextStyle(
-                            fontSize: 12,
-                            fontFamily: FontFamily.poppinsSemiBold,
-                            color: AppColor.textBlackColor.withOpacity(.6),
-                            fontWeight: FontWeight.w300),
-                        children: [
-                          TextSpan(
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  widget.routes == 'fromLoginType'
-                                      ? AppRoutes.pushCupertinoNavigation(
-                                          const LoginScreen())
-                                      : Navigator.pop(context);
-                                },
-                              text: " ${StringKey.logIn.tr}",
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  fontFamily: FontFamily.poppinsSemiBold,
-                                  color: AppColor.appTheme,
-                                  fontWeight: FontWeight.w600))
-                        ])),
-                  ),
-                ],
-              )),
-        );
-      }),
+                          if (myProvider.isVisiblePassword) {
+                            myProvider.updateIsVisiblePassword(false);
+                          } else {
+                            myProvider.updateIsVisiblePassword(true);
+                          }
+                        },
+                        child: Icon(
+                          myProvider.isVisiblePassword
+                              ? Icons.visibility_off_outlined
+                              : Icons.visibility_outlined,
+                          color: AppColor.textBlackColor.withOpacity(.3),
+                        ),
+                      ),
+                    ),
+                    ScreenSize.height(25),
+                    getText(
+                        title: StringKey.reEnterPassword.tr,
+                        size: 14,
+                        fontFamily: FontFamily.poppinsSemiBold,
+                        color: AppColor.textBlackColor,
+                        fontWeight: FontWeight.w500),
+                    ScreenSize.height(5),
+                    CustomTextfield(
+                      controller: myProvider.reEnterPasswordController,
+                      hintText: StringKey.reEnterYourPassword.tr,
+                      isObscureText: myProvider.isVisibleReEnterPassword,
+                      icon: GestureDetector(
+                        onTap: () {
+                          if (myProvider.isVisibleReEnterPassword) {
+                            myProvider.updateIsVisibleReEnterPassword(false);
+                          } else {
+                            myProvider.updateIsVisibleReEnterPassword(true);
+                          }
+                        },
+                        child: Icon(
+                          myProvider.isVisibleReEnterPassword
+                              ? Icons.visibility_off_outlined
+                              : Icons.visibility_outlined,
+                          color: AppColor.textBlackColor.withOpacity(.3),
+                        ),
+                      ),
+                    ),
+                    ScreenSize.height(20),
+                    Row(
+                      children: [
+                        customCheckBox(myProvider),
+                        ScreenSize.width(10),
+                        Flexible(
+                          child: getText(
+                              title: StringKey.acceptTermsAndPrivacyPolicy.tr,
+                              size: 9,
+                              fontFamily: FontFamily.poppinsMedium,
+                              color: AppColor.textBlackColor.withOpacity(.7),
+                              fontWeight: FontWeight.w500),
+                        )
+                      ],
+                    ),
+                    ScreenSize.height(60),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 17, right: 17),
+                      child: AppButton(
+                          title: StringKey.signup.tr,
+                          height: 54,
+                          width: double.infinity,
+                          buttonColor: AppColor.appTheme,
+                          onTap: () {
+                            AppRoutes.pushCupertinoNavigation(
+                                const DashboardScreen());
+                          }),
+                    ),
+                    ScreenSize.height(30),
+                    Align(
+                      alignment: Alignment.center,
+                      child: Text.rich(TextSpan(
+                          text: StringKey.alredyHaveAccount.tr,
+                          style: TextStyle(
+                              fontSize: 12,
+                              fontFamily: FontFamily.poppinsSemiBold,
+                              color: AppColor.textBlackColor.withOpacity(.6),
+                              fontWeight: FontWeight.w300),
+                          children: [
+                            TextSpan(
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    widget.routes == 'fromLoginType'
+                                        ? AppRoutes.pushCupertinoNavigation(
+                                            const LoginScreen())
+                                        : Navigator.pop(context);
+                                  },
+                                text: " ${StringKey.logIn.tr}",
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    fontFamily: FontFamily.poppinsSemiBold,
+                                    color: AppColor.appTheme,
+                                    fontWeight: FontWeight.w600))
+                          ])),
+                    ),
+                  ],
+                )),
+          );
+        }),
+      ),
     );
   }
 

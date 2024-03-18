@@ -10,6 +10,7 @@ import 'package:patient/languages/string_key.dart';
 import 'package:patient/providers/dashboard_provider/home_provider.dart';
 import 'package:patient/screens/dashboard/home/notification_screen.dart';
 import 'package:patient/screens/dashboard/home/view_service_screen.dart';
+import 'package:patient/utils/utils.dart';
 import 'package:provider/provider.dart';
 import 'package:get/get.dart';
 
@@ -23,22 +24,25 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Consumer<HomeProvider>(builder: (context, myProvider, child) {
-        return SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.only(bottom: 40),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                headerWidget(myProvider),
-                ScreenSize.height(40),
-                serviceWidget(myProvider)
-              ],
+    return MediaQuery(
+      data: mediaQuery,
+      child: Scaffold(
+        body: Consumer<HomeProvider>(builder: (context, myProvider, child) {
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 40),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  headerWidget(myProvider),
+                  ScreenSize.height(40),
+                  serviceWidget(myProvider)
+                ],
+              ),
             ),
-          ),
-        );
-      }),
+          );
+        }),
+      ),
     );
   }
 

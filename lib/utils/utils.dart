@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+MediaQueryData mediaQuery = MediaQuery.of(navigatorKey.currentState!.context)
+    .copyWith(textScaleFactor: 1.0);
 
 class Utils {
   static const emailPattern =

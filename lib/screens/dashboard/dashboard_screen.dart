@@ -6,6 +6,7 @@ import 'package:patient/providers/dashboard_provider/dashboard_provider.dart';
 import 'package:patient/screens/dashboard/bookings/bookings_screen.dart';
 import 'package:patient/screens/dashboard/home/home_screen.dart';
 import 'package:patient/screens/dashboard/profile_screen.dart';
+import 'package:patient/utils/utils.dart';
 import 'package:provider/provider.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -23,36 +24,39 @@ class _DashboardScreenState extends State<DashboardScreen> {
   ];
   @override
   Widget build(BuildContext context) {
-    return Consumer<DashboardProvider>(builder: (context, myProvider, child) {
-      return Scaffold(
-        backgroundColor: AppColor.whiteColor,
-        body: screenList[myProvider.selectedIndex],
-        bottomNavigationBar: Container(
-          height: 60,
-          decoration: BoxDecoration(color: AppColor.whiteColor, boxShadow: [
-            BoxShadow(
-                offset: const Offset(0, 2),
-                blurRadius: 20,
-                color: AppColor.shadowColor)
-          ]),
-          padding: const EdgeInsets.only(bottom: 5),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              bottomNavigationItems(AppImages.bottomIcon1, 0, myProvider, () {
-                myProvider.updateSelectedIndex(0);
-              }),
-              bottomNavigationItems(AppImages.bottomIcon2, 1, myProvider, () {
-                myProvider.updateSelectedIndex(1);
-              }),
-              bottomNavigationItems(AppImages.bottomIcon3, 2, myProvider, () {
-                myProvider.updateSelectedIndex(2);
-              }),
-            ],
+    return MediaQuery(
+      data: mediaQuery,
+      child: Consumer<DashboardProvider>(builder: (context, myProvider, child) {
+        return Scaffold(
+          backgroundColor: AppColor.whiteColor,
+          body: screenList[myProvider.selectedIndex],
+          bottomNavigationBar: Container(
+            height: 60,
+            decoration: BoxDecoration(color: AppColor.whiteColor, boxShadow: [
+              BoxShadow(
+                  offset: const Offset(0, 2),
+                  blurRadius: 20,
+                  color: AppColor.shadowColor)
+            ]),
+            padding: const EdgeInsets.only(bottom: 5),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                bottomNavigationItems(AppImages.bottomIcon1, 0, myProvider, () {
+                  myProvider.updateSelectedIndex(0);
+                }),
+                bottomNavigationItems(AppImages.bottomIcon2, 1, myProvider, () {
+                  myProvider.updateSelectedIndex(1);
+                }),
+                bottomNavigationItems(AppImages.bottomIcon3, 2, myProvider, () {
+                  myProvider.updateSelectedIndex(2);
+                }),
+              ],
+            ),
           ),
-        ),
-      );
-    });
+        );
+      }),
+    );
   }
 
   bottomNavigationItems(

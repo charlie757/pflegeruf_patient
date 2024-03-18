@@ -8,6 +8,7 @@ import 'package:patient/helper/getText.dart';
 import 'package:patient/helper/screensize.dart';
 import 'package:patient/languages/string_key.dart';
 import 'package:patient/providers/dashboard_provider/profile_provider.dart';
+import 'package:patient/utils/utils.dart';
 import 'package:provider/provider.dart';
 import 'package:get/get.dart';
 
@@ -32,170 +33,174 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColor.whiteColor,
-      appBar: AppBar(
+    return MediaQuery(
+      data: mediaQuery,
+      child: Scaffold(
         backgroundColor: AppColor.whiteColor,
-        automaticallyImplyLeading: false,
-        elevation: 0.0,
-        scrolledUnderElevation: 0.0,
-        centerTitle: true,
-        title: getText(
-            title: StringKey.profile.tr,
-            size: 20,
-            fontFamily: FontFamily.poppinsSemiBold,
-            color: AppColor.textBlackColor,
-            fontWeight: FontWeight.w600),
-        actions: [
-          GestureDetector(
-            onTap: () {
-              openBottomSheetOptions();
-              // Navigator.pop(context);
-            },
-            child: Container(
-              width: 60,
-              alignment: Alignment.center,
-              child: Icon(
-                Icons.more_vert_outlined,
-                color: AppColor.textBlackColor.withOpacity(.5),
-                size: 22,
+        appBar: AppBar(
+          backgroundColor: AppColor.whiteColor,
+          automaticallyImplyLeading: false,
+          elevation: 0.0,
+          scrolledUnderElevation: 0.0,
+          centerTitle: true,
+          title: getText(
+              title: StringKey.profile.tr,
+              size: 20,
+              fontFamily: FontFamily.poppinsSemiBold,
+              color: AppColor.textBlackColor,
+              fontWeight: FontWeight.w600),
+          actions: [
+            GestureDetector(
+              onTap: () {
+                openBottomSheetOptions();
+                // Navigator.pop(context);
+              },
+              child: Container(
+                width: 60,
+                alignment: Alignment.center,
+                child: Icon(
+                  Icons.more_vert_outlined,
+                  color: AppColor.textBlackColor.withOpacity(.5),
+                  size: 22,
+                ),
               ),
             ),
-          ),
-        ],
-      ),
-      body: Consumer<ProfileProvider>(builder: (context, myProvider, child) {
-        return SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 20.58, right: 20, bottom: 45),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                profileImageWidget(),
-                ScreenSize.height(27),
-                getText(
-                    title: StringKey.firstName.tr,
-                    size: 13,
-                    fontFamily: FontFamily.poppinsRegular,
-                    color: AppColor.textBlackColor.withOpacity(.6),
-                    fontWeight: FontWeight.w400),
-                ScreenSize.height(5),
-                CustomTextfield(
-                  controller: myProvider.firstNameController,
-                  hintText: StringKey.enterFirstName.tr,
-                  icon: GestureDetector(
-                    onTap: () {},
-                    child: Icon(
-                      Icons.edit,
-                      color: AppColor.textBlackColor.withOpacity(.3),
-                      size: 20,
+          ],
+        ),
+        body: Consumer<ProfileProvider>(builder: (context, myProvider, child) {
+          return SingleChildScrollView(
+            child: Padding(
+              padding:
+                  const EdgeInsets.only(left: 20.58, right: 20, bottom: 45),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  profileImageWidget(),
+                  ScreenSize.height(27),
+                  getText(
+                      title: StringKey.firstName.tr,
+                      size: 13,
+                      fontFamily: FontFamily.poppinsRegular,
+                      color: AppColor.textBlackColor.withOpacity(.6),
+                      fontWeight: FontWeight.w400),
+                  ScreenSize.height(5),
+                  CustomTextfield(
+                    controller: myProvider.firstNameController,
+                    hintText: StringKey.enterFirstName.tr,
+                    icon: GestureDetector(
+                      onTap: () {},
+                      child: Icon(
+                        Icons.edit,
+                        color: AppColor.textBlackColor.withOpacity(.3),
+                        size: 20,
+                      ),
                     ),
                   ),
-                ),
-                ScreenSize.height(20),
-                getText(
-                    title: StringKey.lastName.tr,
-                    size: 13,
-                    fontFamily: FontFamily.poppinsRegular,
-                    color: AppColor.textBlackColor.withOpacity(.6),
-                    fontWeight: FontWeight.w400),
-                ScreenSize.height(5),
-                CustomTextfield(
-                  controller: myProvider.lastNameController,
-                  hintText: StringKey.enterLastName.tr,
-                  icon: GestureDetector(
-                    onTap: () {},
-                    child: Icon(
-                      Icons.edit,
-                      color: AppColor.textBlackColor.withOpacity(.3),
-                      size: 20,
+                  ScreenSize.height(20),
+                  getText(
+                      title: StringKey.lastName.tr,
+                      size: 13,
+                      fontFamily: FontFamily.poppinsRegular,
+                      color: AppColor.textBlackColor.withOpacity(.6),
+                      fontWeight: FontWeight.w400),
+                  ScreenSize.height(5),
+                  CustomTextfield(
+                    controller: myProvider.lastNameController,
+                    hintText: StringKey.enterLastName.tr,
+                    icon: GestureDetector(
+                      onTap: () {},
+                      child: Icon(
+                        Icons.edit,
+                        color: AppColor.textBlackColor.withOpacity(.3),
+                        size: 20,
+                      ),
                     ),
                   ),
-                ),
-                ScreenSize.height(20),
-                getText(
-                    title: StringKey.email.tr,
-                    size: 13,
-                    fontFamily: FontFamily.poppinsRegular,
-                    color: AppColor.textBlackColor.withOpacity(.6),
-                    fontWeight: FontWeight.w400),
-                ScreenSize.height(5),
-                CustomTextfield(
-                  controller: myProvider.emailController,
-                  hintText: StringKey.enterYourEmail.tr,
-                  icon: GestureDetector(
-                    onTap: () {},
-                    child: Icon(
-                      Icons.edit,
-                      color: AppColor.textBlackColor.withOpacity(.3),
-                      size: 20,
+                  ScreenSize.height(20),
+                  getText(
+                      title: StringKey.email.tr,
+                      size: 13,
+                      fontFamily: FontFamily.poppinsRegular,
+                      color: AppColor.textBlackColor.withOpacity(.6),
+                      fontWeight: FontWeight.w400),
+                  ScreenSize.height(5),
+                  CustomTextfield(
+                    controller: myProvider.emailController,
+                    hintText: StringKey.enterYourEmail.tr,
+                    icon: GestureDetector(
+                      onTap: () {},
+                      child: Icon(
+                        Icons.edit,
+                        color: AppColor.textBlackColor.withOpacity(.3),
+                        size: 20,
+                      ),
                     ),
                   ),
-                ),
-                ScreenSize.height(20),
-                getText(
-                    title: StringKey.phoneNumber.tr,
-                    size: 13,
-                    fontFamily: FontFamily.poppinsRegular,
-                    color: AppColor.textBlackColor.withOpacity(.6),
-                    fontWeight: FontWeight.w400),
-                ScreenSize.height(5),
-                CustomTextfield(
-                  controller: myProvider.phoneController,
-                  hintText: StringKey.enterYourPhonenUmber.tr,
-                  icon: GestureDetector(
-                    onTap: () {},
-                    child: Icon(
-                      Icons.edit,
-                      color: AppColor.textBlackColor.withOpacity(.3),
-                      size: 20,
+                  ScreenSize.height(20),
+                  getText(
+                      title: StringKey.phoneNumber.tr,
+                      size: 13,
+                      fontFamily: FontFamily.poppinsRegular,
+                      color: AppColor.textBlackColor.withOpacity(.6),
+                      fontWeight: FontWeight.w400),
+                  ScreenSize.height(5),
+                  CustomTextfield(
+                    controller: myProvider.phoneController,
+                    hintText: StringKey.enterYourPhonenUmber.tr,
+                    icon: GestureDetector(
+                      onTap: () {},
+                      child: Icon(
+                        Icons.edit,
+                        color: AppColor.textBlackColor.withOpacity(.3),
+                        size: 20,
+                      ),
                     ),
                   ),
-                ),
-                ScreenSize.height(20),
-                getText(
-                    title: StringKey.password.tr,
-                    size: 13,
-                    fontFamily: FontFamily.poppinsRegular,
-                    color: AppColor.textBlackColor.withOpacity(.6),
-                    fontWeight: FontWeight.w400),
-                ScreenSize.height(5),
-                CustomTextfield(
-                  controller: myProvider.passwordController,
-                  hintText: StringKey.enterYourPasword.tr,
-                  isObscureText: myProvider.isVisiblePassword,
-                  icon: GestureDetector(
-                    onTap: () {
-                      if (myProvider.isVisiblePassword) {
-                        myProvider.updateIsVisiblePassword(false);
-                      } else {
-                        myProvider.updateIsVisiblePassword(true);
-                      }
-                    },
-                    child: Icon(
-                      myProvider.isVisiblePassword
-                          ? Icons.visibility_off_outlined
-                          : Icons.visibility_outlined,
-                      color: AppColor.textBlackColor.withOpacity(.3),
-                      size: 20,
+                  ScreenSize.height(20),
+                  getText(
+                      title: StringKey.password.tr,
+                      size: 13,
+                      fontFamily: FontFamily.poppinsRegular,
+                      color: AppColor.textBlackColor.withOpacity(.6),
+                      fontWeight: FontWeight.w400),
+                  ScreenSize.height(5),
+                  CustomTextfield(
+                    controller: myProvider.passwordController,
+                    hintText: StringKey.enterYourPasword.tr,
+                    isObscureText: myProvider.isVisiblePassword,
+                    icon: GestureDetector(
+                      onTap: () {
+                        if (myProvider.isVisiblePassword) {
+                          myProvider.updateIsVisiblePassword(false);
+                        } else {
+                          myProvider.updateIsVisiblePassword(true);
+                        }
+                      },
+                      child: Icon(
+                        myProvider.isVisiblePassword
+                            ? Icons.visibility_off_outlined
+                            : Icons.visibility_outlined,
+                        color: AppColor.textBlackColor.withOpacity(.3),
+                        size: 20,
+                      ),
                     ),
                   ),
-                ),
-                ScreenSize.height(50),
-                Padding(
-                  padding: const EdgeInsets.only(left: 17, right: 17),
-                  child: AppButton(
-                      title: StringKey.saveChanges.tr,
-                      height: 54,
-                      width: double.infinity,
-                      buttonColor: AppColor.appTheme,
-                      onTap: () {}),
-                ),
-              ],
+                  ScreenSize.height(50),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 17, right: 17),
+                    child: AppButton(
+                        title: StringKey.saveChanges.tr,
+                        height: 54,
+                        width: double.infinity,
+                        buttonColor: AppColor.appTheme,
+                        onTap: () {}),
+                  ),
+                ],
+              ),
             ),
-          ),
-        );
-      }),
+          );
+        }),
+      ),
     );
   }
 
@@ -386,21 +391,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
             ),
-            Positioned(
-                right: 0 + 33,
-                top: isLogout
-                    ? MediaQuery.of(context).size.height / 2.8
-                    : MediaQuery.of(context).size.height / 2.9,
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Image.asset(
-                    AppImages.closeIcon,
-                    height: 25,
-                    width: 25,
-                  ),
-                ))
+            // Positioned(
+            //     right: 0 + 33,
+            //     top: isLogout
+            //         ? MediaQuery.of(context).size.height / 2.8
+            //         : MediaQuery.of(context).size.height / 2.9,
+            //     child: GestureDetector(
+            //       onTap: () {
+            //         Navigator.pop(context);
+            //       },
+            //       child: Image.asset(
+            //         AppImages.closeIcon,
+            //         height: 25,
+            //         width: 25,
+            //       ),
+            //     ))
           ],
         );
       },

@@ -9,6 +9,7 @@ import 'package:patient/helper/screensize.dart';
 import 'package:patient/languages/string_key.dart';
 import 'package:patient/providers/auth_provider/email_verification_provider.dart';
 import 'package:patient/screens/auth/change_password_screen.dart';
+import 'package:patient/utils/utils.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
 import 'package:get/get.dart';
@@ -36,79 +37,82 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: appBar(StringKey.emailVerification.tr, false),
-      body: Consumer<EmailVerificationProvider>(
-          builder: (context, myProvider, child) {
-        return Padding(
-          padding: const EdgeInsets.only(left: 37, right: 37, top: 70),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text.rich(
-                TextSpan(
-                  children: <TextSpan>[
-                    TextSpan(
-                        text: StringKey.enterOtpReceivedOnEmail.tr,
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontFamily: FontFamily.poppinsRegular,
-                          color: AppColor.textBlackColor.withOpacity(.7),
-                          fontWeight: FontWeight.w400,
-                        )),
-                    TextSpan(
-                        text: ' williamson@gmail.com',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontFamily: FontFamily.poppinsMedium,
-                          color: AppColor.appTheme,
-                          fontWeight: FontWeight.w400,
-                        )),
-                  ],
+    return MediaQuery(
+      data: mediaQuery,
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        appBar: appBar(StringKey.emailVerification.tr, false),
+        body: Consumer<EmailVerificationProvider>(
+            builder: (context, myProvider, child) {
+          return Padding(
+            padding: const EdgeInsets.only(left: 37, right: 37, top: 70),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text.rich(
+                  TextSpan(
+                    children: <TextSpan>[
+                      TextSpan(
+                          text: StringKey.enterOtpReceivedOnEmail.tr,
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontFamily: FontFamily.poppinsRegular,
+                            color: AppColor.textBlackColor.withOpacity(.7),
+                            fontWeight: FontWeight.w400,
+                          )),
+                      TextSpan(
+                          text: ' williamson@gmail.com',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontFamily: FontFamily.poppinsMedium,
+                            color: AppColor.appTheme,
+                            fontWeight: FontWeight.w400,
+                          )),
+                    ],
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
-              ),
-              ScreenSize.height(70),
-              customOtpTextfield(myProvider),
-              ScreenSize.height(70),
-              AppButton(
-                  title: StringKey.verify.tr,
-                  height: 54,
-                  width: double.infinity,
-                  buttonColor: AppColor.appTheme,
-                  onTap: () {
-                    AppRoutes.pushCupertinoNavigation(
-                        const ChangePasswordScreen());
-                  }),
-              ScreenSize.height(40),
-              Text.rich(
-                TextSpan(
-                  children: <TextSpan>[
-                    TextSpan(
-                        text: StringKey.resendCode.tr,
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontFamily: FontFamily.poppinsSemiBold,
-                          color: AppColor.textBlackColor.withOpacity(.5),
-                          fontWeight: FontWeight.w300,
-                        )),
-                    TextSpan(
-                        text: ' 00:59',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontFamily: FontFamily.poppinsSemiBold,
-                          color: AppColor.appTheme,
-                          fontWeight: FontWeight.w600,
-                        )),
-                  ],
+                ScreenSize.height(70),
+                customOtpTextfield(myProvider),
+                ScreenSize.height(70),
+                AppButton(
+                    title: StringKey.verify.tr,
+                    height: 54,
+                    width: double.infinity,
+                    buttonColor: AppColor.appTheme,
+                    onTap: () {
+                      AppRoutes.pushCupertinoNavigation(
+                          const ChangePasswordScreen());
+                    }),
+                ScreenSize.height(40),
+                Text.rich(
+                  TextSpan(
+                    children: <TextSpan>[
+                      TextSpan(
+                          text: StringKey.resendCode.tr,
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontFamily: FontFamily.poppinsSemiBold,
+                            color: AppColor.textBlackColor.withOpacity(.5),
+                            fontWeight: FontWeight.w300,
+                          )),
+                      TextSpan(
+                          text: ' 00:59',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontFamily: FontFamily.poppinsSemiBold,
+                            color: AppColor.appTheme,
+                            fontWeight: FontWeight.w600,
+                          )),
+                    ],
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ),
-        );
-      }),
+              ],
+            ),
+          );
+        }),
+      ),
     );
   }
 
