@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:patient/api/apiservice.dart';
+import 'package:patient/api/apiurl.dart';
+import 'package:patient/config/approutes.dart';
+import 'package:patient/screens/auth/login_screen.dart';
+import 'package:patient/utils/app_validation.dart';
+import 'package:patient/utils/utils.dart';
 
 class SignupProvider extends ChangeNotifier {
+  bool isLoading = false;
   final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
   final phoneController = TextEditingController();
@@ -11,6 +18,14 @@ class SignupProvider extends ChangeNotifier {
   bool isChecked = false;
   bool isVisiblePassword = false;
   bool isVisibleReEnterPassword = false;
+
+  /// to show the textfield error
+  String? firstNamevalidationMsg = '';
+  String? lastNamevalidationMsg = '';
+  String? emailValidationMsg = '';
+  String? phoneValidationMsg = '';
+  String? passwordValidationMsg = '';
+  String? reEnterPasswordValidationMsg = '';
 
   clearValues() {
     firstNameController.clear();
@@ -37,5 +52,64 @@ class SignupProvider extends ChangeNotifier {
   updateIsChecked(value) {
     isChecked = value;
     notifyListeners();
+  }
+
+  updateLoading(value) {
+    isLoading = value;
+    notifyListeners();
+  }
+
+  checkValidation(String route) {
+    if (firstNamevalidationMsg == null &&
+        lastNamevalidationMsg == null &&
+        phoneValidationMsg == null &&
+        emailValidationMsg == null &&
+        passwordValidationMsg == null &&
+        reEnterPasswordValidationMsg == null) {
+      if (!isChecked) {
+        Utils.errorSnackBar(
+            'Accept terms & condition', navigatorKey.currentContext);
+      } else {
+        callApiFunction(route);
+      }
+    } else {
+      firstNamevalidationMsg =
+          AppValidation.firstNameValidator(firstNameController.text);
+      lastNamevalidationMsg =
+          AppValidation.lastNameValidator(lastNameController.text);
+      phoneValidationMsg =
+          AppValidation.phoneNumberValidator(phoneController.text);
+      emailValidationMsg = AppValidation.emailValidator(emailController.text);
+      passwordValidationMsg = AppValidation.reEnterpasswordValidator(
+          passwordController.text, reEnterPasswordController.text);
+      reEnterPasswordValidationMsg = AppValidation.reEnterpasswordValidator(
+          reEnterPasswordController.text, passwordController.text);
+    }
+    notifyListeners();
+  }
+
+  callApiFunction(String route) {
+    updateLoading(true);
+    var data = {
+      "p_user_name": firstNameController.text,
+      "p_user_surname": lastNameController.text,
+      "p_user_email": emailController.text,
+      "p_user_password": reEnterPasswordController.text,
+      "p_user_mobile": phoneController.text,
+    };
+    String body = Uri(queryParameters: data).query;
+    print(body);
+    ApiService.apiMethod(
+            ApiUrl.signUpUrl, body, checkApiMethod(httpMethod.post), true)
+        .then((value) {
+      updateLoading(false);
+      if (value != null) {
+        Utils.successSnackBar(value['message'], navigatorKey.currentContext!);
+        route == 'fromLoginType'
+            ? AppRoutes.pushCupertinoNavigation(const LoginScreen())
+            : Navigator.pop(navigatorKey.currentContext!);
+        clearValues();
+      }
+    });
   }
 }

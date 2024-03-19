@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:patient/helper/appcolor.dart';
 import 'package:patient/helper/fontfamily.dart';
 import 'package:patient/helper/getText.dart';
@@ -12,6 +13,8 @@ class CustomTextfield extends StatelessWidget {
   final isObscureText;
   final isReadOnly;
   final errorMsg;
+  final List<TextInputFormatter>? inputFormatters;
+  final TextInputType? textInputType;
   final ValueChanged<String>? onChanged;
   const CustomTextfield(
       {super.key,
@@ -20,6 +23,8 @@ class CustomTextfield extends StatelessWidget {
       this.icon,
       this.isObscureText = false,
       this.isReadOnly = false,
+      this.inputFormatters,
+      this.textInputType = TextInputType.name,
       this.errorMsg = '',
       this.onChanged});
 
@@ -43,9 +48,11 @@ class CustomTextfield extends StatelessWidget {
               ]),
           child: TextFormField(
             controller: controller,
+            inputFormatters: inputFormatters,
             readOnly: isReadOnly,
             cursorColor: AppColor.appTheme,
             obscureText: isObscureText,
+            keyboardType: textInputType,
             style: TextStyle(
                 fontSize: 14,
                 color: AppColor.textBlackColor,

@@ -12,7 +12,6 @@ import 'package:patient/languages/string_key.dart';
 import 'package:patient/providers/auth_provider/login_provider.dart';
 import 'package:patient/screens/auth/forgot_password_screen.dart';
 import 'package:patient/screens/auth/signup_screen.dart';
-import 'package:patient/screens/dashboard/dashboard_screen.dart';
 import 'package:patient/utils/app_validation.dart';
 import 'package:patient/utils/utils.dart';
 import 'package:provider/provider.dart';
@@ -62,6 +61,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       fontWeight: FontWeight.w500),
                   ScreenSize.height(5),
                   CustomTextfield(
+                    isReadOnly: myProvider.isLoading,
+
+                    /// if api is calling
                     controller: myProvider.emailController,
                     hintText: StringKey.enterYourEmail.tr,
                     errorMsg: myProvider.emailValidationMsg,
@@ -81,6 +83,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   ScreenSize.height(5),
                   CustomTextfield(
                     controller: myProvider.passwordController,
+                    isReadOnly: myProvider.isLoading,
+
+                    /// if api is calling
                     hintText: StringKey.enterYourPasword.tr,
                     isObscureText: myProvider.isVisiblePassword,
                     errorMsg: myProvider.passwordValidationMsg,
@@ -137,10 +142,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 54,
                       width: double.infinity,
                       buttonColor: AppColor.appTheme,
+                      isLoading: myProvider.isLoading,
                       onTap: () {
-                        // myProvider.checkValidation();
-                        AppRoutes.pushCupertinoNavigation(
-                            const DashboardScreen());
+                        myProvider.isLoading
+                            ? null
+                            : myProvider.checkValidation();
+                        // AppRoutes.pushCupertinoNavigation(
+                        //     const DashboardScreen());
                       }),
                   ScreenSize.height(30),
                   Align(

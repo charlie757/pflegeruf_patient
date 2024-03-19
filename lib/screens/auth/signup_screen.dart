@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:patient/config/approutes.dart';
 import 'package:patient/helper/appBar.dart';
 import 'package:patient/helper/appbutton.dart';
@@ -11,7 +12,7 @@ import 'package:patient/helper/screensize.dart';
 import 'package:patient/languages/string_key.dart';
 import 'package:patient/providers/auth_provider/signup_provider.dart';
 import 'package:patient/screens/auth/login_screen.dart';
-import 'package:patient/screens/dashboard/dashboard_screen.dart';
+import 'package:patient/utils/app_validation.dart';
 import 'package:patient/utils/utils.dart';
 import 'package:provider/provider.dart';
 import 'package:get/get.dart';
@@ -41,13 +42,14 @@ class _SignupScreenState extends State<SignupScreen> {
     return MediaQuery(
       data: mediaQuery,
       child: Scaffold(
+        resizeToAvoidBottomInset: true,
         backgroundColor: AppColor.whiteColor,
         appBar: appBar(StringKey.signup.tr, false),
         body: Consumer<SignupProvider>(builder: (context, myProvider, child) {
           return SingleChildScrollView(
             child: Padding(
                 padding: const EdgeInsets.only(
-                    top: 71, left: 20, right: 20, bottom: 40),
+                    top: 71, left: 20, right: 20, bottom: 80),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -61,6 +63,13 @@ class _SignupScreenState extends State<SignupScreen> {
                     CustomTextfield(
                       controller: myProvider.firstNameController,
                       hintText: StringKey.enterFirstName.tr,
+                      isReadOnly: myProvider.isLoading,
+                      errorMsg: myProvider.firstNamevalidationMsg,
+                      onChanged: (val) {
+                        myProvider.firstNamevalidationMsg =
+                            AppValidation.firstNameValidator(val);
+                        setState(() {});
+                      },
                     ),
                     ScreenSize.height(25),
                     getText(
@@ -73,6 +82,13 @@ class _SignupScreenState extends State<SignupScreen> {
                     CustomTextfield(
                       controller: myProvider.lastNameController,
                       hintText: StringKey.enterLastName.tr,
+                      isReadOnly: myProvider.isLoading,
+                      errorMsg: myProvider.lastNamevalidationMsg,
+                      onChanged: (val) {
+                        myProvider.lastNamevalidationMsg =
+                            AppValidation.lastNameValidator(val);
+                        setState(() {});
+                      },
                     ),
                     ScreenSize.height(25),
                     getText(
@@ -85,6 +101,13 @@ class _SignupScreenState extends State<SignupScreen> {
                     CustomTextfield(
                       controller: myProvider.emailController,
                       hintText: StringKey.enterYourEmail.tr,
+                      isReadOnly: myProvider.isLoading,
+                      errorMsg: myProvider.emailValidationMsg,
+                      onChanged: (val) {
+                        myProvider.emailValidationMsg =
+                            AppValidation.emailValidator(val);
+                        setState(() {});
+                      },
                     ),
                     ScreenSize.height(25),
                     getText(
@@ -97,6 +120,18 @@ class _SignupScreenState extends State<SignupScreen> {
                     CustomTextfield(
                       controller: myProvider.phoneController,
                       hintText: StringKey.enterYourPhonenUmber.tr,
+                      isReadOnly: myProvider.isLoading,
+                      textInputType: TextInputType.phone,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                        LengthLimitingTextInputFormatter(10)
+                      ],
+                      errorMsg: myProvider.phoneValidationMsg,
+                      onChanged: (val) {
+                        myProvider.phoneValidationMsg =
+                            AppValidation.phoneNumberValidator(val);
+                        setState(() {});
+                      },
                     ),
                     ScreenSize.height(25),
                     getText(
@@ -109,7 +144,15 @@ class _SignupScreenState extends State<SignupScreen> {
                     CustomTextfield(
                       controller: myProvider.passwordController,
                       hintText: StringKey.enterYourPasword.tr,
+                      isReadOnly: myProvider.isLoading,
                       isObscureText: myProvider.isVisiblePassword,
+                      errorMsg: myProvider.passwordValidationMsg,
+                      onChanged: (val) {
+                        myProvider.passwordValidationMsg =
+                            AppValidation.reEnterpasswordValidator(
+                                val, myProvider.reEnterPasswordController.text);
+                        setState(() {});
+                      },
                       icon: GestureDetector(
                         onTap: () {
                           if (myProvider.isVisiblePassword) {
@@ -137,7 +180,15 @@ class _SignupScreenState extends State<SignupScreen> {
                     CustomTextfield(
                       controller: myProvider.reEnterPasswordController,
                       hintText: StringKey.reEnterYourPassword.tr,
+                      isReadOnly: myProvider.isLoading,
                       isObscureText: myProvider.isVisibleReEnterPassword,
+                      errorMsg: myProvider.reEnterPasswordValidationMsg,
+                      onChanged: (val) {
+                        myProvider.reEnterPasswordValidationMsg =
+                            AppValidation.reEnterpasswordValidator(
+                                val, myProvider.passwordController.text);
+                        setState(() {});
+                      },
                       icon: GestureDetector(
                         onTap: () {
                           if (myProvider.isVisibleReEnterPassword) {
@@ -176,10 +227,15 @@ class _SignupScreenState extends State<SignupScreen> {
                           title: StringKey.signup.tr,
                           height: 54,
                           width: double.infinity,
+                          isLoading: myProvider.isLoading,
                           buttonColor: AppColor.appTheme,
                           onTap: () {
-                            AppRoutes.pushCupertinoNavigation(
-                                const DashboardScreen());
+                            myProvider.isLoading
+                                ? null
+                                : myProvider.checkValidation(widget.routes);
+                            // myProvider.callApiFunction();
+                            // AppRoutes.pushCupertinoNavigation(
+                            //     const DashboardScreen());
                           }),
                     ),
                     ScreenSize.height(30),

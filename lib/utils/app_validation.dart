@@ -1,6 +1,38 @@
 import 'package:patient/utils/utils.dart';
 
 class AppValidation {
+  static String? firstNameValidator(val) {
+    if (val.isEmpty) {
+      return 'Enter your first name';
+    } else {
+      return null;
+
+      /// should be return "null" value here in else condition
+    }
+  }
+
+  static String? lastNameValidator(val) {
+    if (val.isEmpty) {
+      return 'Enter your last name';
+    } else {
+      return null;
+
+      /// should be return "null" value here in else condition
+    }
+  }
+
+  static String? phoneNumberValidator(val) {
+    if (val.isEmpty) {
+      return 'Enter your phone number';
+    } else if (val.length < 10) {
+      return 'Enter valid phone number';
+    } else {
+      return null;
+
+      /// should be return "null" value here in else condition
+    }
+  }
+
   static String? emailValidator(val) {
     RegExp regExp = RegExp(Utils.emailPattern.trim());
     if (val.isEmpty) {
@@ -20,6 +52,24 @@ class AppValidation {
       return 'Enter your password';
     } else if (!regExp.hasMatch(val)) {
       return 'Password should contain at least one upper case, one lower case, one digit, one Special character';
+    } else {
+      return null;
+
+      /// should be return "null" value here in else condition
+    }
+  }
+
+  static String? reEnterpasswordValidator(currentValue, previousValue) {
+    RegExp regExp = RegExp(Utils.passwordPattern.trim());
+    if (currentValue.isEmpty) {
+      return 'Enter your password';
+    } else if (!regExp.hasMatch(currentValue)) {
+      return 'Password should contain at least one upper case, one lower case, one digit, one Special character';
+    } else if (previousValue.isNotEmpty) {
+      if (currentValue != previousValue) {
+        return 'Password should be same';
+      }
+      return null;
     } else {
       return null;
 

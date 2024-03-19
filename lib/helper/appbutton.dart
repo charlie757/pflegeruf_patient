@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:patient/helper/appcolor.dart';
 import 'package:patient/helper/fontfamily.dart';
 import 'package:patient/helper/getText.dart';
 
@@ -8,6 +9,7 @@ class AppButton extends StatefulWidget {
   final double width;
   final Color buttonColor;
   final Color textColor;
+  final isLoading;
   final Function() onTap;
   const AppButton({
     super.key,
@@ -16,6 +18,7 @@ class AppButton extends StatefulWidget {
     required this.width,
     required this.buttonColor,
     this.textColor = Colors.white,
+    this.isLoading = false,
     required this.onTap,
   });
 
@@ -36,12 +39,21 @@ class _AppButtonState extends State<AppButton> {
         alignment: Alignment.center,
         height: widget.height,
         width: widget.width,
-        child: getText(
-            title: widget.title,
-            size: 16,
-            fontFamily: FontFamily.poppinsSemiBold,
-            color: widget.textColor,
-            fontWeight: FontWeight.w600),
+        child: widget.isLoading
+            ? SizedBox(
+                height: 20,
+                width: 20,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  color: AppColor.whiteColor,
+                ),
+              )
+            : getText(
+                title: widget.title,
+                size: 16,
+                fontFamily: FontFamily.poppinsSemiBold,
+                color: widget.textColor,
+                fontWeight: FontWeight.w600),
       ),
     );
   }

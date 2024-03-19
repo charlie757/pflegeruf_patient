@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:patient/config/approutes.dart';
 import 'package:patient/helper/appBar.dart';
 import 'package:patient/helper/appbutton.dart';
 import 'package:patient/helper/appcolor.dart';
@@ -9,7 +8,7 @@ import 'package:patient/helper/getText.dart';
 import 'package:patient/helper/screensize.dart';
 import 'package:patient/languages/string_key.dart';
 import 'package:patient/providers/auth_provider/forgot_password_provider.dart';
-import 'package:patient/screens/auth/email_verification_screen.dart';
+import 'package:patient/utils/app_validation.dart';
 import 'package:patient/utils/utils.dart';
 import 'package:provider/provider.dart';
 import 'package:get/get.dart';
@@ -64,6 +63,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 CustomTextfield(
                   controller: myProvider.emailController,
                   hintText: StringKey.enterEmailAddress.tr,
+                  errorMsg: myProvider.emailValidationMsg,
+                  isReadOnly: myProvider.isLoading,
+                  onChanged: (val) {
+                    myProvider.emailValidationMsg =
+                        AppValidation.emailValidator(val);
+                    setState(() {});
+                  },
                 ),
                 ScreenSize.height(60),
                 Padding(
@@ -73,9 +79,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       height: 54,
                       width: double.infinity,
                       buttonColor: AppColor.appTheme,
+                      isLoading: myProvider.isLoading,
                       onTap: () {
-                        AppRoutes.pushCupertinoNavigation(
-                            const EmailVerificationScreen());
+                        myProvider.checkValidation();
+                        // AppRoutes.pushCupertinoNavigation(
+                        //     const EmailVerificationScreen());
                       }),
                 )
               ],

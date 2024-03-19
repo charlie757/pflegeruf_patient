@@ -20,7 +20,7 @@ class AppRoutes {
   static pushReplacementNavigation(
     route,
   ) {
-    Navigator.pushReplacement(navigatorKey.currentContext!,
-        CupertinoPageRoute(builder: (context) => route));
+    Navigator.pushAndRemoveUntil(navigatorKey.currentContext!,
+        CupertinoPageRoute(builder: (context) => route), (route) => false);
   }
 }

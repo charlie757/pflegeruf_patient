@@ -15,7 +15,8 @@ import 'package:provider/provider.dart';
 import 'package:get/get.dart';
 
 class EmailVerificationScreen extends StatefulWidget {
-  const EmailVerificationScreen({super.key});
+  final email;
+  const EmailVerificationScreen({this.email});
 
   @override
   State<EmailVerificationScreen> createState() =>
@@ -61,7 +62,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                             fontWeight: FontWeight.w400,
                           )),
                       TextSpan(
-                          text: ' williamson@gmail.com',
+                          text: ' ${widget.email}',
                           style: TextStyle(
                             fontSize: 12,
                             fontFamily: FontFamily.poppinsMedium,
@@ -81,8 +82,9 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                     width: double.infinity,
                     buttonColor: AppColor.appTheme,
                     onTap: () {
-                      AppRoutes.pushCupertinoNavigation(
-                          const ChangePasswordScreen());
+                      myProvider.callApiFunction(widget.email);
+                      // AppRoutes.pushCupertinoNavigation(
+                      //     const ChangePasswordScreen());
                     }),
                 ScreenSize.height(40),
                 Text.rich(
