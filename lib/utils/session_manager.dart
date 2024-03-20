@@ -11,6 +11,12 @@ class SessionManager {
     sharedPrefs = await SharedPreferences.getInstance();
   }
 
+  static bool get firstTimeOpenApp =>
+      sharedPrefs.getBool(Constants.FIRST_TIME_OPEN_APP) ?? false;
+  static set setFirstTimeOpenApp(bool value) {
+    sharedPrefs.setBool(Constants.FIRST_TIME_OPEN_APP, value);
+  }
+
   static bool get keepMySignedIn =>
       sharedPrefs.getBool(Constants.KEEP_ME_SIGNED_IN) ?? false;
   static set setKeepMySignedIn(bool value) {

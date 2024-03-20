@@ -1,6 +1,6 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:patient/config/approutes.dart';
 import 'package:patient/helper/appBar.dart';
 import 'package:patient/helper/appbutton.dart';
 import 'package:patient/helper/appcolor.dart';
@@ -8,7 +8,6 @@ import 'package:patient/helper/fontfamily.dart';
 import 'package:patient/helper/screensize.dart';
 import 'package:patient/languages/string_key.dart';
 import 'package:patient/providers/auth_provider/email_verification_provider.dart';
-import 'package:patient/screens/auth/change_password_screen.dart';
 import 'package:patient/utils/utils.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
@@ -34,6 +33,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
     final myProvider =
         Provider.of<EmailVerificationProvider>(context, listen: false);
     myProvider.clearValues();
+    myProvider.startTimer();
   }
 
   @override
@@ -81,8 +81,11 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                     height: 54,
                     width: double.infinity,
                     buttonColor: AppColor.appTheme,
+                    isLoading: myProvider.isLoading,
                     onTap: () {
-                      myProvider.callApiFunction(widget.email);
+                      myProvider.isLoading
+                          ? null
+                          : myProvider.callApiFunction(widget.email);
                       // AppRoutes.pushCupertinoNavigation(
                       //     const ChangePasswordScreen());
                     }),
@@ -91,6 +94,12 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                   TextSpan(
                     children: <TextSpan>[
                       TextSpan(
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              myProvider.resend
+                                  ? null
+                                  : myProvider.resendApiFunction(widget.email);
+                            },
                           text: StringKey.resendCode.tr,
                           style: TextStyle(
                             fontSize: 12,
@@ -99,7 +108,9 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                             fontWeight: FontWeight.w300,
                           )),
                       TextSpan(
-                          text: ' 00:59',
+                          text: !myProvider.resend
+                              ? " 00:00"
+                              : " 00:${myProvider.counter < 10 ? "0${myProvider.counter}" : myProvider.counter.toString()}",
                           style: TextStyle(
                             fontSize: 14,
                             fontFamily: FontFamily.poppinsSemiBold,

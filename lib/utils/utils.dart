@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:patient/config/approutes.dart';
 import 'package:patient/helper/appcolor.dart';
+import 'package:patient/screens/auth/login_screen.dart';
+import 'package:patient/utils/session_manager.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 MediaQueryData mediaQuery = MediaQuery.of(navigatorKey.currentState!.context)
@@ -35,6 +38,24 @@ class Utils {
         )));
   }
 
+  static internetSnackBar(
+    context,
+  ) {
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        behavior: SnackBarBehavior.floating,
+        duration: const Duration(seconds: 2),
+        shape: OutlineInputBorder(
+            borderSide: BorderSide(color: AppColor.redColor.withOpacity(.8)),
+            borderRadius: BorderRadius.circular(3)),
+        //  margin: EdgeInsets.only(left: 20,right: 20,bottom: bottom),
+        backgroundColor: AppColor.redColor.withOpacity(.8),
+        content: Text(
+          'No Internet',
+          style: TextStyle(color: AppColor.whiteColor),
+        )));
+  }
+
   static errorSnackBar(
     String title,
     context,
@@ -52,5 +73,10 @@ class Utils {
           title,
           style: TextStyle(color: AppColor.whiteColor),
         )));
+  }
+
+  static logOut() {
+    SessionManager.setToken = '';
+    AppRoutes.pushReplacementNavigation(const LoginScreen());
   }
 }

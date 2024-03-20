@@ -16,7 +16,7 @@ class LoginProvider extends ChangeNotifier {
   final passwordController = TextEditingController();
   bool isLoading = false;
   bool isKeepSigned = false;
-  bool isVisiblePassword = false;
+  bool isVisiblePassword = true;
 
   /// to show the textfield error
   String? emailValidationMsg = '';
@@ -26,7 +26,7 @@ class LoginProvider extends ChangeNotifier {
     emailController.clear();
     passwordController.clear();
     isKeepSigned = false;
-    isVisiblePassword = false;
+    isVisiblePassword = true;
   }
 
   updateIsVisiblePassword(value) {
@@ -35,6 +35,7 @@ class LoginProvider extends ChangeNotifier {
   }
 
   updateKeepSigned(value) {
+    /// again update value when click on login button (if user changes the value after select the "keep me signed in")
     isKeepSigned = value;
     SessionManager.setKeepMySignedIn = value;
     SessionManager.setUserEmail = emailController.text;
@@ -74,6 +75,11 @@ class LoginProvider extends ChangeNotifier {
       if (value != null) {
         loginModel = LoginModel.fromJson(value);
         if (loginModel!.data!.accountStatus == 'Active') {
+          if (SessionManager.keepMySignedIn) {
+            updateIsVisiblePassword(true);
+
+            /// update the value
+          }
           SessionManager.setToken = loginModel!.data!.token;
           AppRoutes.pushReplacementNavigation(const DashboardScreen());
         } else {

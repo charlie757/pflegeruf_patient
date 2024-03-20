@@ -232,7 +232,8 @@ class _SignupScreenState extends State<SignupScreen> {
                           onTap: () {
                             myProvider.isLoading
                                 ? null
-                                : myProvider.checkValidation(widget.routes);
+                                : myProvider
+                                    .checkValidation(widget.routes ?? '');
                             // myProvider.callApiFunction();
                             // AppRoutes.pushCupertinoNavigation(
                             //     const DashboardScreen());
@@ -252,7 +253,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             TextSpan(
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
-                                    widget.routes == 'fromLoginType'
+                                    widget.routes == 'fromSignUpType'
                                         ? AppRoutes.pushCupertinoNavigation(
                                             const LoginScreen())
                                         : Navigator.pop(context);

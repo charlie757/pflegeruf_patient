@@ -10,6 +10,7 @@ import 'package:patient/languages/string_key.dart';
 import 'package:patient/screens/auth/login_screen.dart';
 import 'package:patient/screens/auth/signup_screen.dart';
 import 'package:get/get.dart';
+import 'package:patient/utils/session_manager.dart';
 import 'package:patient/utils/utils.dart';
 
 class ChooseLoginTypeScreen extends StatefulWidget {
@@ -55,8 +56,9 @@ class _ChooseLoginTypeScreenState extends State<ChooseLoginTypeScreen> {
                       buttonColor: AppColor.whiteColor,
                       textColor: AppColor.blackColor,
                       onTap: () {
+                        SessionManager.setFirstTimeOpenApp = true;
                         AppRoutes.pushCupertinoNavigation(const SignupScreen(
-                          routes: 'fromLoginType',
+                          routes: 'fromSignUpType',
                         ));
                       }),
                 ),
@@ -70,6 +72,7 @@ class _ChooseLoginTypeScreenState extends State<ChooseLoginTypeScreen> {
                       buttonColor: AppColor.whiteColor,
                       textColor: AppColor.blackColor,
                       onTap: () {
+                        SessionManager.setFirstTimeOpenApp = true;
                         AppRoutes.pushCupertinoNavigation(const LoginScreen(
                           route: 'fromLoginType',
                         ));

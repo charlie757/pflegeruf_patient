@@ -17,6 +17,17 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+  @override
+  void initState() {
+    callInitFunction();
+    super.initState();
+  }
+
+  callInitFunction() {
+    final myProvider = Provider.of<DashboardProvider>(context, listen: false);
+    myProvider.selectedIndex = 0;
+  }
+
   List screenList = [
     const HomeScreen(),
     const BookingsScreen(),
@@ -27,31 +38,40 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return MediaQuery(
       data: mediaQuery,
       child: Consumer<DashboardProvider>(builder: (context, myProvider, child) {
-        return Scaffold(
-          backgroundColor: AppColor.whiteColor,
-          body: screenList[myProvider.selectedIndex],
-          bottomNavigationBar: Container(
-            height: 60,
-            decoration: BoxDecoration(color: AppColor.whiteColor, boxShadow: [
-              BoxShadow(
-                  offset: const Offset(0, 2),
-                  blurRadius: 20,
-                  color: AppColor.shadowColor)
-            ]),
-            padding: const EdgeInsets.only(bottom: 5),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                bottomNavigationItems(AppImages.bottomIcon1, 0, myProvider, () {
-                  myProvider.updateSelectedIndex(0);
-                }),
-                bottomNavigationItems(AppImages.bottomIcon2, 1, myProvider, () {
-                  myProvider.updateSelectedIndex(1);
-                }),
-                bottomNavigationItems(AppImages.bottomIcon3, 2, myProvider, () {
-                  myProvider.updateSelectedIndex(2);
-                }),
-              ],
+        return PopScope(
+          canPop: false,
+          onPopInvoked: (val) {
+            myProvider.onWillPop();
+          },
+          child: Scaffold(
+            backgroundColor: AppColor.whiteColor,
+            body: screenList[myProvider.selectedIndex],
+            bottomNavigationBar: Container(
+              height: 60,
+              decoration: BoxDecoration(color: AppColor.whiteColor, boxShadow: [
+                BoxShadow(
+                    offset: const Offset(0, 2),
+                    blurRadius: 20,
+                    color: AppColor.shadowColor)
+              ]),
+              padding: const EdgeInsets.only(bottom: 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  bottomNavigationItems(AppImages.bottomIcon1, 0, myProvider,
+                      () {
+                    myProvider.updateSelectedIndex(0);
+                  }),
+                  bottomNavigationItems(AppImages.bottomIcon2, 1, myProvider,
+                      () {
+                    myProvider.updateSelectedIndex(1);
+                  }),
+                  bottomNavigationItems(AppImages.bottomIcon3, 2, myProvider,
+                      () {
+                    myProvider.updateSelectedIndex(2);
+                  }),
+                ],
+              ),
             ),
           ),
         );

@@ -258,7 +258,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Navigator.pop(context);
                         },
                         yesTap: () {
-                          Navigator.pop(context);
+                          Utils.logOut();
                         });
                   },
                   child: Container(

@@ -50,7 +50,8 @@ class ApiService {
         }
       } else {}
     } on SocketException catch (_) {
-      print('not connected');
+      Utils.internetSnackBar(navigatorKey.currentContext!);
+      // print('not connected');
     }
   }
 

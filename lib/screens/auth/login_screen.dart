@@ -13,6 +13,7 @@ import 'package:patient/providers/auth_provider/login_provider.dart';
 import 'package:patient/screens/auth/forgot_password_screen.dart';
 import 'package:patient/screens/auth/signup_screen.dart';
 import 'package:patient/utils/app_validation.dart';
+import 'package:patient/utils/session_manager.dart';
 import 'package:patient/utils/utils.dart';
 import 'package:provider/provider.dart';
 import 'package:get/get.dart';
@@ -35,6 +36,11 @@ class _LoginScreenState extends State<LoginScreen> {
   callInitFunction() {
     final myProvider = Provider.of<LoginProvider>(context, listen: false);
     myProvider.clearValues();
+    if (SessionManager.keepMySignedIn) {
+      myProvider.emailController.text = SessionManager.userEmail;
+      myProvider.passwordController.text = SessionManager.userPassword;
+      myProvider.isKeepSigned = SessionManager.keepMySignedIn;
+    }
   }
 
   @override
@@ -164,7 +170,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           TextSpan(
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
-                                  widget.route == 'fromLoginType'
+                                  widget.route == null ||
+                                          widget.route == 'fromLoginType'
                                       ? AppRoutes.pushCupertinoNavigation(
                                           const SignupScreen())
                                       : Navigator.pop(context);

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:patient/languages/languages.dart';
 import 'package:patient/providers/auth_provider/change_password_provider.dart';
@@ -31,6 +32,18 @@ void main() async {
 }
 
 String selectedLanguage = 'en';
+
+void configLoading() {
+  EasyLoading.instance
+    ..displayDuration = const Duration(milliseconds: 2000)
+    ..indicatorType = EasyLoadingIndicatorType.wave
+    ..loadingStyle = EasyLoadingStyle.dark
+    ..indicatorSize = 45.0
+    ..radius = 10.0
+    ..maskColor = Colors.blue.withOpacity(0.5)
+    ..userInteractions = true
+    ..dismissOnTap = false;
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -66,6 +79,7 @@ class MyApp extends StatelessWidget {
         ),
         debugShowCheckedModeBanner: false,
         home: const SplashSCreen(),
+        builder: EasyLoading.init(),
       ),
     );
   }
