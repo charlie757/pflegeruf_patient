@@ -4,6 +4,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:patient/languages/languages.dart';
 import 'package:patient/providers/auth_provider/change_password_provider.dart';
+import 'package:patient/providers/auth_provider/forgot_verification_provider.dart';
 import 'package:patient/providers/auth_provider/update_language_provider.dart';
 import 'package:patient/providers/dashboard_provider/bookings_provider.dart';
 import 'package:patient/providers/dashboard_provider/dashboard_provider.dart';
@@ -58,6 +59,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => SignupProvider()),
         ChangeNotifierProvider(create: (_) => ForgotPasswordProvider()),
         ChangeNotifierProvider(create: (_) => EmailVerificationProvider()),
+        ChangeNotifierProvider(create: (_) => ForgotVerificationProvider()),
         ChangeNotifierProvider(create: (_) => ChangePasswordProvider()),
         ChangeNotifierProvider(create: (_) => DashboardProvider()),
         ChangeNotifierProvider(create: (_) => RequiredQuestionProvider()),
@@ -65,7 +67,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => BookingsProvier()),
         ChangeNotifierProvider(create: (_) => ViewBookingProvider()),
         ChangeNotifierProvider(create: (_) => HomeProvider()),
-        ChangeNotifierProvider(create: (_) => UpdateLanguageProvider())
+        ChangeNotifierProvider(create: (_) => UpdateLanguageProvider()),
       ],
       child: GetMaterialApp(
         navigatorKey: navigatorKey,

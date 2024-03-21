@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:patient/api/apiservice.dart';
 import 'package:patient/api/apiurl.dart';
 import 'package:patient/config/approutes.dart';
-import 'package:patient/screens/auth/login_screen.dart';
+import 'package:patient/screens/auth/email_verification_screen.dart';
 import 'package:patient/utils/app_validation.dart';
 import 'package:patient/utils/utils.dart';
 
@@ -100,15 +100,40 @@ class SignupProvider extends ChangeNotifier {
     String body = Uri(queryParameters: data).query;
     print(body);
     ApiService.apiMethod(
-            ApiUrl.signUpUrl, body, checkApiMethod(httpMethod.post), true)
-        .then((value) {
+      url: ApiUrl.signUpUrl,
+      body: body,
+      method: checkApiMethod(httpMethod.post),
+    ).then((value) {
       updateLoading(false);
       if (value != null) {
         Utils.successSnackBar(value['message'], navigatorKey.currentContext!);
-        route == 'fromLoginType'
-            ? AppRoutes.pushCupertinoNavigation(const LoginScreen())
-            : Navigator.pop(navigatorKey.currentContext!);
+        AppRoutes.pushReplacementNavigation(EmailVerificationScreen(
+          email: emailController.text,
+        ));
+        // route == 'fromLoginType'
+        //     ? AppRoutes.pushCupertinoNavigation(const LoginScreen())
+        //     : Navigator.pop(navigatorKey.currentContext!);
         clearValues();
+      }
+    });
+  }
+
+  emailVerificationApiFunction() {
+    updateLoading(true);
+    Utils.hideTextField();
+    var data = {
+      "username": emailController.text,
+    };
+    String body = Uri(queryParameters: data).query;
+    print(body);
+    ApiService.apiMethod(
+      url: ApiUrl.forgotPasswordUrl,
+      body: body,
+      method: checkApiMethod(httpMethod.post),
+    ).then((value) {
+      updateLoading(false);
+      if (value != null) {
+        Utils.successSnackBar(value['message'], navigatorKey.currentContext!);
       }
     });
   }

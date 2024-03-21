@@ -8,6 +8,12 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 MediaQueryData mediaQuery = MediaQuery.of(navigatorKey.currentState!.context)
     .copyWith(textScaleFactor: 1.0);
 
+extension StringExtension on String {
+  String capitalize() {
+    return "${this[0].toUpperCase()}${substring(1).toLowerCase()}";
+  }
+}
+
 class Utils {
   static hideTextField() {
     FocusManager.instance.primaryFocus?.unfocus();

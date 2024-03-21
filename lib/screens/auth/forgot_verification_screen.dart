@@ -8,22 +8,22 @@ import 'package:patient/helper/fontfamily.dart';
 import 'package:patient/helper/getText.dart';
 import 'package:patient/helper/screensize.dart';
 import 'package:patient/languages/string_key.dart';
-import 'package:patient/providers/auth_provider/email_verification_provider.dart';
+import 'package:patient/providers/auth_provider/forgot_verification_provider.dart';
 import 'package:patient/utils/utils.dart';
 import 'package:provider/provider.dart';
 import 'package:get/get.dart';
 
-class EmailVerificationScreen extends StatefulWidget {
+class ForgotVerificationScreen extends StatefulWidget {
   final email;
   final route;
-  const EmailVerificationScreen({super.key, this.email, this.route});
+  const ForgotVerificationScreen({this.email, this.route});
 
   @override
-  State<EmailVerificationScreen> createState() =>
-      _EmailVerificationScreenState();
+  State<ForgotVerificationScreen> createState() =>
+      _ForgotVerificationScreenState();
 }
 
-class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
+class _ForgotVerificationScreenState extends State<ForgotVerificationScreen> {
   @override
   void initState() {
     callInitFunction();
@@ -32,7 +32,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
 
   callInitFunction() {
     final myProvider =
-        Provider.of<EmailVerificationProvider>(context, listen: false);
+        Provider.of<ForgotVerificationProvider>(context, listen: false);
     myProvider.clearValues();
     myProvider.startTimer();
   }
@@ -43,8 +43,8 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
       data: mediaQuery,
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: appBar(StringKey.emailVerification.tr, false),
-        body: Consumer<EmailVerificationProvider>(
+        appBar: appBar(StringKey.forgotVerification.tr, false),
+        body: Consumer<ForgotVerificationProvider>(
             builder: (context, myProvider, child) {
           return Padding(
             padding: const EdgeInsets.only(left: 37, right: 37, top: 70),
@@ -128,7 +128,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
     );
   }
 
-  customOtpTextfield(EmailVerificationProvider provider) {
+  customOtpTextfield(ForgotVerificationProvider provider) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -265,8 +265,8 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
   roundedTextField(
       {required TextEditingController controller,
       required bool showUnderline,
+      required ForgotVerificationProvider provider,
       required FocusNode focusNode,
-      required EmailVerificationProvider provider,
       required ValueChanged<String>? onChanged,
       required Function() onTap}) {
     return Container(

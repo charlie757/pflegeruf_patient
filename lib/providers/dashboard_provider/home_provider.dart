@@ -1,22 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:patient/api/apiservice.dart';
+import 'package:patient/api/apiurl.dart';
+import 'package:patient/model/home_model.dart';
+import 'package:patient/utils/showcircleprogessdialog.dart';
+import 'package:patient/utils/utils.dart';
 
 class HomeProvider extends ChangeNotifier {
-  List serviceList = [
-    {'img': 'assets/images/bandaged-finger 1.png', 'title': 'Wound care'},
-    {'img': 'assets/images/leg 1.png', 'title': 'Compression stockings'},
-    {'img': 'assets/images/catheter 1.png', 'title': 'Catheter supply'},
-    {'img': 'assets/images/abdominal-pain 1.png', 'title': 'Stoma care'},
-    {'img': 'assets/images/medicine 1.png', 'title': 'Weekly Box'},
-    {'img': 'assets/images/syringe 1.png', 'title': 'Injections'},
-  ];
-  List imgList = [
-    'assets/images/slider1.png',
-    'assets/images/slider2.png',
-    'assets/images/slider1.png',
-  ];
   int currentSliderIndex = 0;
+  HomeModel? homeModel;
   updateSliderIndex(value) {
     currentSliderIndex = value;
     notifyListeners();
+  }
+
+  homeApiFunction() {
+    var data = {'': ''};
+    homeModel != null
+        ? null
+        : showCircleProgressDialog(navigatorKey.currentContext!);
+    String body = Uri(queryParameters: data).query;
+    print(body);
+    ApiService.apiMethod(
+            url: ApiUrl.homeUrl,
+            body: body,
+            method: checkApiMethod(httpMethod.post),
+            isErrorMessageShow: false,
+            isBodyNotRequired: true)
+        .then((value) {
+      homeModel != null ? null : Navigator.pop(navigatorKey.currentContext!);
+      if (value != null) {
+        homeModel = HomeModel.fromJson(value);
+        notifyListeners();
+      }
+    });
   }
 }

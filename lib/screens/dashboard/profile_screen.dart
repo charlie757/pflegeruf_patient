@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:patient/helper/appbutton.dart';
 import 'package:patient/helper/appcolor.dart';
-import 'package:patient/helper/appimages.dart';
 import 'package:patient/helper/customtextfield.dart';
 import 'package:patient/helper/fontfamily.dart';
 import 'package:patient/helper/getText.dart';

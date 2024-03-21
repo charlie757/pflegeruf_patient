@@ -25,7 +25,11 @@ checkApiMethod(type) {
 
 class ApiService {
   static Future apiMethod(
-      String url, var body, String method, bool isErrorMessageShow) async {
+      {required String url,
+      required var body,
+      required String method,
+      bool isErrorMessageShow = true,
+      bool isBodyNotRequired = false}) async {
     try {
       final result = await InternetAddress.lookup('example.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
@@ -34,9 +38,11 @@ class ApiService {
             method,
             Uri.parse(url),
           );
-          request.body = body;
+          if (!isBodyNotRequired) {
+            request.body = body;
+          }
           request.headers['Content-Type'] = 'application/x-www-form-urlencoded';
-          request.headers['x-access-token'] = SessionManager.token;
+          request.headers['Authorization'] = "Bearer ${SessionManager.token}";
           // request.encoding Encoding.getByName('utf-8');
           final client = http.Client();
           final streamedResponse = await client.send(request);

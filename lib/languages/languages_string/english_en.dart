@@ -37,6 +37,7 @@ const englishEN = {
   StringKey.verify: "Verify",
   StringKey.resendCode: "Resend Code In",
   StringKey.emailVerification: "Email Verification",
+  StringKey.forgotVerification: "Forgot Verification",
   StringKey.changePassword: "Change Password",
   StringKey.setNewPassword:
       "Set the new password for your account, so you\ncan login and access all the features",

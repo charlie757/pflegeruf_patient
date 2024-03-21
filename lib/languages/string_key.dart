@@ -32,6 +32,7 @@ class StringKey {
   static const verify = "verify";
   static const resendCode = "resendCode";
   static const emailVerification = "emailVerification";
+  static const forgotVerification = "forgotVerification";
   static const changePassword = "changePassword";
   static const setNewPassword = "setNewPassword";
   static const reenternewPassword = "reenternewPassword";

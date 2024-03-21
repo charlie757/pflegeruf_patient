@@ -4,6 +4,7 @@ import 'package:patient/api/apiservice.dart';
 import 'package:patient/api/apiurl.dart';
 import 'package:patient/config/approutes.dart';
 import 'package:patient/model/login_model.dart';
+import 'package:patient/screens/auth/email_verification_screen.dart';
 import 'package:patient/screens/dashboard/dashboard_screen.dart';
 import 'package:patient/utils/app_validation.dart';
 import 'package:patient/utils/session_manager.dart';
@@ -69,12 +70,14 @@ class LoginProvider extends ChangeNotifier {
     String body = Uri(queryParameters: data).query;
     print(body);
     ApiService.apiMethod(
-            ApiUrl.loginUrl, body, checkApiMethod(httpMethod.post), true)
-        .then((value) {
+      url: ApiUrl.loginUrl,
+      body: body,
+      method: checkApiMethod(httpMethod.post),
+    ).then((value) {
       updateLoading(false);
       if (value != null) {
         loginModel = LoginModel.fromJson(value);
-        if (loginModel!.data!.accountStatus == 'Active') {
+        if (loginModel!.data!.accountStatus == 'True') {
           if (SessionManager.keepMySignedIn) {
             updateIsVisiblePassword(true);
 
@@ -83,6 +86,9 @@ class LoginProvider extends ChangeNotifier {
           SessionManager.setToken = loginModel!.data!.token;
           AppRoutes.pushReplacementNavigation(const DashboardScreen());
         } else {
+          AppRoutes.pushReplacementNavigation(EmailVerificationScreen(
+            email: emailController.text,
+          ));
           Utils.errorSnackBar(loginModel!.message, navigatorKey.currentContext);
         }
       }
