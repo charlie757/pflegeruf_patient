@@ -27,6 +27,7 @@ class ForgotPasswordProvider extends ChangeNotifier {
     } else {
       emailValidationMsg = AppValidation.emailValidator(emailController.text);
     }
+    notifyListeners();
   }
 
   callApiFunction() {

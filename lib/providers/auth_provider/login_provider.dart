@@ -78,13 +78,18 @@ class LoginProvider extends ChangeNotifier {
       if (value != null) {
         loginModel = LoginModel.fromJson(value);
         if (loginModel!.data!.accountStatus == 'True') {
-          if (SessionManager.keepMySignedIn) {
-            updateIsVisiblePassword(true);
+          /// check account type
+          if (loginModel!.data!.userDetails!.userAccountType == 1) {
+            if (SessionManager.keepMySignedIn) {
+              updateIsVisiblePassword(true);
 
-            /// update the value
+              /// update the value
+            }
+            SessionManager.setToken = loginModel!.data!.token;
+            AppRoutes.pushReplacementNavigation(const DashboardScreen());
+          } else {
+            Utils.errorSnackBar('User not found', navigatorKey.currentContext);
           }
-          SessionManager.setToken = loginModel!.data!.token;
-          AppRoutes.pushReplacementNavigation(const DashboardScreen());
         } else {
           AppRoutes.pushReplacementNavigation(EmailVerificationScreen(
             email: emailController.text,
