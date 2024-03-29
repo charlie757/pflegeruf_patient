@@ -12,4 +12,5 @@ class AppImages {
   static const notificationIcon = 'assets/icons/notificationIcon.png';
   static const bellIcon = 'assets/icons/bellIcon.png';
   static const calendarIcon = 'assets/icons/calendar.png';
+  static const noDataIcon = 'assets/icons/nodataicon.png';
 }

@@ -4,6 +4,7 @@ import 'package:patient/api/apiurl.dart';
 import 'package:patient/config/approutes.dart';
 import 'package:patient/screens/auth/email_verification_screen.dart';
 import 'package:patient/utils/app_validation.dart';
+import 'package:patient/utils/session_manager.dart';
 import 'package:patient/utils/utils.dart';
 
 class SignupProvider extends ChangeNotifier {
@@ -106,34 +107,14 @@ class SignupProvider extends ChangeNotifier {
     ).then((value) {
       updateLoading(false);
       if (value != null) {
+        SessionManager.setUserEmail = emailController.text;
+        SessionManager.setuserPassword = passwordController.text;
+
         Utils.successSnackBar(value['message'], navigatorKey.currentContext!);
         AppRoutes.pushReplacementNavigation(EmailVerificationScreen(
           email: emailController.text,
         ));
-        // route == 'fromLoginType'
-        //     ? AppRoutes.pushCupertinoNavigation(const LoginScreen())
-        //     : Navigator.pop(navigatorKey.currentContext!);
         clearValues();
-      }
-    });
-  }
-
-  emailVerificationApiFunction() {
-    updateLoading(true);
-    Utils.hideTextField();
-    var data = {
-      "username": emailController.text,
-    };
-    String body = Uri(queryParameters: data).query;
-    print(body);
-    ApiService.apiMethod(
-      url: ApiUrl.forgotPasswordUrl,
-      body: body,
-      method: checkApiMethod(httpMethod.post),
-    ).then((value) {
-      updateLoading(false);
-      if (value != null) {
-        Utils.successSnackBar(value['message'], navigatorKey.currentContext!);
       }
     });
   }

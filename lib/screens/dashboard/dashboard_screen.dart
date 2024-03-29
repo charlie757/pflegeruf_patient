@@ -3,6 +3,7 @@ import 'package:patient/helper/appcolor.dart';
 import 'package:patient/helper/appimages.dart';
 import 'package:patient/helper/screensize.dart';
 import 'package:patient/providers/dashboard_provider/dashboard_provider.dart';
+import 'package:patient/providers/dashboard_provider/profile_provider.dart';
 import 'package:patient/screens/dashboard/bookings/bookings_screen.dart';
 import 'package:patient/screens/dashboard/home/home_screen.dart';
 import 'package:patient/screens/dashboard/profile_screen.dart';
@@ -26,6 +27,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
   callInitFunction() {
     final myProvider = Provider.of<DashboardProvider>(context, listen: false);
     myProvider.selectedIndex = 0;
+    final profileProvider =
+        Provider.of<ProfileProvider>(context, listen: false);
+    Future.delayed(Duration.zero, () {
+      profileProvider.getProfileApiFunction(true);
+    });
   }
 
   List screenList = [

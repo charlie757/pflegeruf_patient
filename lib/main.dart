@@ -14,6 +14,7 @@ import 'package:patient/providers/auth_provider/login_provider.dart';
 import 'package:patient/providers/dashboard_provider/home_provider.dart';
 import 'package:patient/providers/dashboard_provider/profile_provider.dart';
 import 'package:patient/providers/dashboard_provider/view_booking_provider.dart';
+import 'package:patient/providers/dashboard_provider/view_service_provider.dart';
 import 'package:patient/providers/onboarding_provider.dart';
 import 'package:patient/providers/dashboard_provider/required_question_provider.dart';
 import 'package:patient/providers/auth_provider/signup_provider.dart';
@@ -68,6 +69,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ViewBookingProvider()),
         ChangeNotifierProvider(create: (_) => HomeProvider()),
         ChangeNotifierProvider(create: (_) => UpdateLanguageProvider()),
+        ChangeNotifierProvider(create: (_) => ViewServiceProvider()),
       ],
       child: GetMaterialApp(
         navigatorKey: navigatorKey,

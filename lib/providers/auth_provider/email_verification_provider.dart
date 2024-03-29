@@ -85,12 +85,12 @@ class EmailVerificationProvider extends ChangeNotifier {
     Utils.hideTextField();
     showCircleProgressDialog(navigatorKey.currentContext!);
     var data = {
-      "username": email,
+      "email": email,
     };
     String body = Uri(queryParameters: data).query;
     print(body);
     ApiService.apiMethod(
-      url: ApiUrl.forgotPasswordUrl,
+      url: ApiUrl.signUpResendUrl,
       body: body,
       method: checkApiMethod(httpMethod.post),
     ).then((value) {

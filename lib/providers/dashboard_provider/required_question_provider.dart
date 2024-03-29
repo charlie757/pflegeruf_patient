@@ -1,4 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:patient/api/apiservice.dart';
+import 'package:patient/api/apiurl.dart';
+import 'package:patient/helper/appbutton.dart';
+import 'package:patient/helper/appcolor.dart';
+import 'package:patient/helper/appimages.dart';
+import 'package:patient/helper/fontfamily.dart';
+import 'package:patient/helper/screensize.dart';
+import 'package:patient/languages/string_key.dart';
+import 'package:patient/utils/app_validation.dart';
+import 'package:patient/utils/showcircleprogessdialog.dart';
+import 'package:patient/utils/utils.dart';
+import 'package:get/get.dart';
 
 class RequiredQuestionProvider extends ChangeNotifier {
   final nameController = TextEditingController();
@@ -8,10 +21,25 @@ class RequiredQuestionProvider extends ChangeNotifier {
   final cityController = TextEditingController();
   final insuranceController = TextEditingController();
   final birthDateController = TextEditingController();
-  bool privateInsurance = false;
-  bool nationalInsurance = false;
+  int insuranceType = 0;
+
+  /// to show the textfield error
+  String? namevalidationMsg = '';
+  String? addressValidationMsg = '';
+  String? postalCodeValidationMsg = '';
+  String? streetValidationMsg = '';
+  String? cityValidationMsg = '';
+  String? insuranceNoValidationMsg = '';
+  String? birthDateValidationMsg = '';
 
   clearValues() {
+    namevalidationMsg = '';
+    addressValidationMsg = '';
+    postalCodeValidationMsg = '';
+    streetValidationMsg = '';
+    cityValidationMsg = '';
+    insuranceNoValidationMsg = '';
+    birthDateValidationMsg = '';
     nameController.clear();
     addressController.clear();
     postalCodeController.clear();
@@ -19,17 +47,151 @@ class RequiredQuestionProvider extends ChangeNotifier {
     cityController.clear();
     insuranceController.clear();
     birthDateController.clear();
-    privateInsurance = false;
-    nationalInsurance = false;
+    insuranceType = 0;
   }
 
-  updatePrivateInsurance(value) {
-    privateInsurance = value;
+  updateInsurance(value) {
+    insuranceType = value;
     notifyListeners();
   }
 
-  updateNiationalInsurance(value) {
-    nationalInsurance = value;
+  checkValidation(String id, String title) {
+    if (namevalidationMsg == null &&
+        addressValidationMsg == null &&
+        postalCodeValidationMsg == null &&
+        streetValidationMsg == null &&
+        cityValidationMsg == null &&
+        insuranceNoValidationMsg == null &&
+        birthDateValidationMsg == null) {
+      if (insuranceType == 0) {
+        EasyLoading.showToast('Select insurance type');
+      } else {
+        callApiFunction(id, title);
+      }
+    } else {
+      namevalidationMsg = AppValidation.nameValidator(nameController.text);
+      addressValidationMsg =
+          AppValidation.addressValidator(addressController.text);
+      postalCodeValidationMsg =
+          AppValidation.postalCodeValidator(postalCodeController.text);
+      streetValidationMsg =
+          AppValidation.streetValidator(streetController.text);
+      cityValidationMsg = AppValidation.cityValidator(cityController.text);
+      insuranceNoValidationMsg =
+          AppValidation.insuranceNoValidator(insuranceController.text);
+      birthDateValidationMsg =
+          AppValidation.birthDateValidator(birthDateController.text);
+    }
     notifyListeners();
+  }
+
+  callApiFunction(String id, String title) {
+    showCircleProgressDialog(navigatorKey.currentContext!);
+    var data = {
+      'title': title,
+      'service': id,
+      'name': nameController.text,
+      'address': addressController.text,
+      'street': streetController.text,
+      'postal_code': postalCodeController.text,
+      'city': cityController.text,
+      'insurance_type': insuranceType == 1 ? 'Private' : 'National',
+      'insurance_number': insuranceController.text.toString(),
+      'dob': birthDateController.text
+    };
+    print(data);
+    String body = Uri(queryParameters: data).query;
+    ApiService.apiMethod(
+      url: ApiUrl.nurseBookingUrl,
+      body: body,
+      method: checkApiMethod(httpMethod.post),
+      // isErrorMessageShow: false,
+    ).then((value) {
+      Navigator.pop(navigatorKey.currentContext!);
+      if (value != null) {
+        if (value['status'] == 'success') {
+          successDialogBox(navigatorKey.currentContext!);
+        }
+        notifyListeners();
+      }
+    });
+  }
+
+  void successDialogBox(BuildContext context) {
+    showGeneralDialog(
+      context: context,
+      barrierLabel: "Barrier",
+      barrierDismissible: false,
+      barrierColor: Colors.black.withOpacity(0.5),
+      transitionDuration: const Duration(milliseconds: 400),
+      pageBuilder: (_, __, ___) {
+        return PopScope(
+          canPop: false,
+          child: Center(
+            child: Container(
+              // height: 394,
+              margin: const EdgeInsets.symmetric(horizontal: 20),
+              decoration: BoxDecoration(
+                  color: Colors.white, borderRadius: BorderRadius.circular(20)),
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    top: 35, left: 20, right: 20, bottom: 33),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Image.asset(
+                      AppImages.checkImage,
+                      height: 90,
+                      width: 90,
+                    ),
+                    ScreenSize.height(42),
+                    Text(
+                      StringKey.requestSentSuccessfully.tr,
+                      style: TextStyle(
+                          decoration: TextDecoration.none,
+                          fontSize: 14,
+                          fontFamily: FontFamily.poppinsSemiBold,
+                          color: AppColor.textBlackColor,
+                          fontWeight: FontWeight.w600),
+                      textAlign: TextAlign.center,
+                    ),
+                    ScreenSize.height(47),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 7, right: 7),
+                      child: AppButton(
+                          title: StringKey.backToHome.tr,
+                          height: 50,
+                          width: double.infinity,
+                          buttonColor: AppColor.appTheme,
+                          onTap: () {
+                            Navigator.pop(context);
+                            Navigator.pop(context);
+                            Navigator.pop(context);
+                          }),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+      transitionBuilder: (_, anim, __, child) {
+        Tween<Offset> tween;
+        if (anim.status == AnimationStatus.reverse) {
+          tween = Tween(begin: const Offset(0, 1), end: Offset.zero);
+        } else {
+          tween = Tween(begin: const Offset(0, 1), end: Offset.zero);
+        }
+
+        return SlideTransition(
+          position: tween.animate(anim),
+          child: FadeTransition(
+            opacity: anim,
+            child: child,
+          ),
+        );
+      },
+    );
   }
 }

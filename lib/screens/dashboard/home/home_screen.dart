@@ -5,11 +5,14 @@ import 'package:patient/helper/appcolor.dart';
 import 'package:patient/helper/appimages.dart';
 import 'package:patient/helper/fontfamily.dart';
 import 'package:patient/helper/getText.dart';
+import 'package:patient/helper/network_image_helper.dart';
 import 'package:patient/helper/screensize.dart';
 import 'package:patient/languages/string_key.dart';
 import 'package:patient/providers/dashboard_provider/home_provider.dart';
+import 'package:patient/providers/dashboard_provider/profile_provider.dart';
 import 'package:patient/screens/dashboard/home/notification_screen.dart';
 import 'package:patient/screens/dashboard/home/view_service_screen.dart';
+import 'package:patient/utils/no_data.dart';
 import 'package:patient/utils/utils.dart';
 import 'package:provider/provider.dart';
 import 'package:get/get.dart';
@@ -37,71 +40,58 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final profileProvider = Provider.of<ProfileProvider>(context);
+
     return MediaQuery(
       data: mediaQuery,
-      child: Scaffold(
-        body: Consumer<HomeProvider>(builder: (context, myProvider, child) {
-          return SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 40),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+      child:
+          Consumer<HomeProvider>(builder: (context, myProvider, childcontext) {
+        return Scaffold(
+          appBar: AppBar(
+            backgroundColor: AppColor.appTheme,
+            scrolledUnderElevation: 0.0,
+            title: Padding(
+              padding: const EdgeInsets.only(left: 0, right: 0),
+              child: Row(
                 children: [
-                  headerWidget(myProvider),
-                  ScreenSize.height(40),
-                  serviceWidget(myProvider)
+                  myProvider.homeModel != null &&
+                          myProvider.homeModel!.data != null &&
+                          myProvider.homeModel!.data!.userDetails != null
+                      ? ClipRRect(
+                          borderRadius: BorderRadius.circular(100),
+                          child: NetworkImageHelper(
+                            img: myProvider.homeModel!.data!.userDetails!
+                                        .pUserPhoto ==
+                                    null
+                                ? "${myProvider.homeModel!.data!.profilePath}${myProvider.homeModel!.data!.userDetails!.displayProfileImage}"
+                                : "${myProvider.homeModel!.data!.profilePath}${myProvider.homeModel!.data!.userDetails!.pUserPhoto}",
+                            height: 40.0,
+                            width: 40.0,
+                            isAnotherColorOfLodingIndicator: true,
+                          ))
+                      : Image.asset(
+                          'assets/images/dummyProfile.png',
+                          height: 40,
+                          width: 40,
+                          fit: BoxFit.cover,
+                        ),
+                  ScreenSize.width(10),
+                  Flexible(
+                    child: getText(
+                        title:
+                            '${StringKey.welcome.tr}, ${myProvider.homeModel != null && myProvider.homeModel!.data != null && myProvider.homeModel!.data!.userDetails != null ? (myProvider.homeModel!.data!.userDetails!.firstName.toString().substring(0).toUpperCase()[0] + myProvider.homeModel!.data!.userDetails!.firstName.toString().substring(1)) : ''}',
+                        size: 16,
+                        fontFamily: FontFamily.poppinsSemiBold,
+                        color: AppColor.whiteColor,
+                        fontWeight: FontWeight.w600),
+                  ),
                 ],
               ),
             ),
-          );
-        }),
-      ),
-    );
-  }
-
-  headerWidget(HomeProvider provider) {
-    return Container(
-      decoration: BoxDecoration(
-          color: AppColor.appTheme,
-          borderRadius: const BorderRadius.only(
-              bottomLeft: Radius.circular(30),
-              bottomRight: Radius.circular(30))),
-      padding: const EdgeInsets.only(top: 55, bottom: 33),
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20),
-            child: Row(
-              children: [
-                provider.homeModel != null &&
-                        provider.homeModel!.data != null &&
-                        provider.homeModel!.data!.userDetails != null
-                    ? ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: Image.network(
-                          provider.homeModel!.data!.userDetails!.pUserPhoto ==
-                                  null
-                              ? "${provider.homeModel!.data!.profilePath}${provider.homeModel!.data!.userDetails!.displayProfileImage}"
-                              : "${provider.homeModel!.data!.profilePath}${provider.homeModel!.data!.userDetails!.pUserPhoto}",
-                          height: 40,
-                          width: 40,
-                        ),
-                      )
-                    : Image.asset(
-                        'assets/images/dummyProfile.png',
-                        height: 40,
-                        width: 40,
-                      ),
-                ScreenSize.width(10),
-                getText(
-                    title:
-                        '${StringKey.welcome.tr}, ${provider.homeModel != null && provider.homeModel!.data != null && provider.homeModel!.data!.userDetails != null ? (provider.homeModel!.data!.userDetails!.firstName.toString().substring(0).toUpperCase()[0] + provider.homeModel!.data!.userDetails!.firstName.toString().substring(1)) : ''}',
-                    size: 16,
-                    fontFamily: FontFamily.poppinsSemiBold,
-                    color: AppColor.whiteColor,
-                    fontWeight: FontWeight.w600),
-                const Spacer(),
-                GestureDetector(
+            actions: [
+              Padding(
+                padding: const EdgeInsets.only(right: 20),
+                child: GestureDetector(
                   onTap: () {
                     AppRoutes.pushCupertinoNavigation(
                         const NotificationScreen());
@@ -140,15 +130,42 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                   ),
-                )
-              ],
+                ),
+              )
+            ],
+          ),
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 40),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  headerWidget(myProvider),
+                  ScreenSize.height(40),
+                  serviceWidget(myProvider)
+                ],
+              ),
             ),
           ),
-          ScreenSize.height(48),
-          provider.homeModel != null &&
-                  provider.homeModel!.data != null &&
-                  provider.homeModel!.data!.banners!.isNotEmpty
-              ? SizedBox(
+        );
+      }),
+    );
+  }
+
+  headerWidget(HomeProvider provider) {
+    return provider.homeModel != null &&
+            provider.homeModel!.data != null &&
+            provider.homeModel!.data!.banners!.isNotEmpty
+        ? Container(
+            decoration: BoxDecoration(
+                color: AppColor.appTheme,
+                borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(30),
+                    bottomRight: Radius.circular(30))),
+            padding: const EdgeInsets.only(top: 18, bottom: 35),
+            child: Column(
+              children: [
+                SizedBox(
                   height: 168,
                   // color: Colors.red,
                   child: CarouselSlider.builder(
@@ -160,12 +177,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           right: 15,
                         ),
                         child: ClipRRect(
-                          borderRadius: BorderRadius.circular(15),
-                          child: Image.network(
-                            "${provider.homeModel!.data!.bannerPath}${provider.homeModel!.data!.banners![itemIndex].bannerImage}",
-                            fit: BoxFit.fill,
-                          ),
-                        ),
+                            borderRadius: BorderRadius.circular(15),
+                            child: NetworkImageHelper(
+                              img:
+                                  "${provider.homeModel!.data!.bannerPath}${provider.homeModel!.data!.banners![itemIndex].bannerImage}",
+                              height: 168.0,
+                              width: double.infinity,
+                              isAnotherColorOfLodingIndicator: true,
+                            )),
                       );
                     },
                     options: CarouselOptions(
@@ -184,24 +203,20 @@ class _HomeScreenState extends State<HomeScreen> {
                           provider.updateSliderIndex(val);
                         }),
                   ),
-                )
-              : const SizedBox.shrink(),
-          ScreenSize.height(20),
-          provider.homeModel != null &&
-                  provider.homeModel!.data != null &&
-                  provider.homeModel!.data!.banners!.isNotEmpty
-              ? Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: List.generate(
-                      provider.homeModel!.data!.banners!.length, (index) {
-                    return provider.currentSliderIndex == index
-                        ? indicator(true)
-                        : indicator(false);
-                  }))
-              : const SizedBox.shrink(),
-        ],
-      ),
-    );
+                ),
+                ScreenSize.height(20),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(
+                        provider.homeModel!.data!.banners!.length, (index) {
+                      return provider.currentSliderIndex == index
+                          ? indicator(true)
+                          : indicator(false);
+                    }))
+              ],
+            ),
+          )
+        : Container();
   }
 
   serviceWidget(HomeProvider provider) {
@@ -235,30 +250,33 @@ class _HomeScreenState extends State<HomeScreen> {
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () {
-                      AppRoutes.pushCupertinoNavigation(
-                          const ViewServiceScreen());
+                      AppRoutes.pushCupertinoNavigation(ViewServiceScreen(
+                        id: provider
+                            .homeModel!.data!.category![index].categoryId
+                            .toString(),
+                      ));
                     },
                     child: Column(
                       children: [
                         Container(
-                          height: 90,
-                          width: 90,
-                          decoration: BoxDecoration(
-                              color: AppColor.whiteColor,
-                              borderRadius: BorderRadius.circular(10),
-                              boxShadow: [
-                                BoxShadow(
-                                    offset: const Offset(0, 2),
-                                    color: AppColor.shadowColor,
-                                    blurRadius: 10)
-                              ]),
-                          alignment: Alignment.center,
-                          child: Image.network(
-                            "${provider.homeModel!.data!.categoryPath}${provider.homeModel!.data!.category![index].categoryImage}",
-                            height: 40,
-                            width: 40,
-                          ),
-                        ),
+                            height: 90,
+                            width: 90,
+                            decoration: BoxDecoration(
+                                color: AppColor.whiteColor,
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(
+                                      offset: const Offset(0, 2),
+                                      color: AppColor.shadowColor,
+                                      blurRadius: 10)
+                                ]),
+                            alignment: Alignment.center,
+                            child: NetworkImageHelper(
+                              img:
+                                  "${provider.homeModel!.data!.categoryPath}${provider.homeModel!.data!.category![index].categoryImage}",
+                              height: 40.0,
+                              width: 40.0,
+                            )),
                         ScreenSize.height(8),
                         Text(
                           provider

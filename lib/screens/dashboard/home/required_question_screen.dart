@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:patient/helper/appBar.dart';
 import 'package:patient/helper/appbutton.dart';
 import 'package:patient/helper/appcolor.dart';
@@ -9,12 +10,15 @@ import 'package:patient/helper/getText.dart';
 import 'package:patient/helper/screensize.dart';
 import 'package:patient/languages/string_key.dart';
 import 'package:patient/providers/dashboard_provider/required_question_provider.dart';
+import 'package:patient/utils/app_validation.dart';
 import 'package:patient/utils/utils.dart';
 import 'package:provider/provider.dart';
 import 'package:get/get.dart';
 
 class RequiredQuestionScreen extends StatefulWidget {
-  const RequiredQuestionScreen({super.key});
+  final id;
+  final title;
+  const RequiredQuestionScreen({super.key, this.id, this.title});
 
   @override
   State<RequiredQuestionScreen> createState() => _RequiredQuestionScreenState();
@@ -38,6 +42,7 @@ class _RequiredQuestionScreenState extends State<RequiredQuestionScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.title);
     return MediaQuery(
       data: mediaQuery,
       child: Scaffold(
@@ -62,6 +67,12 @@ class _RequiredQuestionScreenState extends State<RequiredQuestionScreen> {
                   CustomTextfield(
                     controller: myProvider.nameController,
                     hintText: StringKey.enterYourName.tr,
+                    errorMsg: myProvider.namevalidationMsg,
+                    onChanged: (val) {
+                      myProvider.namevalidationMsg =
+                          AppValidation.nameValidator(val);
+                      setState(() {});
+                    },
                   ),
                   ScreenSize.height(20),
                   getText(
@@ -74,6 +85,12 @@ class _RequiredQuestionScreenState extends State<RequiredQuestionScreen> {
                   CustomTextfield(
                     controller: myProvider.addressController,
                     hintText: StringKey.enterYourAddress.tr,
+                    errorMsg: myProvider.addressValidationMsg,
+                    onChanged: (val) {
+                      myProvider.addressValidationMsg =
+                          AppValidation.addressValidator(val);
+                      setState(() {});
+                    },
                   ),
                   ScreenSize.height(20),
                   getText(
@@ -86,6 +103,17 @@ class _RequiredQuestionScreenState extends State<RequiredQuestionScreen> {
                   CustomTextfield(
                     controller: myProvider.postalCodeController,
                     hintText: StringKey.enterYourPostalCode.tr,
+                    textInputType: TextInputType.number,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly,
+                      LengthLimitingTextInputFormatter(6)
+                    ],
+                    errorMsg: myProvider.postalCodeValidationMsg,
+                    onChanged: (val) {
+                      myProvider.postalCodeValidationMsg =
+                          AppValidation.postalCodeValidator(val);
+                      setState(() {});
+                    },
                   ),
                   ScreenSize.height(20),
                   getText(
@@ -98,6 +126,12 @@ class _RequiredQuestionScreenState extends State<RequiredQuestionScreen> {
                   CustomTextfield(
                     controller: myProvider.streetController,
                     hintText: StringKey.enterYourStreet.tr,
+                    errorMsg: myProvider.streetValidationMsg,
+                    onChanged: (val) {
+                      myProvider.streetValidationMsg =
+                          AppValidation.streetValidator(val);
+                      setState(() {});
+                    },
                   ),
                   ScreenSize.height(20),
                   getText(
@@ -110,6 +144,12 @@ class _RequiredQuestionScreenState extends State<RequiredQuestionScreen> {
                   CustomTextfield(
                     controller: myProvider.cityController,
                     hintText: StringKey.enterYourCity.tr,
+                    errorMsg: myProvider.cityValidationMsg,
+                    onChanged: (val) {
+                      myProvider.cityValidationMsg =
+                          AppValidation.cityValidator(val);
+                      setState(() {});
+                    },
                   ),
                   ScreenSize.height(20),
                   getText(
@@ -127,17 +167,15 @@ class _RequiredQuestionScreenState extends State<RequiredQuestionScreen> {
                         Row(
                           children: [
                             customCheckBox(
-                                borderColor: myProvider.privateInsurance
+                                borderColor: myProvider.insuranceType == 1
                                     ? AppColor.appTheme
                                     : AppColor.textBlackColor.withOpacity(.3),
-                                backgroundColor: myProvider.privateInsurance
+                                backgroundColor: myProvider.insuranceType == 1
                                     ? AppColor.appTheme
                                     : AppColor.whiteColor,
                                 onTap: () {
-                                  if (myProvider.privateInsurance) {
-                                    myProvider.updatePrivateInsurance(false);
-                                  } else {
-                                    myProvider.updatePrivateInsurance(true);
+                                  if (myProvider.insuranceType != 1) {
+                                    myProvider.updateInsurance(1);
                                   }
                                 }),
                             ScreenSize.width(15),
@@ -152,17 +190,15 @@ class _RequiredQuestionScreenState extends State<RequiredQuestionScreen> {
                         Row(
                           children: [
                             customCheckBox(
-                                borderColor: myProvider.nationalInsurance
+                                borderColor: myProvider.insuranceType == 2
                                     ? AppColor.appTheme
                                     : AppColor.textBlackColor.withOpacity(.3),
-                                backgroundColor: myProvider.nationalInsurance
+                                backgroundColor: myProvider.insuranceType == 2
                                     ? AppColor.appTheme
                                     : AppColor.whiteColor,
                                 onTap: () {
-                                  if (myProvider.nationalInsurance) {
-                                    myProvider.updateNiationalInsurance(false);
-                                  } else {
-                                    myProvider.updateNiationalInsurance(true);
+                                  if (myProvider.insuranceType != 2) {
+                                    myProvider.updateInsurance(2);
                                   }
                                 }),
                             ScreenSize.width(15),
@@ -188,6 +224,14 @@ class _RequiredQuestionScreenState extends State<RequiredQuestionScreen> {
                   CustomTextfield(
                     controller: myProvider.insuranceController,
                     hintText: StringKey.enterYourInsuranceNo.tr,
+                    errorMsg: myProvider.insuranceNoValidationMsg,
+                    textInputType: TextInputType.number,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    onChanged: (val) {
+                      myProvider.insuranceNoValidationMsg =
+                          AppValidation.insuranceNoValidator(val);
+                      setState(() {});
+                    },
                   ),
                   ScreenSize.height(20),
                   getText(
@@ -201,6 +245,12 @@ class _RequiredQuestionScreenState extends State<RequiredQuestionScreen> {
                     controller: myProvider.birthDateController,
                     hintText: StringKey.enterYourBirthDate.tr,
                     isReadOnly: true,
+                    errorMsg: myProvider.birthDateValidationMsg,
+                    onChanged: (val) {
+                      myProvider.birthDateValidationMsg =
+                          AppValidation.birthDateValidator(val);
+                      setState(() {});
+                    },
                     icon: GestureDetector(
                       onTap: () {
                         birthdayPicker(myProvider);
@@ -225,7 +275,8 @@ class _RequiredQuestionScreenState extends State<RequiredQuestionScreen> {
                         width: double.infinity,
                         buttonColor: AppColor.appTheme,
                         onTap: () {
-                          successDialogBox(context);
+                          myProvider.checkValidation(
+                              widget.id.toString(), widget.title);
                         }),
                   )
                 ],
@@ -295,80 +346,5 @@ class _RequiredQuestionScreenState extends State<RequiredQuestionScreen> {
         provider.birthDateController.text = "${selectedDate.year}-$month-$day";
       });
     }
-  }
-
-  void successDialogBox(BuildContext context) {
-    showGeneralDialog(
-      context: context,
-      barrierLabel: "Barrier",
-      barrierDismissible: true,
-      barrierColor: Colors.black.withOpacity(0.5),
-      transitionDuration: const Duration(milliseconds: 400),
-      pageBuilder: (_, __, ___) {
-        return Center(
-          child: Container(
-            // height: 394,
-            margin: const EdgeInsets.symmetric(horizontal: 20),
-            decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(20)),
-            child: Padding(
-              padding: const EdgeInsets.only(
-                  top: 35, left: 20, right: 20, bottom: 33),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Image.asset(
-                    AppImages.checkImage,
-                    height: 90,
-                    width: 90,
-                  ),
-                  ScreenSize.height(42),
-                  Text(
-                    StringKey.requestSentSuccessfully.tr,
-                    style: TextStyle(
-                        decoration: TextDecoration.none,
-                        fontSize: 14,
-                        fontFamily: FontFamily.poppinsSemiBold,
-                        color: AppColor.textBlackColor,
-                        fontWeight: FontWeight.w600),
-                    textAlign: TextAlign.center,
-                  ),
-                  ScreenSize.height(47),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 7, right: 7),
-                    child: AppButton(
-                        title: StringKey.backToHome.tr,
-                        height: 50,
-                        width: double.infinity,
-                        buttonColor: AppColor.appTheme,
-                        onTap: () {
-                          Navigator.pop(context);
-                          Navigator.pop(context);
-                          Navigator.pop(context);
-                        }),
-                  )
-                ],
-              ),
-            ),
-          ),
-        );
-      },
-      transitionBuilder: (_, anim, __, child) {
-        Tween<Offset> tween;
-        if (anim.status == AnimationStatus.reverse) {
-          tween = Tween(begin: const Offset(0, 1), end: Offset.zero);
-        } else {
-          tween = Tween(begin: const Offset(0, 1), end: Offset.zero);
-        }
-
-        return SlideTransition(
-          position: tween.animate(anim),
-          child: FadeTransition(
-            opacity: anim,
-            child: child,
-          ),
-        );
-      },
-    );
   }
 }

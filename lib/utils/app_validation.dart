@@ -76,4 +76,64 @@ class AppValidation {
       /// should be return "null" value here in else condition
     }
   }
+
+  static String? nameValidator(val) {
+    if (val.isEmpty) {
+      return 'Enter your name';
+    } else {
+      return null;
+
+      /// should be return "null" value here in else condition
+    }
+  }
+
+  static String? addressValidator(val) {
+    if (val.isEmpty) {
+      return 'Enter your address';
+    } else {
+      return null;
+    }
+  }
+
+  static String? postalCodeValidator(val) {
+    if (val.isEmpty) {
+      return 'Enter your postal code';
+    } else if (val.length < 6) {
+      return 'Enter valid postal code';
+    } else {
+      return null;
+    }
+  }
+
+  static String? streetValidator(val) {
+    if (val.isEmpty) {
+      return 'Enter your street';
+    } else {
+      return null;
+    }
+  }
+
+  static String? cityValidator(val) {
+    if (val.isEmpty) {
+      return 'Enter your city';
+    } else {
+      return null;
+    }
+  }
+
+  static String? insuranceNoValidator(val) {
+    if (val.isEmpty) {
+      return 'Enter your insurance no';
+    } else {
+      return null;
+    }
+  }
+
+  static String? birthDateValidator(val) {
+    if (val.isEmpty) {
+      return 'Select your birth date';
+    } else {
+      return null;
+    }
+  }
 }

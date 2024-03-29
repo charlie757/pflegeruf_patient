@@ -85,4 +85,12 @@ class Utils {
     SessionManager.setToken = '';
     AppRoutes.pushReplacementNavigation(const LoginScreen());
   }
+
+  static deleteAcount() {
+    SessionManager.setToken = '';
+    SessionManager.setKeepMySignedIn = false;
+    SessionManager.setUserEmail = '';
+    SessionManager.setuserPassword = '';
+    AppRoutes.pushReplacementNavigation(const LoginScreen());
+  }
 }

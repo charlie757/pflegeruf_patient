@@ -39,8 +39,6 @@ class LoginProvider extends ChangeNotifier {
     /// again update value when click on login button (if user changes the value after select the "keep me signed in")
     isKeepSigned = value;
     SessionManager.setKeepMySignedIn = value;
-    SessionManager.setUserEmail = emailController.text;
-    SessionManager.setuserPassword = passwordController.text;
     notifyListeners();
   }
 
@@ -61,6 +59,9 @@ class LoginProvider extends ChangeNotifier {
   }
 
   callApiFunction() {
+    /// set the values
+    SessionManager.setUserEmail = emailController.text;
+    SessionManager.setuserPassword = passwordController.text;
     updateLoading(true);
     var data = {
       "username": emailController.text,
@@ -77,7 +78,7 @@ class LoginProvider extends ChangeNotifier {
       updateLoading(false);
       if (value != null) {
         loginModel = LoginModel.fromJson(value);
-        if (loginModel!.data!.accountStatus == 'True') {
+        if (loginModel!.data!.status == true) {
           /// check account type
           if (loginModel!.data!.userDetails!.userAccountType == 1) {
             if (SessionManager.keepMySignedIn) {
@@ -91,7 +92,7 @@ class LoginProvider extends ChangeNotifier {
             Utils.errorSnackBar('User not found', navigatorKey.currentContext);
           }
         } else {
-          AppRoutes.pushReplacementNavigation(EmailVerificationScreen(
+          AppRoutes.pushCupertinoNavigation(EmailVerificationScreen(
             email: emailController.text,
           ));
           Utils.errorSnackBar(loginModel!.message, navigatorKey.currentContext);

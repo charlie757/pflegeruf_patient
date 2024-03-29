@@ -97,4 +97,5 @@ class StringKey {
   static const serviceForYou = "serviceForYou";
   static const continueTitle = "continueTitle";
   static const description = "description";
+  static const noData = "noData";
 }
