@@ -120,11 +120,12 @@ class ProfileProvider extends ChangeNotifier {
       url: ApiUrl.profileUpdateUrl,
       body: body,
       method: checkApiMethod(httpMethod.post),
-      isErrorMessageShow: false,
+      isErrorMessageShow: true,
     ).then((value) {
       Navigator.pop(navigatorKey.currentContext!);
-      getProfileApiFunction(false);
       if (value != null) {
+        getProfileApiFunction(false);
+        Utils.successSnackBar(value['message'], navigatorKey.currentContext!);
         notifyListeners();
       }
     });
@@ -168,9 +169,9 @@ class ProfileProvider extends ChangeNotifier {
       Navigator.pop(navigatorKey.currentContext!);
       var dataAll = json.decode(vb.body);
       Utils.successSnackBar(dataAll['message'], navigatorKey.currentContext!);
+      getProfileApiFunction(true);
     } else {
       Navigator.pop(navigatorKey.currentContext!);
-
       var dataAll = json.decode(vb.body);
       Utils.errorSnackBar(dataAll['message'], navigatorKey.currentContext!);
     }

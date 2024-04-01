@@ -84,14 +84,14 @@ class _ViewServiceScreenState extends State<ViewServiceScreen> {
                                     fontFamily: FontFamily.poppinsRegular,
                                     color: AppColor.appTheme,
                                     fontWeight: FontWeight.w600),
-                                ScreenSize.height(15),
-                                const getText(
-                                    title:
-                                        'Apply gentle pressure to stop bleeding',
-                                    size: 16,
-                                    fontFamily: FontFamily.poppinsRegular,
-                                    color: AppColor.lightTextColor,
-                                    fontWeight: FontWeight.w400),
+                                // ScreenSize.height(15),
+                                // const getText(
+                                //     title:
+                                //         'Apply gentle pressure to stop bleeding',
+                                //     size: 16,
+                                //     fontFamily: FontFamily.poppinsRegular,
+                                //     color: AppColor.lightTextColor,
+                                //     fontWeight: FontWeight.w400),
                                 ScreenSize.height(27),
                                 getText(
                                     title: StringKey.description.tr,

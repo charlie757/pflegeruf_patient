@@ -260,23 +260,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
       alignment: Alignment.center,
       child: Stack(
         children: [
-          //   provider.profileModel!.data!.details!.displayProfileImage?
-          //   NetworkImageHelper(img:  provider.profileModel!.data!.details!.displayProfileImage?
-          //  ,)
-          provider.imgFile != null
+          provider.profileModel!.data!.details!.displayProfileImage.isNotEmpty
               ? ClipRRect(
                   borderRadius: BorderRadius.circular(50),
-                  child: Image.file(
-                    File(provider.imgFile!.path),
-                    height: 100,
-                    width: 100,
-                    fit: BoxFit.cover,
-                  ))
-              : Image.asset(
-                  'assets/images/dummyProfile.png',
-                  height: 100,
-                  width: 100,
-                ),
+                  child: NetworkImageHelper(
+                    img: provider
+                        .profileModel!.data!.details!.displayProfileImage,
+                    height: 100.0,
+                    width: 100.0,
+                  ),
+                )
+              : provider.imgFile != null
+                  ? ClipRRect(
+                      borderRadius: BorderRadius.circular(50),
+                      child: Image.file(
+                        File(provider.imgFile!.path),
+                        height: 100,
+                        width: 100,
+                        fit: BoxFit.cover,
+                      ))
+                  : Image.asset(
+                      'assets/images/dummyProfile.png',
+                      height: 100,
+                      width: 100,
+                    ),
           Positioned(
             right: 0,
             child: GestureDetector(
