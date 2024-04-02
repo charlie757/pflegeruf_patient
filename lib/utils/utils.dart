@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:patient/config/approutes.dart';
 import 'package:patient/helper/appcolor.dart';
+import 'package:patient/providers/dashboard_provider/home_provider.dart';
+import 'package:patient/providers/dashboard_provider/profile_provider.dart';
 import 'package:patient/screens/auth/login_screen.dart';
 import 'package:patient/utils/session_manager.dart';
+import 'package:provider/provider.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 MediaQueryData mediaQuery = MediaQuery.of(navigatorKey.currentState!.context)
@@ -82,6 +85,13 @@ class Utils {
   }
 
   static logOut() {
+    final homeProvider =
+        Provider.of<HomeProvider>(navigatorKey.currentContext!, listen: false);
+    final profileProvider = Provider.of<ProfileProvider>(
+        navigatorKey.currentContext!,
+        listen: false);
+    homeProvider.clearValues();
+    profileProvider.clearValuesOnLogout();
     SessionManager.setToken = '';
     AppRoutes.pushReplacementNavigation(const LoginScreen());
   }

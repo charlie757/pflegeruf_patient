@@ -13,6 +13,10 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  clearValues() {
+    homeModel = null;
+  }
+
   homeApiFunction() {
     var data = {'': ''};
     homeModel != null

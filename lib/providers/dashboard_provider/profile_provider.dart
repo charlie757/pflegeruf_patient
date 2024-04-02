@@ -30,6 +30,10 @@ class ProfileProvider extends ChangeNotifier {
   String? passwordValidationMsg = '';
   String? reEnterPasswordValidationMsg = '';
 
+  clearValuesOnLogout() {
+    profileModel = null;
+  }
+
   clearValues() {
     firstNamevalidationMsg = '';
     lastNamevalidationMsg = '';
@@ -110,9 +114,9 @@ class ProfileProvider extends ChangeNotifier {
     var data = {
       'p_user_name': firstNameController.text,
       'p_user_surname': lastNameController.text,
-      // 'p_user_email': emailController.text,
       'p_user_mobile': phoneController.text,
-      // 'p_user_password': passwordController.text
+      'latitude': SessionManager.lat,
+      'longitude': SessionManager.lng
     };
     print(data);
     String body = Uri(queryParameters: data).query;

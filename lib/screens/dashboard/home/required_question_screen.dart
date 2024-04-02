@@ -226,7 +226,10 @@ class _RequiredQuestionScreenState extends State<RequiredQuestionScreen> {
                     hintText: StringKey.enterYourInsuranceNo.tr,
                     errorMsg: myProvider.insuranceNoValidationMsg,
                     textInputType: TextInputType.number,
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly,
+                      LengthLimitingTextInputFormatter(10)
+                    ],
                     onChanged: (val) {
                       myProvider.insuranceNoValidationMsg =
                           AppValidation.insuranceNoValidator(val);
