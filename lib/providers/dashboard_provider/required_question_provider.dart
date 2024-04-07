@@ -56,13 +56,26 @@ class RequiredQuestionProvider extends ChangeNotifier {
   }
 
   checkValidation(String id, String title) {
-    if (namevalidationMsg == null &&
-        addressValidationMsg == null &&
-        postalCodeValidationMsg == null &&
-        streetValidationMsg == null &&
-        cityValidationMsg == null &&
-        insuranceNoValidationMsg == null &&
-        birthDateValidationMsg == null) {
+    if (AppValidation.nameValidator(nameController.text) == null &&
+        AppValidation.addressValidator(addressController.text) == null &&
+        AppValidation.postalCodeValidator(postalCodeController.text) == null &&
+        AppValidation.streetValidator(streetController.text) == null &&
+        AppValidation.cityValidator(cityController.text) == null &&
+        AppValidation.insuranceNoValidator(insuranceController.text) == null &&
+        AppValidation.birthDateValidator(birthDateController.text) == null) {
+      namevalidationMsg = AppValidation.nameValidator(nameController.text);
+      addressValidationMsg =
+          AppValidation.addressValidator(addressController.text);
+      postalCodeValidationMsg =
+          AppValidation.postalCodeValidator(postalCodeController.text);
+      streetValidationMsg =
+          AppValidation.streetValidator(streetController.text);
+      cityValidationMsg = AppValidation.cityValidator(cityController.text);
+      insuranceNoValidationMsg =
+          AppValidation.insuranceNoValidator(insuranceController.text);
+      birthDateValidationMsg =
+          AppValidation.birthDateValidator(birthDateController.text);
+
       if (insuranceType == 0) {
         EasyLoading.showToast('Select insurance type');
       } else {

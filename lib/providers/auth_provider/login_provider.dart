@@ -48,7 +48,11 @@ class LoginProvider extends ChangeNotifier {
   }
 
   checkValidation() {
-    if (emailValidationMsg == null && passwordValidationMsg == null) {
+    if (AppValidation.emailValidator(emailController.text) == null &&
+        AppValidation.passwordValidator(passwordController.text) == null) {
+      emailValidationMsg = AppValidation.emailValidator(emailController.text);
+      passwordValidationMsg =
+          AppValidation.passwordValidator(passwordController.text);
       callApiFunction();
     } else {
       emailValidationMsg = AppValidation.emailValidator(emailController.text);
@@ -66,7 +70,9 @@ class LoginProvider extends ChangeNotifier {
     var data = {
       "username": emailController.text,
       "password": passwordController.text,
-      "device": Platform.isIOS ? 'ios' : 'android'
+      "device": Platform.isIOS ? 'ios' : 'android',
+      'latitude': SessionManager.lat,
+      'longitude': SessionManager.lng
     };
     String body = Uri(queryParameters: data).query;
     print(body);

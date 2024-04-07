@@ -42,7 +42,6 @@ class _RequiredQuestionScreenState extends State<RequiredQuestionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.title);
     return MediaQuery(
       data: mediaQuery,
       child: Scaffold(

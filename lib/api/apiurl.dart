@@ -14,4 +14,6 @@ class ApiUrl {
   static String deleteAccountUrl = '${baseUrl}profile/delete-account';
   static String getServiceCategoryUrl = '${baseUrl}Category';
   static String nurseBookingUrl = '${baseUrl}Mylisting/create';
+  static String bookingListUrl = '${baseUrl}Mylisting';
+  static String bookingDetailsUrl = '${baseUrl}Mylisting/booking-detail';
 }

@@ -61,12 +61,27 @@ class SignupProvider extends ChangeNotifier {
   }
 
   checkValidation(String route) {
-    if (firstNamevalidationMsg == null &&
-        lastNamevalidationMsg == null &&
-        phoneValidationMsg == null &&
-        emailValidationMsg == null &&
-        passwordValidationMsg == null &&
-        reEnterPasswordValidationMsg == null) {
+    if (AppValidation.firstNameValidator(firstNameController.text) == null &&
+        AppValidation.lastNameValidator(lastNameController.text) == null &&
+        AppValidation.phoneNumberValidator(phoneController.text) == null &&
+        AppValidation.emailValidator(emailController.text) == null &&
+        AppValidation.reEnterpasswordValidator(
+                passwordController.text, reEnterPasswordController.text) ==
+            null &&
+        AppValidation.reEnterpasswordValidator(
+                reEnterPasswordController.text, passwordController.text) ==
+            null) {
+      firstNamevalidationMsg =
+          AppValidation.firstNameValidator(firstNameController.text);
+      lastNamevalidationMsg =
+          AppValidation.lastNameValidator(lastNameController.text);
+      phoneValidationMsg =
+          AppValidation.phoneNumberValidator(phoneController.text);
+      emailValidationMsg = AppValidation.emailValidator(emailController.text);
+      passwordValidationMsg = AppValidation.reEnterpasswordValidator(
+          passwordController.text, reEnterPasswordController.text);
+      reEnterPasswordValidationMsg = AppValidation.reEnterpasswordValidator(
+          reEnterPasswordController.text, passwordController.text);
       if (!isChecked) {
         Utils.errorSnackBar(
             'Accept terms & condition', navigatorKey.currentContext);

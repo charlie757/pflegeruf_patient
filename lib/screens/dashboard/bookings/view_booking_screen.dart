@@ -5,18 +5,34 @@ import 'package:patient/helper/fontfamily.dart';
 import 'package:patient/helper/getText.dart';
 import 'package:patient/helper/screensize.dart';
 import 'package:patient/languages/string_key.dart';
+import 'package:patient/providers/dashboard_provider/view_booking_provider.dart';
 import 'package:patient/utils/utils.dart';
 import 'package:patient/widgets/ratingwidget.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 class ViewBookingScreen extends StatefulWidget {
-  const ViewBookingScreen({super.key});
+  final bookingId;
+  const ViewBookingScreen({super.key, this.bookingId});
 
   @override
   State<ViewBookingScreen> createState() => _ViewBookingScreenState();
 }
 
 class _ViewBookingScreenState extends State<ViewBookingScreen> {
+  @override
+  void initState() {
+    callInitFunction();
+    super.initState();
+  }
+
+  callInitFunction() {
+    final provider = Provider.of<ViewBookingProvider>(context, listen: false);
+    Future.delayed(Duration.zero, () {
+      provider.callApiFunction(widget.bookingId);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MediaQuery(

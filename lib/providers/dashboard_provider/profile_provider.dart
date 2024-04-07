@@ -55,11 +55,23 @@ class ProfileProvider extends ChangeNotifier {
   }
 
   checkValidation() {
-    if (firstNamevalidationMsg == null &&
-        lastNamevalidationMsg == null &&
-        phoneValidationMsg == null &&
-        emailValidationMsg == null &&
-        passwordValidationMsg == null) {
+    if (AppValidation.firstNameValidator(firstNameController.text) == null &&
+        AppValidation.lastNameValidator(lastNameController.text) == null &&
+        AppValidation.phoneNumberValidator(phoneController.text) == null &&
+        AppValidation.emailValidator(emailController.text) == null &&
+        AppValidation.reEnterpasswordValidator(
+                passwordController.text, passwordController.text) ==
+            null) {
+      firstNamevalidationMsg =
+          AppValidation.firstNameValidator(firstNameController.text);
+      lastNamevalidationMsg =
+          AppValidation.lastNameValidator(lastNameController.text);
+      phoneValidationMsg =
+          AppValidation.phoneNumberValidator(phoneController.text);
+      emailValidationMsg = AppValidation.emailValidator(emailController.text);
+      passwordValidationMsg = AppValidation.reEnterpasswordValidator(
+          passwordController.text, passwordController.text);
+
       updateProfileApiFunction();
       // callApiFunction(route);
     } else {

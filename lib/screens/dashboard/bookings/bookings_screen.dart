@@ -4,10 +4,14 @@ import 'package:patient/helper/appBar.dart';
 import 'package:patient/helper/appcolor.dart';
 import 'package:patient/helper/fontfamily.dart';
 import 'package:patient/helper/getText.dart';
+import 'package:patient/helper/network_image_helper.dart';
 import 'package:patient/helper/screensize.dart';
 import 'package:patient/languages/string_key.dart';
+import 'package:patient/model/booking_model.dart';
 import 'package:patient/providers/dashboard_provider/bookings_provider.dart';
 import 'package:patient/screens/dashboard/bookings/view_booking_screen.dart';
+import 'package:patient/utils/no_data.dart';
+import 'package:patient/utils/time_format.dart';
 import 'package:patient/utils/utils.dart';
 import 'package:patient/widgets/ratingwidget.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +25,19 @@ class BookingsScreen extends StatefulWidget {
 }
 
 class _BookingsScreenState extends State<BookingsScreen> {
+  @override
+  void initState() {
+    callInitFunction();
+    super.initState();
+  }
+
+  callInitFunction() {
+    final provider = Provider.of<BookingsProvier>(context, listen: false);
+    Future.delayed(Duration.zero, () {
+      provider.callApiFunction();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MediaQuery(
@@ -36,8 +53,8 @@ class _BookingsScreenState extends State<BookingsScreen> {
                 customTabBar(myProvider),
                 Expanded(
                     child: myProvider.isSelectedTabBar == 0
-                        ? activeBookingsWidget()
-                        : pendingBookingsWidget())
+                        ? activeBookingsWidget(myProvider)
+                        : pendingBookingsWidget(myProvider))
               ],
             ),
           );
@@ -112,82 +129,111 @@ class _BookingsScreenState extends State<BookingsScreen> {
     );
   }
 
-  activeBookingsWidget() {
-    return ListView.separated(
-        separatorBuilder: (context, sp) {
-          return ScreenSize.height(10);
-        },
-        itemCount: 6,
-        shrinkWrap: true,
-        padding:
-            const EdgeInsets.only(left: 15, right: 15, top: 40, bottom: 40),
-        itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () {
-              AppRoutes.pushCupertinoNavigation(const ViewBookingScreen());
+  activeBookingsWidget(BookingsProvier provier) {
+    return provier.activeList.isEmpty
+        ? Align(
+            alignment: Alignment.center,
+            child: noDataWidget(),
+          )
+        : ListView.separated(
+            separatorBuilder: (context, sp) {
+              return ScreenSize.height(10);
             },
-            child: Container(
-              decoration: BoxDecoration(
-                  color: AppColor.whiteColor,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                        offset: const Offset(0, 2),
-                        color: AppColor.blackColor.withOpacity(.2),
-                        blurRadius: 10)
-                  ]),
-              padding: const EdgeInsets.only(
-                  left: 20, top: 20, bottom: 24, right: 20),
-              child: Column(
-                children: [
-                  Row(
+            itemCount: provier.activeList.length,
+            shrinkWrap: true,
+            padding:
+                const EdgeInsets.only(left: 15, right: 15, top: 40, bottom: 40),
+            itemBuilder: (context, index) {
+              var model = BookingModel.fromJson(provier.activeList[index]);
+              return GestureDetector(
+                onTap: () {
+                  AppRoutes.pushCupertinoNavigation(ViewBookingScreen(
+                    bookingId: model.bookingId.toString(),
+                  ));
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: AppColor.whiteColor,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                            offset: const Offset(0, 2),
+                            color: AppColor.blackColor.withOpacity(.2),
+                            blurRadius: 10)
+                      ]),
+                  padding: const EdgeInsets.only(
+                      left: 20, top: 20, bottom: 24, right: 20),
+                  child: Column(
                     children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Image.asset(
-                          'assets/images/nurseProfile.png',
-                          height: 70,
-                          width: 70,
-                        ),
+                      Row(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: model.nurse != null
+                                ? NetworkImageHelper(
+                                    img: model.nurse!.photo,
+                                    height: 70.0,
+                                    width: 70.0,
+                                  )
+                                : const SizedBox(
+                                    height: 70,
+                                    width: 70,
+                                  ),
+                          ),
+                          ScreenSize.width(15),
+                          Expanded(
+                              child: Text(
+                            model.nurse != null
+                                ? model.nurse!.name != null
+                                    ? model.nurse!.name
+                                            .toString()
+                                            .substring(0)
+                                            .toUpperCase()[0] +
+                                        model.nurse!.name
+                                            .toString()
+                                            .substring(1)
+                                    : ''
+                                : '',
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontFamily: FontFamily.poppinsSemiBold,
+                                color: AppColor.textBlackColor,
+                                fontWeight: FontWeight.w600),
+                          )),
+                          ratingWidget(12)
+                        ],
                       ),
-                      ScreenSize.width(15),
-                      Expanded(
-                          child: Text(
-                        'Masia Glura',
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontFamily: FontFamily.poppinsSemiBold,
-                            color: AppColor.textBlackColor,
-                            fontWeight: FontWeight.w600),
-                      )),
-                      ratingWidget(12)
+                      ScreenSize.height(20),
+                      customRowDetailsWidget(
+                          title: StringKey.bookingDate.tr,
+                          subTitle: model.bookingDate != null
+                              ? TimeFormat.convertBookingDate(model.bookingDate)
+                              : ''),
+                      ScreenSize.height(9),
+                      customRowDetailsWidget(
+                          title: StringKey.serviceName.tr,
+                          subTitle:
+                              model.service != null ? model.service!.name : ''),
                     ],
                   ),
-                  ScreenSize.height(20),
-                  customRowDetailsWidget(
-                      title: StringKey.bookingDate.tr, subTitle: '08 Dec 2022'),
-                  ScreenSize.height(9),
-                  customRowDetailsWidget(
-                      title: StringKey.serviceName.tr, subTitle: 'Wound Care'),
-                ],
-              ),
-            ),
-          );
-        });
+                ),
+              );
+            });
   }
 
-  pendingBookingsWidget() {
+  pendingBookingsWidget(BookingsProvier provier) {
     return ListView.separated(
         separatorBuilder: (context, sp) {
           return ScreenSize.height(10);
         },
-        itemCount: 2,
+        itemCount: provier.pendingList.length,
         shrinkWrap: true,
         padding:
             const EdgeInsets.only(left: 15, right: 15, top: 40, bottom: 40),
         itemBuilder: (context, index) {
+          var model = BookingModel.fromJson(provier.pendingList[index]);
           return Container(
             decoration: BoxDecoration(
                 color: AppColor.whiteColor,
@@ -203,18 +249,25 @@ class _BookingsScreenState extends State<BookingsScreen> {
             child: Column(
               children: [
                 customRowDetailsWidget(
-                    title: StringKey.bookingDate.tr, subTitle: '08 Dec 2022'),
+                    title: StringKey.bookingDate.tr,
+                    subTitle: model.bookingDate != null
+                        ? TimeFormat.convertBookingDate(model.bookingDate)
+                        : ''),
                 ScreenSize.height(14),
                 customRowDetailsWidget(
-                    title: StringKey.bookedFor.tr, subTitle: 'Wound Care'),
+                    title: StringKey.bookedFor.tr,
+                    subTitle: model.service != null ? model.service!.name : ''),
                 ScreenSize.height(14),
                 customRowDetailsWidget(
                     title: StringKey.patientName.tr,
-                    subTitle: 'Alexandra Will'),
+                    subTitle:
+                        model.patient != null ? model.patient!.name ?? "" : ''),
                 ScreenSize.height(14),
                 customRowDetailsWidget(
                     title: StringKey.patientAddress.tr,
-                    subTitle: 'Berlin, Germany'),
+                    subTitle: model.patient != null
+                        ? "${model.patient!.address}, ${model.patient!.street ?? ""}, ${model.patient!.city ?? ""}, ${model.patient!.postalCode.toString()}"
+                        : ''),
               ],
             ),
           );
@@ -224,18 +277,23 @@ class _BookingsScreenState extends State<BookingsScreen> {
   customRowDetailsWidget({required String title, required String subTitle}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        getText(
-            title: title,
-            size: 14,
-            fontFamily: FontFamily.poppinsMedium,
-            color: AppColor.textBlackColor,
-            fontWeight: FontWeight.w500),
-        ScreenSize.width(20),
+        SizedBox(
+          width: 115,
+          child: getText(
+              title: title,
+              size: 14,
+              fontFamily: FontFamily.poppinsMedium,
+              color: AppColor.textBlackColor,
+              fontWeight: FontWeight.w500),
+        ),
+        ScreenSize.width(5),
         Flexible(
           child: getText(
               title: subTitle,
               size: 14,
+              textAlign: TextAlign.end,
               fontFamily: FontFamily.poppinsMedium,
               color: const Color(0xff606573),
               fontWeight: FontWeight.w500),
