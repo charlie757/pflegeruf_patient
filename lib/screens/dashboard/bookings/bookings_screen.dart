@@ -202,7 +202,12 @@ class _BookingsScreenState extends State<BookingsScreen> {
                                 color: AppColor.textBlackColor,
                                 fontWeight: FontWeight.w600),
                           )),
-                          ratingWidget(12)
+                          ratingWidget(
+                              size: 12,
+                              initalRating: model.nurse!.rating != null
+                                  ? double.parse(model.nurse!.rating.toString())
+                                  : 0,
+                              isGesture: false)
                         ],
                       ),
                       ScreenSize.height(20),

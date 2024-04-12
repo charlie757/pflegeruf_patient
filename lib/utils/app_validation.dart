@@ -98,7 +98,7 @@ class AppValidation {
   static String? postalCodeValidator(val) {
     if (val.isEmpty) {
       return 'Enter your postal code';
-    } else if (val.length < 6) {
+    } else if (val.length < 5) {
       return 'Enter valid postal code';
     } else {
       return null;

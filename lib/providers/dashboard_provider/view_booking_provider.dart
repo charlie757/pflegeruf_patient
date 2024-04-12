@@ -9,6 +9,7 @@ class ViewBookingProvider extends ChangeNotifier {
   ViewBookingModel? model;
   callApiFunction(String id) async {
     model = null;
+    notifyListeners();
     showCircleProgressDialog(navigatorKey.currentContext!);
     var map = {
       'booking_id': id,

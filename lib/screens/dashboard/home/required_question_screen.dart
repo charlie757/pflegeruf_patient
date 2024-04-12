@@ -42,251 +42,250 @@ class _RequiredQuestionScreenState extends State<RequiredQuestionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MediaQuery(
-      data: mediaQuery,
-      child: Scaffold(
-        backgroundColor: AppColor.whiteColor,
-        appBar: appBar(StringKey.requiredQuestion.tr, true),
-        body: Consumer<RequiredQuestionProvider>(
-            builder: (context, myProvider, child) {
-          return SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.only(
-                  left: 20, right: 20, top: 50, bottom: 60),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  getText(
-                      title: "1. ${StringKey.name.tr}",
-                      size: 14,
-                      fontFamily: FontFamily.poppinsSemiBold,
-                      color: AppColor.textBlackColor,
-                      fontWeight: FontWeight.w500),
-                  ScreenSize.height(5),
-                  CustomTextfield(
-                    controller: myProvider.nameController,
-                    hintText: StringKey.enterYourName.tr,
-                    errorMsg: myProvider.namevalidationMsg,
-                    onChanged: (val) {
-                      myProvider.namevalidationMsg =
-                          AppValidation.nameValidator(val);
-                      setState(() {});
-                    },
-                  ),
-                  ScreenSize.height(20),
-                  getText(
-                      title: "2. ${StringKey.address.tr}",
-                      size: 14,
-                      fontFamily: FontFamily.poppinsSemiBold,
-                      color: AppColor.textBlackColor,
-                      fontWeight: FontWeight.w500),
-                  ScreenSize.height(5),
-                  CustomTextfield(
-                    controller: myProvider.addressController,
-                    hintText: StringKey.enterYourAddress.tr,
-                    errorMsg: myProvider.addressValidationMsg,
-                    onChanged: (val) {
-                      myProvider.addressValidationMsg =
-                          AppValidation.addressValidator(val);
-                      setState(() {});
-                    },
-                  ),
-                  ScreenSize.height(20),
-                  getText(
-                      title: "3. ${StringKey.postalCode.tr}",
-                      size: 14,
-                      fontFamily: FontFamily.poppinsSemiBold,
-                      color: AppColor.textBlackColor,
-                      fontWeight: FontWeight.w500),
-                  ScreenSize.height(5),
-                  CustomTextfield(
-                    controller: myProvider.postalCodeController,
-                    hintText: StringKey.enterYourPostalCode.tr,
-                    textInputType: TextInputType.number,
-                    inputFormatters: [
-                      FilteringTextInputFormatter.digitsOnly,
-                      LengthLimitingTextInputFormatter(6)
+    return Scaffold(
+      resizeToAvoidBottomInset: true,
+      backgroundColor: AppColor.whiteColor,
+      appBar: appBar(StringKey.requiredQuestion.tr, true),
+      body: Consumer<RequiredQuestionProvider>(
+          builder: (context, myProvider, child) {
+        return SingleChildScrollView(
+          child: Padding(
+            padding:
+                const EdgeInsets.only(left: 20, right: 20, top: 50, bottom: 60),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                getText(
+                    title: "1. ${StringKey.name.tr}",
+                    size: 14,
+                    fontFamily: FontFamily.poppinsSemiBold,
+                    color: AppColor.textBlackColor,
+                    fontWeight: FontWeight.w500),
+                ScreenSize.height(5),
+                CustomTextfield(
+                  controller: myProvider.nameController,
+                  hintText: StringKey.enterYourName.tr,
+                  errorMsg: myProvider.namevalidationMsg,
+                  onChanged: (val) {
+                    myProvider.namevalidationMsg =
+                        AppValidation.nameValidator(val);
+                    setState(() {});
+                  },
+                ),
+                ScreenSize.height(20),
+                getText(
+                    title: "2. ${StringKey.address.tr}",
+                    size: 14,
+                    fontFamily: FontFamily.poppinsSemiBold,
+                    color: AppColor.textBlackColor,
+                    fontWeight: FontWeight.w500),
+                ScreenSize.height(5),
+                CustomTextfield(
+                  controller: myProvider.addressController,
+                  hintText: StringKey.enterYourAddress.tr,
+                  errorMsg: myProvider.addressValidationMsg,
+                  onChanged: (val) {
+                    myProvider.addressValidationMsg =
+                        AppValidation.addressValidator(val);
+                    setState(() {});
+                  },
+                ),
+                ScreenSize.height(20),
+                getText(
+                    title: "3. ${StringKey.postalCode.tr}",
+                    size: 14,
+                    fontFamily: FontFamily.poppinsSemiBold,
+                    color: AppColor.textBlackColor,
+                    fontWeight: FontWeight.w500),
+                ScreenSize.height(5),
+                CustomTextfield(
+                  controller: myProvider.postalCodeController,
+                  hintText: StringKey.enterYourPostalCode.tr,
+                  textInputType: TextInputType.number,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                    LengthLimitingTextInputFormatter(6)
+                  ],
+                  errorMsg: myProvider.postalCodeValidationMsg,
+                  onChanged: (val) {
+                    myProvider.postalCodeValidationMsg =
+                        AppValidation.postalCodeValidator(val);
+                    setState(() {});
+                  },
+                ),
+                ScreenSize.height(20),
+                getText(
+                    title: "4. ${StringKey.street.tr}",
+                    size: 14,
+                    fontFamily: FontFamily.poppinsSemiBold,
+                    color: AppColor.textBlackColor,
+                    fontWeight: FontWeight.w500),
+                ScreenSize.height(5),
+                CustomTextfield(
+                  controller: myProvider.streetController,
+                  hintText: StringKey.enterYourStreet.tr,
+                  errorMsg: myProvider.streetValidationMsg,
+                  onChanged: (val) {
+                    myProvider.streetValidationMsg =
+                        AppValidation.streetValidator(val);
+                    setState(() {});
+                  },
+                ),
+                ScreenSize.height(20),
+                getText(
+                    title: "5. ${StringKey.city.tr}",
+                    size: 14,
+                    fontFamily: FontFamily.poppinsSemiBold,
+                    color: AppColor.textBlackColor,
+                    fontWeight: FontWeight.w500),
+                ScreenSize.height(5),
+                CustomTextfield(
+                  controller: myProvider.cityController,
+                  hintText: StringKey.enterYourCity.tr,
+                  errorMsg: myProvider.cityValidationMsg,
+                  onChanged: (val) {
+                    myProvider.cityValidationMsg =
+                        AppValidation.cityValidator(val);
+                    setState(() {});
+                  },
+                ),
+                ScreenSize.height(20),
+                getText(
+                    title: "5. ${StringKey.insurance.tr}",
+                    size: 14,
+                    fontFamily: FontFamily.poppinsSemiBold,
+                    color: AppColor.textBlackColor,
+                    fontWeight: FontWeight.w500),
+                ScreenSize.height(18),
+                Padding(
+                  padding: const EdgeInsets.only(right: 50),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          customCheckBox(
+                              borderColor: myProvider.insuranceType == 1
+                                  ? AppColor.appTheme
+                                  : AppColor.textBlackColor.withOpacity(.3),
+                              backgroundColor: myProvider.insuranceType == 1
+                                  ? AppColor.appTheme
+                                  : AppColor.whiteColor,
+                              onTap: () {
+                                if (myProvider.insuranceType != 1) {
+                                  myProvider.updateInsurance(1);
+                                }
+                              }),
+                          ScreenSize.width(15),
+                          getText(
+                              title: StringKey.private.tr,
+                              size: 16,
+                              fontFamily: FontFamily.poppinsRegular,
+                              color: AppColor.textBlackColor.withOpacity(.6),
+                              fontWeight: FontWeight.w400)
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          customCheckBox(
+                              borderColor: myProvider.insuranceType == 2
+                                  ? AppColor.appTheme
+                                  : AppColor.textBlackColor.withOpacity(.3),
+                              backgroundColor: myProvider.insuranceType == 2
+                                  ? AppColor.appTheme
+                                  : AppColor.whiteColor,
+                              onTap: () {
+                                if (myProvider.insuranceType != 2) {
+                                  myProvider.updateInsurance(2);
+                                }
+                              }),
+                          ScreenSize.width(15),
+                          getText(
+                              title: StringKey.national.tr,
+                              size: 16,
+                              fontFamily: FontFamily.poppinsRegular,
+                              color: AppColor.textBlackColor.withOpacity(.6),
+                              fontWeight: FontWeight.w400)
+                        ],
+                      )
                     ],
-                    errorMsg: myProvider.postalCodeValidationMsg,
-                    onChanged: (val) {
-                      myProvider.postalCodeValidationMsg =
-                          AppValidation.postalCodeValidator(val);
-                      setState(() {});
-                    },
                   ),
-                  ScreenSize.height(20),
-                  getText(
-                      title: "4. ${StringKey.street.tr}",
-                      size: 14,
-                      fontFamily: FontFamily.poppinsSemiBold,
-                      color: AppColor.textBlackColor,
-                      fontWeight: FontWeight.w500),
-                  ScreenSize.height(5),
-                  CustomTextfield(
-                    controller: myProvider.streetController,
-                    hintText: StringKey.enterYourStreet.tr,
-                    errorMsg: myProvider.streetValidationMsg,
-                    onChanged: (val) {
-                      myProvider.streetValidationMsg =
-                          AppValidation.streetValidator(val);
-                      setState(() {});
+                ),
+                ScreenSize.height(33),
+                getText(
+                    title: "7. ${StringKey.insuranceNo.tr}",
+                    size: 14,
+                    fontFamily: FontFamily.poppinsSemiBold,
+                    color: AppColor.textBlackColor,
+                    fontWeight: FontWeight.w500),
+                ScreenSize.height(5),
+                CustomTextfield(
+                  controller: myProvider.insuranceController,
+                  hintText: StringKey.enterYourInsuranceNo.tr,
+                  errorMsg: myProvider.insuranceNoValidationMsg,
+                  // textInputType: TextInputType.text,
+                  inputFormatters: [
+                    LengthLimitingTextInputFormatter(10),
+                    FilteringTextInputFormatter.deny(
+                        RegExp(r'[!@#$%^&*(),.?":{}|<>]'))
+                  ],
+                  onChanged: (val) {
+                    myProvider.insuranceNoValidationMsg =
+                        AppValidation.insuranceNoValidator(val);
+                    setState(() {});
+                  },
+                ),
+                ScreenSize.height(20),
+                getText(
+                    title: "8. ${StringKey.birthDate.tr}",
+                    size: 14,
+                    fontFamily: FontFamily.poppinsSemiBold,
+                    color: AppColor.textBlackColor,
+                    fontWeight: FontWeight.w500),
+                ScreenSize.height(5),
+                CustomTextfield(
+                  controller: myProvider.birthDateController,
+                  hintText: StringKey.enterYourBirthDate.tr,
+                  isReadOnly: true,
+                  errorMsg: myProvider.birthDateValidationMsg,
+                  onChanged: (val) {
+                    myProvider.birthDateValidationMsg =
+                        AppValidation.birthDateValidator(val);
+                    setState(() {});
+                  },
+                  icon: GestureDetector(
+                    onTap: () {
+                      birthdayPicker(myProvider);
                     },
-                  ),
-                  ScreenSize.height(20),
-                  getText(
-                      title: "5. ${StringKey.city.tr}",
-                      size: 14,
-                      fontFamily: FontFamily.poppinsSemiBold,
-                      color: AppColor.textBlackColor,
-                      fontWeight: FontWeight.w500),
-                  ScreenSize.height(5),
-                  CustomTextfield(
-                    controller: myProvider.cityController,
-                    hintText: StringKey.enterYourCity.tr,
-                    errorMsg: myProvider.cityValidationMsg,
-                    onChanged: (val) {
-                      myProvider.cityValidationMsg =
-                          AppValidation.cityValidator(val);
-                      setState(() {});
-                    },
-                  ),
-                  ScreenSize.height(20),
-                  getText(
-                      title: "5. ${StringKey.insurance.tr}",
-                      size: 14,
-                      fontFamily: FontFamily.poppinsSemiBold,
-                      color: AppColor.textBlackColor,
-                      fontWeight: FontWeight.w500),
-                  ScreenSize.height(18),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 50),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            customCheckBox(
-                                borderColor: myProvider.insuranceType == 1
-                                    ? AppColor.appTheme
-                                    : AppColor.textBlackColor.withOpacity(.3),
-                                backgroundColor: myProvider.insuranceType == 1
-                                    ? AppColor.appTheme
-                                    : AppColor.whiteColor,
-                                onTap: () {
-                                  if (myProvider.insuranceType != 1) {
-                                    myProvider.updateInsurance(1);
-                                  }
-                                }),
-                            ScreenSize.width(15),
-                            getText(
-                                title: StringKey.private.tr,
-                                size: 16,
-                                fontFamily: FontFamily.poppinsRegular,
-                                color: AppColor.textBlackColor.withOpacity(.6),
-                                fontWeight: FontWeight.w400)
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            customCheckBox(
-                                borderColor: myProvider.insuranceType == 2
-                                    ? AppColor.appTheme
-                                    : AppColor.textBlackColor.withOpacity(.3),
-                                backgroundColor: myProvider.insuranceType == 2
-                                    ? AppColor.appTheme
-                                    : AppColor.whiteColor,
-                                onTap: () {
-                                  if (myProvider.insuranceType != 2) {
-                                    myProvider.updateInsurance(2);
-                                  }
-                                }),
-                            ScreenSize.width(15),
-                            getText(
-                                title: StringKey.national.tr,
-                                size: 16,
-                                fontFamily: FontFamily.poppinsRegular,
-                                color: AppColor.textBlackColor.withOpacity(.6),
-                                fontWeight: FontWeight.w400)
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                  ScreenSize.height(33),
-                  getText(
-                      title: "7. ${StringKey.insuranceNo.tr}",
-                      size: 14,
-                      fontFamily: FontFamily.poppinsSemiBold,
-                      color: AppColor.textBlackColor,
-                      fontWeight: FontWeight.w500),
-                  ScreenSize.height(5),
-                  CustomTextfield(
-                    controller: myProvider.insuranceController,
-                    hintText: StringKey.enterYourInsuranceNo.tr,
-                    errorMsg: myProvider.insuranceNoValidationMsg,
-                    textInputType: TextInputType.number,
-                    inputFormatters: [
-                      FilteringTextInputFormatter.digitsOnly,
-                      LengthLimitingTextInputFormatter(10)
-                    ],
-                    onChanged: (val) {
-                      myProvider.insuranceNoValidationMsg =
-                          AppValidation.insuranceNoValidator(val);
-                      setState(() {});
-                    },
-                  ),
-                  ScreenSize.height(20),
-                  getText(
-                      title: "8. ${StringKey.birthDate.tr}",
-                      size: 14,
-                      fontFamily: FontFamily.poppinsSemiBold,
-                      color: AppColor.textBlackColor,
-                      fontWeight: FontWeight.w500),
-                  ScreenSize.height(5),
-                  CustomTextfield(
-                    controller: myProvider.birthDateController,
-                    hintText: StringKey.enterYourBirthDate.tr,
-                    isReadOnly: true,
-                    errorMsg: myProvider.birthDateValidationMsg,
-                    onChanged: (val) {
-                      myProvider.birthDateValidationMsg =
-                          AppValidation.birthDateValidator(val);
-                      setState(() {});
-                    },
-                    icon: GestureDetector(
-                      onTap: () {
-                        birthdayPicker(myProvider);
-                      },
-                      child: Container(
-                        height: 24,
-                        width: 24,
-                        alignment: Alignment.center,
-                        child: const ImageIcon(
-                          AssetImage(AppImages.calendarIcon),
-                          size: 24,
-                        ),
+                    child: Container(
+                      height: 24,
+                      width: 24,
+                      alignment: Alignment.center,
+                      child: const ImageIcon(
+                        AssetImage(AppImages.calendarIcon),
+                        size: 24,
                       ),
                     ),
                   ),
-                  ScreenSize.height(50),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 17, right: 17),
-                    child: AppButton(
-                        title: StringKey.submit.tr,
-                        height: 54,
-                        width: double.infinity,
-                        buttonColor: AppColor.appTheme,
-                        onTap: () {
-                          myProvider.checkValidation(
-                              widget.id.toString(), widget.title);
-                        }),
-                  )
-                ],
-              ),
+                ),
+                ScreenSize.height(50),
+                Padding(
+                  padding: const EdgeInsets.only(left: 17, right: 17),
+                  child: AppButton(
+                      title: StringKey.submit.tr,
+                      height: 54,
+                      width: double.infinity,
+                      buttonColor: AppColor.appTheme,
+                      onTap: () {
+                        myProvider.checkValidation(
+                            widget.id.toString(), widget.title);
+                      }),
+                )
+              ],
             ),
-          );
-        }),
-      ),
+          ),
+        );
+      }),
     );
   }
 

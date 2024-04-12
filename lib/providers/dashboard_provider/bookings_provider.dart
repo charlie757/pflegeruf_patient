@@ -43,7 +43,8 @@ class BookingsProvier extends ChangeNotifier {
         for (int i = 0; i < value['data']['myListing'].length; i++) {
           if (value['data']['myListing'][i]['booking_status'] == "NEW") {
             pendingList.add(value['data']['myListing'][i]);
-          } else {
+          } else if (value['data']['myListing'][i]['booking_status'] ==
+              "ACCEPTED") {
             activeList.add(value['data']['myListing'][i]);
           }
         }

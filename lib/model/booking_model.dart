@@ -96,6 +96,7 @@ class Nurse {
   dynamic id;
   dynamic name;
   dynamic photo;
+  dynamic rating;
 
   Nurse({this.id, this.name, this.photo});
 
@@ -103,6 +104,7 @@ class Nurse {
     id = json['id'];
     name = json['name'];
     photo = json['photo'];
+    rating = json['rating'];
   }
 
   Map<String, dynamic> toJson() {
@@ -110,6 +112,7 @@ class Nurse {
     data['id'] = id;
     data['name'] = name;
     data['photo'] = photo;
+    data['rating'] = rating;
     return data;
   }
 }

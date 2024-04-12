@@ -54,6 +54,7 @@ class MyListing {
   dynamic bookingNumber;
   dynamic bookingDate;
   dynamic bookingStatus;
+  dynamic bookingMessage;
   Patient? patient;
   Service? service;
   Nurse? nurse;
@@ -63,6 +64,7 @@ class MyListing {
       this.bookingNumber,
       this.bookingDate,
       this.bookingStatus,
+      this.bookingMessage,
       this.patient,
       this.service,
       this.nurse});
@@ -72,6 +74,7 @@ class MyListing {
     bookingNumber = json['booking_number'];
     bookingDate = json['booking_date'];
     bookingStatus = json['booking_status'];
+    bookingMessage = json['booking_message'];
     patient =
         json['patient'] != null ? Patient.fromJson(json['patient']) : null;
     service =
@@ -85,6 +88,7 @@ class MyListing {
     data['booking_number'] = bookingNumber;
     data['booking_date'] = bookingDate;
     data['booking_status'] = bookingStatus;
+    data['booking_message'] = bookingMessage;
     if (patient != null) {
       data['patient'] = patient!.toJson();
     }
