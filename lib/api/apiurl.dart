@@ -16,4 +16,5 @@ class ApiUrl {
   static String nurseBookingUrl = '${baseUrl}Mylisting/create';
   static String bookingListUrl = '${baseUrl}Mylisting';
   static String bookingDetailsUrl = '${baseUrl}Mylisting/booking-detail';
+  static String addRatingUrl = '${baseUrl}rating/add-rating';
 }
