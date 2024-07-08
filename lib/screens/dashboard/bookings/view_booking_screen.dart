@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:patient/helper/appbutton.dart';
 import 'package:patient/helper/appcolor.dart';
 import 'package:patient/helper/fontfamily.dart';
@@ -6,6 +7,7 @@ import 'package:patient/helper/getText.dart';
 import 'package:patient/helper/network_image_helper.dart';
 import 'package:patient/helper/screensize.dart';
 import 'package:patient/languages/string_key.dart';
+import 'package:patient/providers/dashboard_provider/profile_provider.dart';
 import 'package:patient/providers/dashboard_provider/view_booking_provider.dart';
 import 'package:patient/utils/no_data.dart';
 import 'package:patient/utils/time_format.dart';
@@ -31,6 +33,7 @@ class _ViewBookingScreenState extends State<ViewBookingScreen> {
 
   callInitFunction() {
     final provider = Provider.of<ViewBookingProvider>(context, listen: false);
+    provider.clearValues();
     Future.delayed(Duration.zero, () {
       provider.callApiFunction(widget.bookingId);
     });
@@ -38,6 +41,7 @@ class _ViewBookingScreenState extends State<ViewBookingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final profileProvider = Provider.of<ProfileProvider>(context);
     return MediaQuery(
       data: mediaQuery,
       child: Scaffold(
@@ -86,7 +90,8 @@ class _ViewBookingScreenState extends State<ViewBookingScreen> {
                                     width: double.infinity,
                                     buttonColor: AppColor.appTheme,
                                     onTap: () {
-                                      openRatingBottomSheet(myProvider);
+                                      openRatingBottomSheet(
+                                          myProvider, profileProvider);
                                     }),
                               )
                             ],
@@ -163,7 +168,8 @@ class _ViewBookingScreenState extends State<ViewBookingScreen> {
                             .model!.data!.myListing!.nurse!.rating
                             .toString())
                         : 0,
-                    isGesture: false)
+                    isGesture: true,
+                    onRatingUpdate: (val) {})
               ],
             ),
           ),
@@ -235,180 +241,210 @@ class _ViewBookingScreenState extends State<ViewBookingScreen> {
     );
   }
 
-  openRatingBottomSheet(ViewBookingProvider provider) {
+  openRatingBottomSheet(
+      ViewBookingProvider provider, ProfileProvider profileProvider) {
     showModalBottomSheet(
         isScrollControlled: true,
         context: context,
         builder: (context) {
-          return Container(
-            decoration: BoxDecoration(
-                color: AppColor.whiteColor,
-                borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20))),
-            padding: EdgeInsets.only(
-                left: 20,
-                right: 20,
-                top: 30,
-                bottom: MediaQuery.of(context).viewInsets.bottom),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                        color: AppColor.whiteColor,
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: [
-                          BoxShadow(
-                              offset: const Offset(0, 2),
-                              color: AppColor.textBlackColor.withOpacity(.2),
-                              blurRadius: 10)
-                        ]),
-                    padding: const EdgeInsets.only(
-                        left: 20, bottom: 22, top: 15, right: 15),
-                    child: Row(
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(100),
-                          child: provider.model!.data!.myListing!.nurse != null
-                              ? NetworkImageHelper(
-                                  img: provider
-                                      .model!.data!.myListing!.nurse!.photo,
-                                  height: 100.0,
-                                  width: 100.0,
-                                )
-                              : Container(
-                                  height: 100,
-                                  width: 100,
-                                  color: Colors.grey.shade300,
-                                ),
-                        ),
-                        ScreenSize.width(21),
-                        Flexible(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
+          return StatefulBuilder(builder: (context, state) {
+            return Container(
+              decoration: BoxDecoration(
+                  color: AppColor.whiteColor,
+                  borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20))),
+              padding: EdgeInsets.only(
+                  left: 20,
+                  right: 20,
+                  top: 30,
+                  bottom: MediaQuery.of(context).viewInsets.bottom),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                          color: AppColor.whiteColor,
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: [
+                            BoxShadow(
+                                offset: const Offset(0, 2),
+                                color: AppColor.textBlackColor.withOpacity(.2),
+                                blurRadius: 10)
+                          ]),
+                      padding: const EdgeInsets.only(
+                          left: 20, bottom: 22, top: 15, right: 15),
+                      child: Row(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(100),
+                            child:
                                 provider.model!.data!.myListing!.nurse != null
-                                    ? provider
-                                            .model!.data!.myListing!.nurse!.name
-                                            .toString()
-                                            .substring(0)
-                                            .toUpperCase()[0] +
-                                        provider
-                                            .model!.data!.myListing!.nurse!.name
-                                            .toString()
-                                            .substring(1)
-                                            .toLowerCase()
-                                    : '',
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    fontFamily: FontFamily.poppinsSemiBold,
-                                    color: AppColor.textBlackColor,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                              ScreenSize.height(4),
-                              const getText(
-                                  title: 'Sr. Psychologist',
-                                  size: 16,
-                                  fontFamily: FontFamily.poppinsMedium,
-                                  color: Color(0xff606573),
-                                  fontWeight: FontWeight.w400),
-                              ScreenSize.height(11),
-                              Row(
-                                children: [
-                                  ratingWidget(
-                                      size: 17,
-                                      initalRating: provider.model!.data!
-                                                      .myListing!.nurse !=
-                                                  null &&
-                                              provider.model!.data!.myListing!
-                                                      .nurse!.rating !=
-                                                  null
-                                          ? double.parse(provider.model!.data!
-                                              .myListing!.nurse!.rating
-                                              .toString())
-                                          : 0,
-                                      isGesture: false),
-                                  ScreenSize.width(9),
-                                  Flexible(
-                                      child: Text(
-                                    '(${provider.model!.data!.myListing!.nurse != null && provider.model!.data!.myListing!.nurse!.rating != null ? provider.model!.data!.myListing!.nurse!.rating.toString() : ''} reviews)',
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 1,
-                                    style: const TextStyle(
-                                        fontSize: 12,
-                                        fontFamily: FontFamily.poppinsMedium,
-                                        color: Color(0xff606573),
-                                        fontWeight: FontWeight.w400),
-                                  )),
-                                ],
-                              )
-                            ],
+                                    ? NetworkImageHelper(
+                                        img: provider.model!.data!.myListing!
+                                            .nurse!.photo,
+                                        height: 100.0,
+                                        width: 100.0,
+                                      )
+                                    : Container(
+                                        height: 100,
+                                        width: 100,
+                                        color: Colors.grey.shade300,
+                                      ),
                           ),
-                        )
-                      ],
+                          ScreenSize.width(21),
+                          Flexible(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  provider.model!.data!.myListing!.nurse != null
+                                      ? provider.model!.data!.myListing!.nurse!
+                                              .name
+                                              .toString()
+                                              .substring(0)
+                                              .toUpperCase()[0] +
+                                          provider.model!.data!.myListing!
+                                              .nurse!.name
+                                              .toString()
+                                              .substring(1)
+                                              .toLowerCase()
+                                      : '',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontFamily: FontFamily.poppinsSemiBold,
+                                      color: AppColor.textBlackColor,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                ScreenSize.height(4),
+                                const getText(
+                                    title: 'Sr. Psychologist',
+                                    size: 16,
+                                    fontFamily: FontFamily.poppinsMedium,
+                                    color: Color(0xff606573),
+                                    fontWeight: FontWeight.w400),
+                                ScreenSize.height(11),
+                                Row(
+                                  children: [
+                                    ratingWidget(
+                                        size: 17,
+                                        initalRating: provider.model!.data!
+                                                        .myListing!.nurse !=
+                                                    null &&
+                                                provider.model!.data!.myListing!
+                                                        .nurse!.rating !=
+                                                    null
+                                            ? double.parse(provider.model!.data!
+                                                .myListing!.nurse!.rating
+                                                .toString())
+                                            : 0,
+                                        isGesture: true,
+                                        onRatingUpdate: (val) {}),
+                                    ScreenSize.width(9),
+                                    Flexible(
+                                        child: Text(
+                                      '(${provider.model!.data!.myListing!.nurse != null && provider.model!.data!.myListing!.nurse!.rating != null ? provider.model!.data!.myListing!.nurse!.rating.toString() : ''} reviews)',
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 1,
+                                      style: const TextStyle(
+                                          fontSize: 12,
+                                          fontFamily: FontFamily.poppinsMedium,
+                                          color: Color(0xff606573),
+                                          fontWeight: FontWeight.w400),
+                                    )),
+                                  ],
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                  ScreenSize.height(30),
-                  getText(
-                      title: StringKey.leaveAReview.tr,
-                      size: 22,
-                      fontFamily: FontFamily.poppinsSemiBold,
-                      color: AppColor.textBlackColor,
-                      fontWeight: FontWeight.w600),
-                  ScreenSize.height(6),
-                  getText(
-                      title: StringKey.howYourRateAndExperience.tr,
-                      size: 13,
-                      fontFamily: FontFamily.poppinsRegular,
-                      color: const Color(0xff606573),
-                      fontWeight: FontWeight.w400),
-                  ScreenSize.height(19),
-                  getText(
-                      title: '5 Star Rating',
-                      size: 18,
-                      fontFamily: FontFamily.poppinsSemiBold,
-                      color: AppColor.appTheme,
-                      fontWeight: FontWeight.w600),
-                  ScreenSize.height(12),
-                  ratingWidget(size: 33, initalRating: 3, isGesture: true),
-                  ScreenSize.height(35),
-                  getText(
-                      title: StringKey.yourComment.tr,
-                      size: 15,
-                      fontFamily: FontFamily.poppinsSemiBold,
-                      color: AppColor.appTheme,
-                      fontWeight: FontWeight.w600),
-                  ScreenSize.height(7),
-                  commentBoxWidget(),
-                  ScreenSize.height(40),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 17,
-                      right: 17,
+                    ScreenSize.height(30),
+                    getText(
+                        title: StringKey.leaveAReview.tr,
+                        size: 22,
+                        fontFamily: FontFamily.poppinsSemiBold,
+                        color: AppColor.textBlackColor,
+                        fontWeight: FontWeight.w600),
+                    ScreenSize.height(6),
+                    getText(
+                        title: StringKey.howYourRateAndExperience.tr,
+                        size: 13,
+                        fontFamily: FontFamily.poppinsRegular,
+                        color: const Color(0xff606573),
+                        fontWeight: FontWeight.w400),
+                    ScreenSize.height(19),
+                    getText(
+                        title: '5 Star Rating',
+                        size: 18,
+                        fontFamily: FontFamily.poppinsSemiBold,
+                        color: AppColor.appTheme,
+                        fontWeight: FontWeight.w600),
+                    ScreenSize.height(12),
+                    ratingWidget(
+                        size: 33,
+                        initalRating: provider.ratingStar,
+                        isGesture: false,
+                        onRatingUpdate: (val) {
+                          provider.ratingStar = val;
+                          print(val);
+                          state(() {});
+                          setState(() {});
+                        }),
+                    ScreenSize.height(35),
+                    getText(
+                        title: StringKey.yourComment.tr,
+                        size: 15,
+                        fontFamily: FontFamily.poppinsSemiBold,
+                        color: AppColor.appTheme,
+                        fontWeight: FontWeight.w600),
+                    ScreenSize.height(7),
+                    commentBoxWidget(provider),
+                    ScreenSize.height(40),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: 17,
+                        right: 17,
+                      ),
+                      child: AppButton(
+                          title: StringKey.submitYourReview.tr,
+                          height: 54,
+                          width: double.infinity,
+                          buttonColor: AppColor.appTheme,
+                          onTap: () {
+                            if (provider.ratingStar < 0) {
+                              Utils.errorSnackBar('Add rating', context);
+                            } else if (provider
+                                .commentController.text.isEmpty) {
+                              EasyLoading.showToast('Enter your comment');
+                            } else {
+                              provider.addRatingApiFunction(
+                                  provider.model!.data!.myListing!.bookingId
+                                      .toString(),
+                                  profileProvider
+                                      .profileModel!.data!.details!.pUserId
+                                      .toString());
+                            }
+                          }),
                     ),
-                    child: AppButton(
-                        title: StringKey.submitYourReview.tr,
-                        height: 54,
-                        width: double.infinity,
-                        buttonColor: AppColor.appTheme,
-                        onTap: () {}),
-                  ),
-                  ScreenSize.height(20)
-                ],
+                    ScreenSize.height(20)
+                  ],
+                ),
               ),
-            ),
-          );
+            );
+          });
         });
   }
 
-  commentBoxWidget() {
+  commentBoxWidget(ViewBookingProvider provider) {
     return TextFormField(
       maxLines: 5,
+      controller: provider.commentController,
       cursorColor: AppColor.appTheme,
+      textInputAction: TextInputAction.done,
       style: TextStyle(
           fontSize: 14,
           color: AppColor.textBlackColor,

@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -19,18 +20,37 @@ import 'package:patient/providers/onboarding_provider.dart';
 import 'package:patient/providers/dashboard_provider/required_question_provider.dart';
 import 'package:patient/providers/auth_provider/signup_provider.dart';
 import 'package:patient/screens/splash_screen.dart';
+import 'package:patient/utils/notification_service.dart';
 import 'package:patient/utils/session_manager.dart';
 import 'package:patient/utils/utils.dart';
+
+import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   await SessionManager().init();
+  FirebaseMessaging.onBackgroundMessage(backgroundHandler);
+
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+  getFCMToken();
   runApp(const MyApp());
+}
+
+Future<void> backgroundHandler(RemoteMessage message) async {
+  print('Handling a background message ${message.messageId}');
+}
+
+getFCMToken() async {
+  FirebaseMessaging.instance.requestPermission();
+  FirebaseMessaging.instance.getAPNSToken();
+  FirebaseMessaging.instance.getToken().then((token) async {
+    SessionManager.setFcmToken = token!;
+  });
 }
 
 String selectedLanguage = 'en';
@@ -47,12 +67,20 @@ void configLoading() {
     ..dismissOnTap = false;
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final NotificationService notificationService = NotificationService();
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    notificationService.initialize();
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => OnboardingProvider()),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:patient/api/apiservice.dart';
 import 'package:patient/api/apiurl.dart';
 import 'package:patient/model/view_booking_model.dart';
@@ -9,6 +10,12 @@ class ViewBookingProvider extends ChangeNotifier {
   double ratingStar = 3;
   final commentController = TextEditingController();
   ViewBookingModel? model;
+
+  clearValues() {
+    ratingStar = 3;
+    commentController.clear();
+  }
+
   callApiFunction(String id) async {
     model = null;
     notifyListeners();
@@ -31,6 +38,7 @@ class ViewBookingProvider extends ChangeNotifier {
     String productId,
     String userId,
   ) {
+    showCircleProgressDialog(navigatorKey.currentContext!);
     var data = {
       "product_id": productId,
       "user_id": userId,
@@ -44,7 +52,14 @@ class ViewBookingProvider extends ChangeNotifier {
       body: body,
       method: checkApiMethod(httpMethod.post),
     ).then((value) {
-      if (value != null) {}
+      Navigator.pop(navigatorKey.currentContext!);
+      if (value != null) {
+        Navigator.pop(navigatorKey.currentContext!);
+        clearValues();
+        Utils.successSnackBar(value['status'], navigatorKey.currentContext!);
+      } else {
+        Utils.errorSnackBar(value['message'], navigatorKey.currentContext!);
+      }
     });
   }
 }

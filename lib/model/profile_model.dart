@@ -49,6 +49,7 @@ class Data {
 }
 
 class Details {
+  dynamic pUserId;
   dynamic firstName;
   dynamic lastName;
   dynamic email;
@@ -60,7 +61,8 @@ class Details {
   dynamic displayProfileImage;
 
   Details(
-      {this.firstName,
+      {this.pUserId,
+      this.firstName,
       this.lastName,
       this.email,
       this.mobileNumber,
@@ -71,6 +73,7 @@ class Details {
       this.displayProfileImage});
 
   Details.fromJson(Map<String, dynamic> json) {
+    pUserId = json['p_user_id'];
     firstName = json['first_name'] ?? "";
     lastName = json['last_name'] ?? "";
     email = json['email'] ?? '';
@@ -84,6 +87,7 @@ class Details {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();
+    data['p_user_id'] = pUserId;
     data['first_name'] = firstName;
     data['last_name'] = lastName;
     data['email'] = email;

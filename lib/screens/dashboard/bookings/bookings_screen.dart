@@ -207,7 +207,8 @@ class _BookingsScreenState extends State<BookingsScreen> {
                               initalRating: model.nurse!.rating != null
                                   ? double.parse(model.nurse!.rating.toString())
                                   : 0,
-                              isGesture: false)
+                              isGesture: true,
+                              onRatingUpdate: (val) {})
                         ],
                       ),
                       ScreenSize.height(20),
