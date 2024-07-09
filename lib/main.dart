@@ -2,6 +2,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:patient/languages/languages.dart';
 import 'package:patient/providers/auth_provider/change_password_provider.dart';
@@ -20,6 +21,7 @@ import 'package:patient/providers/onboarding_provider.dart';
 import 'package:patient/providers/dashboard_provider/required_question_provider.dart';
 import 'package:patient/providers/auth_provider/signup_provider.dart';
 import 'package:patient/screens/splash_screen.dart';
+import 'package:patient/utils/location_service.dart';
 import 'package:patient/utils/notification_service.dart';
 import 'package:patient/utils/session_manager.dart';
 import 'package:patient/utils/utils.dart';
@@ -48,6 +50,7 @@ Future<void> backgroundHandler(RemoteMessage message) async {
 getFCMToken() async {
   FirebaseMessaging.instance.requestPermission();
   FirebaseMessaging.instance.getAPNSToken();
+  getLocationPermission();
   FirebaseMessaging.instance.getToken().then((token) async {
     SessionManager.setFcmToken = token!;
   });

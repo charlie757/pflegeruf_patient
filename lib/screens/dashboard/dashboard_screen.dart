@@ -7,6 +7,7 @@ import 'package:patient/providers/dashboard_provider/profile_provider.dart';
 import 'package:patient/screens/dashboard/bookings/bookings_screen.dart';
 import 'package:patient/screens/dashboard/home/home_screen.dart';
 import 'package:patient/screens/dashboard/profile_screen.dart';
+import 'package:patient/utils/location_service.dart';
 import 'package:patient/utils/utils.dart';
 import 'package:provider/provider.dart';
 
@@ -21,6 +22,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   void initState() {
     callInitFunction();
+    getLocationPermission();
     super.initState();
   }
 

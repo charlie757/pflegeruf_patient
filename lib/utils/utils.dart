@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:patient/config/approutes.dart';
 import 'package:patient/helper/appcolor.dart';
 import 'package:patient/providers/dashboard_provider/home_provider.dart';
@@ -45,6 +46,15 @@ class Utils {
           title,
           style: TextStyle(color: AppColor.whiteColor),
         )));
+  }
+
+  static showToast(String title, {Color color = Colors.black}) {
+    Fluttertoast.showToast(
+        msg: title,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        textColor: AppColor.whiteColor);
   }
 
   static internetSnackBar(

@@ -13,6 +13,7 @@ import 'package:patient/providers/auth_provider/login_provider.dart';
 import 'package:patient/screens/auth/forgot_password_screen.dart';
 import 'package:patient/screens/auth/signup_screen.dart';
 import 'package:patient/utils/app_validation.dart';
+import 'package:patient/utils/location_service.dart';
 import 'package:patient/utils/session_manager.dart';
 import 'package:patient/utils/utils.dart';
 import 'package:provider/provider.dart';
@@ -30,6 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     callInitFunction();
+    getLocationPermission();
     super.initState();
   }
 

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:patient/api/apiservice.dart';
 import 'package:patient/api/apiurl.dart';
+import 'package:patient/helper/appcolor.dart';
 import 'package:patient/model/profile_model.dart';
 import 'package:patient/utils/app_validation.dart';
 import 'package:patient/utils/session_manager.dart';
@@ -141,7 +142,9 @@ class ProfileProvider extends ChangeNotifier {
       Navigator.pop(navigatorKey.currentContext!);
       if (value != null) {
         getProfileApiFunction(false);
-        Utils.successSnackBar(value['message'], navigatorKey.currentContext!);
+        Utils.showToast(value['message'],
+            color: AppColor.appTheme.withOpacity(.9));
+        // Utils.successSnackBar(value['message'], navigatorKey.currentContext!);
         notifyListeners();
       }
     });

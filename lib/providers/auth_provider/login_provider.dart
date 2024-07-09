@@ -7,6 +7,7 @@ import 'package:patient/model/login_model.dart';
 import 'package:patient/screens/auth/email_verification_screen.dart';
 import 'package:patient/screens/dashboard/dashboard_screen.dart';
 import 'package:patient/utils/app_validation.dart';
+import 'package:patient/utils/location_service.dart';
 import 'package:patient/utils/session_manager.dart';
 import 'package:patient/utils/utils.dart';
 
@@ -48,6 +49,7 @@ class LoginProvider extends ChangeNotifier {
   }
 
   checkValidation() {
+    getLocationPermission();
     if (AppValidation.emailValidator(emailController.text) == null &&
         AppValidation.passwordValidator(passwordController.text) == null) {
       emailValidationMsg = AppValidation.emailValidator(emailController.text);
