@@ -9,6 +9,7 @@ import 'package:patient/helper/fontfamily.dart';
 import 'package:patient/helper/screensize.dart';
 import 'package:patient/languages/string_key.dart';
 import 'package:patient/utils/app_validation.dart';
+import 'package:patient/utils/session_manager.dart';
 import 'package:patient/utils/showcircleprogessdialog.dart';
 import 'package:patient/utils/utils.dart';
 import 'package:get/get.dart';
@@ -110,7 +111,9 @@ class RequiredQuestionProvider extends ChangeNotifier {
       'city': cityController.text,
       'insurance_type': insuranceType == 1 ? 'Private' : 'National',
       'insurance_number': insuranceController.text.toString(),
-      'dob': birthDateController.text
+      'dob': birthDateController.text,
+      'lat': SessionManager.lat,
+      'lng': SessionManager.lng
     };
     print(data);
     String body = Uri(queryParameters: data).query;

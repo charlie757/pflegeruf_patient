@@ -11,6 +11,7 @@ import 'package:patient/helper/screensize.dart';
 import 'package:patient/languages/string_key.dart';
 import 'package:patient/providers/dashboard_provider/required_question_provider.dart';
 import 'package:patient/utils/app_validation.dart';
+import 'package:patient/utils/location_service.dart';
 import 'package:patient/utils/utils.dart';
 import 'package:provider/provider.dart';
 import 'package:get/get.dart';
@@ -35,6 +36,7 @@ class _RequiredQuestionScreenState extends State<RequiredQuestionScreen> {
   }
 
   callInitFunction() {
+    getLocationPermission();
     final myProvider =
         Provider.of<RequiredQuestionProvider>(context, listen: false);
     myProvider.clearValues();
@@ -65,6 +67,7 @@ class _RequiredQuestionScreenState extends State<RequiredQuestionScreen> {
                 CustomTextfield(
                   controller: myProvider.nameController,
                   hintText: StringKey.enterYourName.tr,
+                  textInputAction: TextInputAction.next,
                   errorMsg: myProvider.namevalidationMsg,
                   onChanged: (val) {
                     myProvider.namevalidationMsg =
@@ -83,6 +86,7 @@ class _RequiredQuestionScreenState extends State<RequiredQuestionScreen> {
                 CustomTextfield(
                   controller: myProvider.addressController,
                   hintText: StringKey.enterYourAddress.tr,
+                  textInputAction: TextInputAction.next,
                   errorMsg: myProvider.addressValidationMsg,
                   onChanged: (val) {
                     myProvider.addressValidationMsg =
@@ -102,6 +106,7 @@ class _RequiredQuestionScreenState extends State<RequiredQuestionScreen> {
                   controller: myProvider.postalCodeController,
                   hintText: StringKey.enterYourPostalCode.tr,
                   textInputType: TextInputType.number,
+                  textInputAction: TextInputAction.next,
                   inputFormatters: [
                     FilteringTextInputFormatter.digitsOnly,
                     LengthLimitingTextInputFormatter(6)
@@ -125,6 +130,7 @@ class _RequiredQuestionScreenState extends State<RequiredQuestionScreen> {
                   controller: myProvider.streetController,
                   hintText: StringKey.enterYourStreet.tr,
                   errorMsg: myProvider.streetValidationMsg,
+                  textInputAction: TextInputAction.next,
                   onChanged: (val) {
                     myProvider.streetValidationMsg =
                         AppValidation.streetValidator(val);
@@ -142,6 +148,7 @@ class _RequiredQuestionScreenState extends State<RequiredQuestionScreen> {
                 CustomTextfield(
                   controller: myProvider.cityController,
                   hintText: StringKey.enterYourCity.tr,
+                  textInputAction: TextInputAction.next,
                   errorMsg: myProvider.cityValidationMsg,
                   onChanged: (val) {
                     myProvider.cityValidationMsg =
@@ -223,6 +230,7 @@ class _RequiredQuestionScreenState extends State<RequiredQuestionScreen> {
                   controller: myProvider.insuranceController,
                   hintText: StringKey.enterYourInsuranceNo.tr,
                   errorMsg: myProvider.insuranceNoValidationMsg,
+                  textInputAction: TextInputAction.next,
                   // textInputType: TextInputType.text,
                   inputFormatters: [
                     LengthLimitingTextInputFormatter(10),
@@ -248,6 +256,7 @@ class _RequiredQuestionScreenState extends State<RequiredQuestionScreen> {
                   hintText: StringKey.enterYourBirthDate.tr,
                   isReadOnly: true,
                   errorMsg: myProvider.birthDateValidationMsg,
+                  textInputAction: TextInputAction.done,
                   onChanged: (val) {
                     myProvider.birthDateValidationMsg =
                         AppValidation.birthDateValidator(val);

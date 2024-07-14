@@ -17,4 +17,5 @@ class ApiUrl {
   static String bookingListUrl = '${baseUrl}Mylisting';
   static String bookingDetailsUrl = '${baseUrl}Mylisting/booking-detail';
   static String addRatingUrl = '${baseUrl}rating/add-rating';
+  static String notificationurl = '${baseUrl}notification';
 }

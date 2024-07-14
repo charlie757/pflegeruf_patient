@@ -6,7 +6,11 @@ import 'package:patient/helper/getText.dart';
 import 'package:patient/helper/screensize.dart';
 import 'package:patient/languages/string_key.dart';
 import 'package:get/get.dart';
+import 'package:patient/providers/dashboard_provider/notification_provider.dart';
+import 'package:patient/utils/no_data.dart';
+import 'package:patient/utils/time_format.dart';
 import 'package:patient/utils/utils.dart';
+import 'package:provider/provider.dart';
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});
@@ -17,62 +21,84 @@ class NotificationScreen extends StatefulWidget {
 
 class _NotificationScreenState extends State<NotificationScreen> {
   @override
+  void initState() {
+    callIniFunction();
+    super.initState();
+  }
+
+  callIniFunction() async {
+    final provider = Provider.of<NotificationProvider>(context, listen: false);
+    Future.delayed(Duration.zero, () {
+      provider.getNotificationApiFunction();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return MediaQuery(
       data: mediaQuery,
-      child: Scaffold(
-        backgroundColor: AppColor.whiteColor,
-        appBar: AppBar(
+      child:
+          Consumer<NotificationProvider>(builder: (context, myProvider, child) {
+        return Scaffold(
           backgroundColor: AppColor.whiteColor,
-          automaticallyImplyLeading: false,
-          elevation: 0.0,
-          scrolledUnderElevation: 0.0,
-          leading: Row(
-            children: [
-              GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Container(
-                  margin: const EdgeInsets.only(left: 18),
-                  alignment: Alignment.center,
-                  height: 30,
-                  width: 30,
-                  decoration: BoxDecoration(
-                      color: AppColor.appTheme,
-                      borderRadius: BorderRadius.circular(100)),
-                  child: Icon(
-                    Icons.arrow_back_ios_new_outlined,
-                    color: AppColor.whiteColor,
-                    size: 18,
+          appBar: AppBar(
+            backgroundColor: AppColor.whiteColor,
+            automaticallyImplyLeading: false,
+            elevation: 0.0,
+            scrolledUnderElevation: 0.0,
+            leading: Row(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.only(left: 18),
+                    alignment: Alignment.center,
+                    height: 30,
+                    width: 30,
+                    decoration: BoxDecoration(
+                        color: AppColor.appTheme,
+                        borderRadius: BorderRadius.circular(100)),
+                    child: Icon(
+                      Icons.arrow_back_ios_new_outlined,
+                      color: AppColor.whiteColor,
+                      size: 18,
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
+            centerTitle: true,
+            title: getText(
+                title: StringKey.notification.tr,
+                size: 20,
+                fontFamily: FontFamily.poppinsSemiBold,
+                color: AppColor.textBlackColor,
+                fontWeight: FontWeight.w600),
           ),
-          centerTitle: true,
-          title: getText(
-              title: StringKey.notification.tr,
-              size: 20,
-              fontFamily: FontFamily.poppinsSemiBold,
-              color: AppColor.textBlackColor,
-              fontWeight: FontWeight.w600),
-        ),
-        body: ListView.separated(
-            separatorBuilder: (context, sp) {
-              return ScreenSize.height(25);
-            },
-            padding: const EdgeInsets.only(top: 15, bottom: 30),
-            itemCount: 5,
-            shrinkWrap: true,
-            itemBuilder: (context, index) {
-              return notificationWidget();
-            }),
-      ),
+          body: myProvider.model != null
+              ? myProvider.model!.data!.isEmpty
+                  ? Align(alignment: Alignment.center, child: noDataWidget())
+                  : ListView.separated(
+                      separatorBuilder: (context, sp) {
+                        return ScreenSize.height(25);
+                      },
+                      padding: const EdgeInsets.only(top: 15, bottom: 30),
+                      itemCount: myProvider.model!.data!.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return notificationWidget(index, myProvider);
+                      })
+              : Container(),
+        );
+      }),
     );
   }
 
-  notificationWidget() {
+  notificationWidget(int index, NotificationProvider provider) {
+    var model = provider.model!.data![index];
+
     return Column(
       children: [
         Container(
@@ -106,14 +132,17 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     getText(
-                        title: 'Your booking has been confirm successfully',
+                        title: model.msg ?? "",
                         size: 15,
                         fontFamily: FontFamily.poppinsSemiBold,
                         color: AppColor.textBlackColor,
                         fontWeight: FontWeight.w600),
                     ScreenSize.height(10),
-                    const getText(
-                        title: '23 July 22 at 09:15 AM',
+                    getText(
+                        title: model.notificationCreatedAt != null
+                            ? TimeFormat.convertNotificationDate(
+                                model.notificationCreatedAt)
+                            : "",
                         size: 14,
                         fontFamily: FontFamily.poppinsRegular,
                         color: Color(0xff606573),

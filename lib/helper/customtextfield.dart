@@ -16,7 +16,8 @@ class CustomTextfield extends StatelessWidget {
   final List<TextInputFormatter>? inputFormatters;
   final TextInputType? textInputType;
   final ValueChanged<String>? onChanged;
-  const CustomTextfield(
+  TextInputAction? textInputAction;
+  CustomTextfield(
       {super.key,
       this.hintText,
       required this.controller,
@@ -26,7 +27,8 @@ class CustomTextfield extends StatelessWidget {
       this.inputFormatters,
       this.textInputType = TextInputType.name,
       this.errorMsg = '',
-      this.onChanged});
+      this.onChanged,
+      this.textInputAction});
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +51,7 @@ class CustomTextfield extends StatelessWidget {
           child: TextFormField(
             controller: controller,
             inputFormatters: inputFormatters,
+            textInputAction: textInputAction,
             readOnly: isReadOnly,
             cursorColor: AppColor.appTheme,
             obscureText: isObscureText,

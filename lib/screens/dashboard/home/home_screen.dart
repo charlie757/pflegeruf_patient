@@ -118,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 color: AppColor.appTheme,
                                 borderRadius: BorderRadius.circular(8)),
                             child: getText(
-                                title: '2',
+                                title: '',
                                 size: 9,
                                 fontFamily: FontFamily.poppinsBold,
                                 color: AppColor.whiteColor,
@@ -189,7 +189,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         autoPlay: true,
                         scrollDirection: Axis.horizontal,
                         // enlargeCenterPage: true,
-                        viewportFraction: .9,
+                        viewportFraction: 1,
                         aspectRatio: 2.0,
                         initialPage: 0,
                         autoPlayCurve: Curves.ease,

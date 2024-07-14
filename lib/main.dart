@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:patient/helper/appcolor.dart';
 import 'package:patient/languages/languages.dart';
 import 'package:patient/providers/auth_provider/change_password_provider.dart';
 import 'package:patient/providers/auth_provider/forgot_verification_provider.dart';
@@ -14,6 +15,7 @@ import 'package:patient/providers/auth_provider/email_verification_provider.dart
 import 'package:patient/providers/auth_provider/forgot_password_provider.dart';
 import 'package:patient/providers/auth_provider/login_provider.dart';
 import 'package:patient/providers/dashboard_provider/home_provider.dart';
+import 'package:patient/providers/dashboard_provider/notification_provider.dart';
 import 'package:patient/providers/dashboard_provider/profile_provider.dart';
 import 'package:patient/providers/dashboard_provider/view_booking_provider.dart';
 import 'package:patient/providers/dashboard_provider/view_service_provider.dart';
@@ -101,6 +103,7 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (_) => HomeProvider()),
         ChangeNotifierProvider(create: (_) => UpdateLanguageProvider()),
         ChangeNotifierProvider(create: (_) => ViewServiceProvider()),
+        ChangeNotifierProvider(create: (_) => NotificationProvider()),
       ],
       child: GetMaterialApp(
         navigatorKey: navigatorKey,
@@ -109,9 +112,9 @@ class _MyAppState extends State<MyApp> {
         locale: Locale(selectedLanguage),
         fallbackLocale: const Locale('en'),
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            useMaterial3: true,
+            scaffoldBackgroundColor: AppColor.whiteColor),
         debugShowCheckedModeBanner: false,
         home: const SplashSCreen(),
         builder: EasyLoading.init(),
