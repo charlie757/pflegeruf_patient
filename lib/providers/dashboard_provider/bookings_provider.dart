@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:patient/api/apiservice.dart';
 import 'package:patient/api/apiurl.dart';
 import 'package:patient/model/booking_model.dart';
+import 'package:patient/model/complete_booking_model.dart';
 import 'package:patient/utils/enum_booking_status.dart';
 import 'package:patient/utils/showcircleprogessdialog.dart';
 import 'package:patient/utils/utils.dart';
 
 class BookingsProvier extends ChangeNotifier {
-  BookingModel? activeModel;
-  BookingModel? pendingModel;
+  CompleteBookingModel? completeBookingModel;
   List pendingList = [];
   List activeList = [];
   bool isLoading = false;
@@ -23,9 +23,9 @@ class BookingsProvier extends ChangeNotifier {
     notifyListeners();
   }
 
-  callApiFunction() {
+  callApiFunction(bool isLoading) {
     var data = {'': ''};
-    showCircleProgressDialog(navigatorKey.currentContext!);
+    isLoading ? showCircleProgressDialog(navigatorKey.currentContext!) : null;
     updateLoading(true);
     String body = Uri(queryParameters: data).query;
     ApiService.apiMethod(
@@ -37,7 +37,7 @@ class BookingsProvier extends ChangeNotifier {
         .then((value) {
       pendingList.clear();
       activeList.clear();
-      Navigator.pop(navigatorKey.currentContext!);
+      isLoading ? Navigator.pop(navigatorKey.currentContext!) : null;
       updateLoading(false);
       if (value != null) {
         for (int i = 0; i < value['data']['myListing'].length; i++) {
@@ -52,6 +52,30 @@ class BookingsProvier extends ChangeNotifier {
       } else {
         pendingList.clear();
         activeList.clear();
+      }
+    });
+  }
+
+  completedBookingApiFunction(isLoading) async {
+    var data = {'': ''};
+    isLoading ? showCircleProgressDialog(navigatorKey.currentContext!) : null;
+    updateLoading(isLoading);
+    String body = Uri(queryParameters: data).query;
+    ApiService.apiMethod(
+            url: ApiUrl.completedBookingListUrl,
+            body: body,
+            method: checkApiMethod(httpMethod.post),
+            isErrorMessageShow: false,
+            isBodyNotRequired: true)
+        .then((value) {
+      updateLoading(false);
+      isLoading ? Navigator.pop(navigatorKey.currentContext!) : null;
+      if (value != null) {
+        completeBookingModel = CompleteBookingModel.fromJson(value);
+        notifyListeners();
+      } else {
+        completeBookingModel = null;
+        notifyListeners();
       }
     });
   }

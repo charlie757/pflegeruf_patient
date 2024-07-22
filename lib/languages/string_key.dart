@@ -78,6 +78,7 @@ class StringKey {
   static const bookings = "bookings";
   static const active = "active";
   static const pending = "pending";
+  static const completed = 'completed';
   static const bookingDate = "bookingDate";
   static const serviceName = "serviceName";
   static const bookedFor = "bookedFor";

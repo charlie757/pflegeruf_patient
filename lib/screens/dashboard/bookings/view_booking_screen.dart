@@ -46,78 +46,81 @@ class _ViewBookingScreenState extends State<ViewBookingScreen> {
       data: mediaQuery,
       child: Scaffold(
         backgroundColor: AppColor.whiteColor,
-        body: Consumer<ViewBookingProvider>(
-            builder: (context, myProvider, child) {
-          return Stack(
-            children: [
-              myProvider.model != null &&
-                      myProvider.model!.data != null &&
-                      myProvider.model!.data!.myListing != null
-                  ? SingleChildScrollView(
-                      child: Padding(
-                          padding: const EdgeInsets.only(bottom: 43),
-                          child: Column(
-                            children: [
-                              myProvider.model!.data!.myListing!.nurse != null
-                                  ? ClipRRect(
-                                      borderRadius: const BorderRadius.only(
-                                          bottomLeft: Radius.circular(15),
-                                          bottomRight: Radius.circular(15)),
-                                      child: NetworkImageHelper(
-                                        img: myProvider.model!.data!.myListing!
-                                            .nurse!.photo,
+        body: SafeArea(
+          child: Consumer<ViewBookingProvider>(
+              builder: (context, myProvider, child) {
+            return Stack(
+              children: [
+                myProvider.model != null &&
+                        myProvider.model!.data != null &&
+                        myProvider.model!.data!.myListing != null
+                    ? SingleChildScrollView(
+                        child: Padding(
+                            padding: const EdgeInsets.only(bottom: 43),
+                            child: Column(
+                              children: [
+                                myProvider.model!.data!.myListing!.nurse != null
+                                    ? ClipRRect(
+                                        borderRadius: const BorderRadius.only(
+                                            bottomLeft: Radius.circular(15),
+                                            bottomRight: Radius.circular(15)),
+                                        child: NetworkImageHelper(
+                                          img: myProvider.model!.data!
+                                              .myListing!.nurse!.photo,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              .5,
+                                          width: double.infinity,
+                                        ),
+                                      )
+                                    : SizedBox(
                                         height:
                                             MediaQuery.of(context).size.height *
                                                 .5,
                                         width: double.infinity,
                                       ),
-                                    )
-                                  : SizedBox(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              .5,
+                                ScreenSize.height(34),
+                                userDetails(myProvider),
+                                ScreenSize.height(50),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 38, right: 38),
+                                  child: AppButton(
+                                      title: StringKey.giveReview.tr,
+                                      height: 54,
                                       width: double.infinity,
-                                    ),
-                              ScreenSize.height(34),
-                              userDetails(myProvider),
-                              ScreenSize.height(50),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 38, right: 38),
-                                child: AppButton(
-                                    title: StringKey.giveReview.tr,
-                                    height: 54,
-                                    width: double.infinity,
-                                    buttonColor: AppColor.appTheme,
-                                    onTap: () {
-                                      openRatingBottomSheet(
-                                          myProvider, profileProvider);
-                                    }),
-                              )
-                            ],
-                          )),
-                    )
-                  : Align(alignment: Alignment.center, child: noDataWidget()),
-              GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Container(
-                  height: 32,
-                  width: 32,
-                  margin: const EdgeInsets.only(left: 16, top: 45),
-                  decoration: BoxDecoration(
-                      color: AppColor.whiteColor,
-                      borderRadius: BorderRadius.circular(16)),
-                  child: const Icon(
-                    Icons.arrow_back_ios_new_outlined,
-                    size: 18,
+                                      buttonColor: AppColor.appTheme,
+                                      onTap: () {
+                                        openRatingBottomSheet(
+                                            myProvider, profileProvider);
+                                      }),
+                                )
+                              ],
+                            )),
+                      )
+                    : Align(alignment: Alignment.center, child: noDataWidget()),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    height: 32,
+                    width: 32,
+                    margin: const EdgeInsets.only(left: 16, top: 5),
+                    decoration: BoxDecoration(
+                        color: AppColor.whiteColor,
+                        borderRadius: BorderRadius.circular(16)),
+                    child: const Icon(
+                      Icons.arrow_back_ios_new_outlined,
+                      size: 18,
+                    ),
                   ),
-                ),
-              )
-            ],
-          );
-        }),
+                )
+              ],
+            );
+          }),
+        ),
       ),
     );
   }
@@ -424,8 +427,7 @@ class _ViewBookingScreenState extends State<ViewBookingScreen> {
                               provider.addRatingApiFunction(
                                   provider.model!.data!.myListing!.bookingId
                                       .toString(),
-                                  profileProvider
-                                      .profileModel!.data!.details!.pUserId
+                                  provider.model!.data!.myListing!.nurse!.id
                                       .toString());
                             }
                           }),

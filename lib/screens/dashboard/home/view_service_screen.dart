@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:patient/config/approutes.dart';
+import 'package:patient/helper/appBar.dart';
 import 'package:patient/helper/appbutton.dart';
 import 'package:patient/helper/appcolor.dart';
 import 'package:patient/helper/fontfamily.dart';
@@ -43,6 +44,7 @@ class _ViewServiceScreenState extends State<ViewServiceScreen> {
         data: mediaQuery,
         child: Scaffold(
           backgroundColor: AppColor.whiteColor,
+          appBar: appBar('', true),
           body: Stack(
             children: [
               myProvider.model != null && myProvider.model!.data != null
@@ -62,8 +64,7 @@ class _ViewServiceScreenState extends State<ViewServiceScreen> {
                                   child: CachedNetworkImage(
                                     imageUrl:
                                         '${myProvider.model!.data!.category!.categoryPath}${myProvider.model!.data!.category!.categoryImage}',
-                                    height: MediaQuery.of(context).size.height *
-                                        .45,
+                                    height: 300,
                                     width: double.infinity,
                                   ))
                               : Image.asset('assets/images/woundImg.png'),
@@ -140,23 +141,6 @@ class _ViewServiceScreenState extends State<ViewServiceScreen> {
                       ),
                     )
                   : Container(),
-              GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Container(
-                  height: 32,
-                  width: 32,
-                  margin: const EdgeInsets.only(left: 16, top: 45),
-                  decoration: BoxDecoration(
-                      color: AppColor.whiteColor,
-                      borderRadius: BorderRadius.circular(16)),
-                  child: const Icon(
-                    Icons.arrow_back_ios_new_outlined,
-                    size: 18,
-                  ),
-                ),
-              )
             ],
           ),
         ),

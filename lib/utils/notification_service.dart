@@ -4,6 +4,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:patient/utils/session_manager.dart';
+import 'package:patient/utils/utils.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/dashboard_provider/notification_provider.dart';
 
 class NotificationService {
   FirebaseMessaging fcm = FirebaseMessaging.instance;
@@ -43,6 +47,12 @@ class NotificationService {
     configLocalNotification();
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      if (SessionManager.token.isNotEmpty) {
+        Provider.of<NotificationProvider>(navigatorKey.currentContext!,
+                listen: false)
+            .unreadNotificationApiFunction();
+      }
+
       RemoteNotification? notification = message.notification;
       AndroidNotification? androidNotification = message.notification?.android;
       AppleNotification? appleNotification = message.notification?.apple;

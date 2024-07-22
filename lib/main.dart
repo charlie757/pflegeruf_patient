@@ -82,7 +82,6 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final NotificationService notificationService = NotificationService();
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     notificationService.initialize();

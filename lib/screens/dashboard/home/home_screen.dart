@@ -8,7 +8,9 @@ import 'package:patient/helper/getText.dart';
 import 'package:patient/helper/network_image_helper.dart';
 import 'package:patient/helper/screensize.dart';
 import 'package:patient/languages/string_key.dart';
+import 'package:patient/providers/dashboard_provider/dashboard_provider.dart';
 import 'package:patient/providers/dashboard_provider/home_provider.dart';
+import 'package:patient/providers/dashboard_provider/notification_provider.dart';
 import 'package:patient/providers/dashboard_provider/profile_provider.dart';
 import 'package:patient/screens/dashboard/home/notification_screen.dart';
 import 'package:patient/screens/dashboard/home/view_service_screen.dart';
@@ -36,11 +38,13 @@ class _HomeScreenState extends State<HomeScreen> {
   callInitFunction() {
     final myProvider = Provider.of<HomeProvider>(context, listen: false);
     myProvider.homeApiFunction();
+    Provider.of<NotificationProvider>(context).unreadNotificationApiFunction();
   }
 
   @override
   Widget build(BuildContext context) {
     final profileProvider = Provider.of<ProfileProvider>(context);
+    final dashboardProvider = Provider.of<DashboardProvider>(context);
     return MediaQuery(
       data: mediaQuery,
       child:
@@ -58,15 +62,20 @@ class _HomeScreenState extends State<HomeScreen> {
                           profileProvider.profileModel!.data!.details != null &&
                           profileProvider.profileModel!.data!.details!
                               .displayProfileImage.isNotEmpty
-                      ? ClipRRect(
-                          borderRadius: BorderRadius.circular(100),
-                          child: NetworkImageHelper(
-                            img: profileProvider.profileModel!.data!.details!
-                                .displayProfileImage,
-                            height: 40.0,
-                            width: 40.0,
-                            isAnotherColorOfLodingIndicator: true,
-                          ))
+                      ? GestureDetector(
+                          onTap: () {
+                            dashboardProvider.updateSelectedIndex(2);
+                          },
+                          child: ClipRRect(
+                              borderRadius: BorderRadius.circular(100),
+                              child: NetworkImageHelper(
+                                img: profileProvider.profileModel!.data!
+                                    .details!.displayProfileImage,
+                                height: 40.0,
+                                width: 40.0,
+                                isAnotherColorOfLodingIndicator: true,
+                              )),
+                        )
                       : Image.asset(
                           'assets/images/dummyProfile.png',
                           height: 40,
@@ -107,24 +116,36 @@ class _HomeScreenState extends State<HomeScreen> {
                             width: 26,
                           ),
                         ),
-                        Positioned(
-                          right: 0,
-                          top: 0,
-                          child: Container(
-                            height: 16,
-                            width: 16,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                color: AppColor.appTheme,
-                                borderRadius: BorderRadius.circular(8)),
-                            child: getText(
-                                title: '',
-                                size: 9,
-                                fontFamily: FontFamily.poppinsBold,
-                                color: AppColor.whiteColor,
-                                fontWeight: FontWeight.w600),
-                          ),
-                        )
+                        Provider.of<NotificationProvider>(context)
+                                    .unreadNotificationCount ==
+                                0
+                            ? Container()
+                            : Positioned(
+                                right: 0,
+                                top: 0,
+                                child: Container(
+                                  height: 16,
+                                  width: 16,
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                      color: AppColor.appTheme,
+                                      borderRadius: BorderRadius.circular(8)),
+                                  child: getText(
+                                      title: Provider.of<NotificationProvider>(
+                                                      context)
+                                                  .unreadNotificationCount >
+                                              99
+                                          ? "+99"
+                                          : Provider.of<NotificationProvider>(
+                                                  context)
+                                              .unreadNotificationCount
+                                              .toString(),
+                                      size: 9,
+                                      fontFamily: FontFamily.poppinsBold,
+                                      color: AppColor.whiteColor,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              )
                       ],
                     ),
                   ),

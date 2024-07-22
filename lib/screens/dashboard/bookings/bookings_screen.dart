@@ -34,7 +34,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
   callInitFunction() {
     final provider = Provider.of<BookingsProvier>(context, listen: false);
     Future.delayed(Duration.zero, () {
-      provider.callApiFunction();
+      provider.callApiFunction(true);
     });
   }
 
@@ -54,7 +54,9 @@ class _BookingsScreenState extends State<BookingsScreen> {
                 Expanded(
                     child: myProvider.isSelectedTabBar == 0
                         ? activeBookingsWidget(myProvider)
-                        : pendingBookingsWidget(myProvider))
+                        : myProvider.isSelectedTabBar == 1
+                            ? pendingBookingsWidget(myProvider)
+                            : completeBookingsWidget(myProvider))
               ],
             ),
           );
@@ -73,6 +75,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
               onTap: () {
                 if (provier.isSelectedTabBar != 0) {
                   provier.updateSelectedTabBar(0);
+                  provier.callApiFunction(false);
                 }
               },
               child: Column(
@@ -100,6 +103,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
             child: GestureDetector(
               onTap: () {
                 if (provier.isSelectedTabBar != 1) {
+                  provier.callApiFunction(false);
                   provier.updateSelectedTabBar(1);
                 }
               },
@@ -117,6 +121,35 @@ class _BookingsScreenState extends State<BookingsScreen> {
                   Container(
                     height: 1,
                     color: provier.isSelectedTabBar == 1
+                        ? AppColor.textBlackColor
+                        : AppColor.borderD9Color,
+                  )
+                ],
+              ),
+            ),
+          ),
+          Flexible(
+            child: GestureDetector(
+              onTap: () {
+                if (provier.isSelectedTabBar != 2) {
+                  provier.completedBookingApiFunction(false);
+                  provier.updateSelectedTabBar(2);
+                }
+              },
+              child: Column(
+                children: [
+                  getText(
+                      title: StringKey.completed.tr,
+                      size: 14,
+                      fontFamily: FontFamily.poppinsMedium,
+                      color: provier.isSelectedTabBar == 2
+                          ? AppColor.textBlackColor
+                          : AppColor.textBlackColor.withOpacity(.6),
+                      fontWeight: FontWeight.w500),
+                  ScreenSize.height(10),
+                  Container(
+                    height: 1,
+                    color: provier.isSelectedTabBar == 2
                         ? AppColor.textBlackColor
                         : AppColor.borderD9Color,
                   )
@@ -149,7 +182,9 @@ class _BookingsScreenState extends State<BookingsScreen> {
                 onTap: () {
                   AppRoutes.pushCupertinoNavigation(ViewBookingScreen(
                     bookingId: model.bookingId.toString(),
-                  ));
+                  )).then((val) {
+                    provier.callApiFunction(false);
+                  });
                 },
                 child: Container(
                   decoration: BoxDecoration(
@@ -222,6 +257,101 @@ class _BookingsScreenState extends State<BookingsScreen> {
                           title: StringKey.serviceName.tr,
                           subTitle:
                               model.service != null ? model.service!.name : ''),
+                    ],
+                  ),
+                ),
+              );
+            });
+  }
+
+  completeBookingsWidget(BookingsProvier provier) {
+    return provier.activeList.isEmpty
+        ? Align(
+            alignment: Alignment.center,
+            child: noDataWidget(),
+          )
+        : ListView.separated(
+            separatorBuilder: (context, sp) {
+              return ScreenSize.height(10);
+            },
+            itemCount: provier.completeBookingModel!.data!.myListing!.length,
+            shrinkWrap: true,
+            padding:
+                const EdgeInsets.only(left: 15, right: 15, top: 40, bottom: 40),
+            itemBuilder: (context, index) {
+              var model = provier.completeBookingModel!.data!.myListing![index];
+              return GestureDetector(
+                onTap: () {
+                  AppRoutes.pushCupertinoNavigation(ViewBookingScreen(
+                    bookingId: model.bookingId.toString(),
+                  )).then((val) {
+                    provier.completedBookingApiFunction(false);
+                  });
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: AppColor.whiteColor,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                            offset: const Offset(0, 2),
+                            color: AppColor.blackColor.withOpacity(.2),
+                            blurRadius: 10)
+                      ]),
+                  padding: const EdgeInsets.only(
+                      left: 20, top: 20, bottom: 24, right: 20),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: model.nurse != null
+                                ? NetworkImageHelper(
+                                    img: model.nurse!.displayProfileImage,
+                                    height: 70.0,
+                                    width: 70.0,
+                                  )
+                                : const SizedBox(
+                                    height: 70,
+                                    width: 70,
+                                  ),
+                          ),
+                          ScreenSize.width(15),
+                          Expanded(
+                              child: Text(
+                            model.nurse != null
+                                ? "${model.nurse!.pUserName != null ? model.nurse!.pUserName.toString().substring(0).toUpperCase()[0] + model.nurse!.pUserName.toString().substring(1) : ''} ${model.nurse!.pUserSurname != null ? model.nurse!.pUserSurname.toString().substring(0).toUpperCase()[0] + model.nurse!.pUserSurname.toString().substring(1) : ''}"
+                                : '',
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontFamily: FontFamily.poppinsSemiBold,
+                                color: AppColor.textBlackColor,
+                                fontWeight: FontWeight.w600),
+                          )),
+                          ratingWidget(
+                              size: 12,
+                              initalRating: model.nurse!.ratingAsBuyer != null
+                                  ? double.parse(
+                                      model.nurse!.ratingAsBuyer.toString())
+                                  : 0,
+                              isGesture: true,
+                              onRatingUpdate: (val) {})
+                        ],
+                      ),
+                      ScreenSize.height(20),
+                      customRowDetailsWidget(
+                          title: StringKey.bookingDate.tr,
+                          subTitle: model.statusCreatedAt != null
+                              ? TimeFormat.convertBookingDate(
+                                  model.statusCreatedAt)
+                              : ''),
+                      ScreenSize.height(9),
+                      customRowDetailsWidget(
+                          title: StringKey.serviceName.tr,
+                          subTitle: model.productTitle ?? ''),
                     ],
                   ),
                 ),

@@ -48,17 +48,19 @@ class ViewBookingProvider extends ChangeNotifier {
     String body = Uri(queryParameters: data).query;
     print(body);
     ApiService.apiMethod(
-      url: ApiUrl.addRatingUrl,
-      body: body,
-      method: checkApiMethod(httpMethod.post),
-    ).then((value) {
+            url: ApiUrl.addRatingUrl,
+            body: body,
+            method: checkApiMethod(httpMethod.post),
+            isErrorMessageShow: true)
+        .then((value) {
       Navigator.pop(navigatorKey.currentContext!);
       if (value != null) {
         Navigator.pop(navigatorKey.currentContext!);
         clearValues();
         Utils.successSnackBar(value['status'], navigatorKey.currentContext!);
       } else {
-        Utils.errorSnackBar(value['message'], navigatorKey.currentContext!);
+        Navigator.pop(navigatorKey.currentContext!);
+        print('object$value...');
       }
     });
   }

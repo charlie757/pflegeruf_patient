@@ -3,11 +3,13 @@ import 'package:patient/helper/appcolor.dart';
 import 'package:patient/helper/appimages.dart';
 import 'package:patient/helper/screensize.dart';
 import 'package:patient/providers/dashboard_provider/dashboard_provider.dart';
+import 'package:patient/providers/dashboard_provider/notification_provider.dart';
 import 'package:patient/providers/dashboard_provider/profile_provider.dart';
 import 'package:patient/screens/dashboard/bookings/bookings_screen.dart';
 import 'package:patient/screens/dashboard/home/home_screen.dart';
 import 'package:patient/screens/dashboard/profile_screen.dart';
 import 'package:patient/utils/location_service.dart';
+import 'package:patient/utils/session_manager.dart';
 import 'package:patient/utils/utils.dart';
 import 'package:provider/provider.dart';
 
@@ -18,12 +20,46 @@ class DashboardScreen extends StatefulWidget {
   State<DashboardScreen> createState() => _DashboardScreenState();
 }
 
-class _DashboardScreenState extends State<DashboardScreen> {
+class _DashboardScreenState extends State<DashboardScreen>
+    with WidgetsBindingObserver {
   @override
   void initState() {
+    WidgetsBinding.instance.addObserver(this);
+
     callInitFunction();
     getLocationPermission();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    switch (state) {
+      case AppLifecycleState.inactive:
+        print('App is inactive');
+        break;
+      case AppLifecycleState.paused:
+        print('App is paused');
+        break;
+      case AppLifecycleState.resumed:
+        if (SessionManager.token.isNotEmpty) {
+          Provider.of<NotificationProvider>(navigatorKey.currentContext!,
+                  listen: false)
+              .unreadNotificationApiFunction();
+        }
+        break;
+      case AppLifecycleState.detached:
+        print('App is detached');
+        break;
+      case AppLifecycleState.hidden:
+      // TODO: Handle this case.
+    }
   }
 
   callInitFunction() {

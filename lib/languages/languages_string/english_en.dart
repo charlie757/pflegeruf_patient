@@ -94,5 +94,6 @@ const englishEN = {
   StringKey.serviceForYou: "Services for you",
   StringKey.continueTitle: "Continue",
   StringKey.description: "Description",
-  StringKey.noData: "No Data"
+  StringKey.noData: "No Data",
+  StringKey.completed: "Completed"
 };
