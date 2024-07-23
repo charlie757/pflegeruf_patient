@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:patient/config/approutes.dart';
@@ -103,7 +104,8 @@ class Utils {
     homeProvider.clearValues();
     profileProvider.clearValuesOnLogout();
     SessionManager.setToken = '';
-    AppRoutes.pushReplacementNavigation(const LoginScreen());
+    Navigator.pushAndRemoveUntil(navigatorKey.currentContext!, CupertinoPageRoute(builder: (context)=>const  LoginScreen()), (route)=>false);
+    // AppRoutes.pushReplacementNavigation(const LoginScreen());
   }
 
   static deleteAcount() {
@@ -111,6 +113,7 @@ class Utils {
     SessionManager.setKeepMySignedIn = false;
     SessionManager.setUserEmail = '';
     SessionManager.setuserPassword = '';
-    AppRoutes.pushReplacementNavigation(const LoginScreen());
+    Navigator.pushAndRemoveUntil(navigatorKey.currentContext!, CupertinoPageRoute(builder: (context)=>const LoginScreen()), (route)=>false);
+    // AppRoutes.pushReplacementNavigation(const LoginScreen());
   }
 }

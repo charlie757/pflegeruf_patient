@@ -24,4 +24,5 @@ class ApiUrl {
       '${baseUrl}notification/notification-unread-count';
   static String completedBookingListUrl =
       '${baseUrl}Mylisting/booking-list-completed-patient';
+  static String logoutUrl = '${baseUrl}User/logout';
 }

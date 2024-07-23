@@ -35,7 +35,7 @@ class _ViewBookingScreenState extends State<ViewBookingScreen> {
     final provider = Provider.of<ViewBookingProvider>(context, listen: false);
     provider.clearValues();
     Future.delayed(Duration.zero, () {
-      provider.callApiFunction(widget.bookingId);
+      provider.callApiFunction(widget.bookingId,true);
     });
   }
 
@@ -82,10 +82,11 @@ class _ViewBookingScreenState extends State<ViewBookingScreen> {
                                       ),
                                 ScreenSize.height(34),
                                 userDetails(myProvider),
-                                ScreenSize.height(50),
+                                myProvider.model!=null&&myProvider.model!.data!=null&&myProvider.model!.data!.myListing!=null&&
+                                    myProvider.model!.data!.myListing!.patient!=null&&myProvider.model!.data!.myListing!.patient!.ratedByPatient.toString().toLowerCase()!='yes'?
                                 Padding(
                                   padding: const EdgeInsets.only(
-                                      left: 38, right: 38),
+                                      left: 38, right: 38,top: 50),
                                   child: AppButton(
                                       title: StringKey.giveReview.tr,
                                       height: 54,
@@ -95,7 +96,7 @@ class _ViewBookingScreenState extends State<ViewBookingScreen> {
                                         openRatingBottomSheet(
                                             myProvider, profileProvider);
                                       }),
-                                )
+                                ):Container()
                               ],
                             )),
                       )
@@ -428,7 +429,7 @@ class _ViewBookingScreenState extends State<ViewBookingScreen> {
                                   provider.model!.data!.myListing!.bookingId
                                       .toString(),
                                   provider.model!.data!.myListing!.nurse!.id
-                                      .toString());
+                                      .toString(), widget.bookingId);
                             }
                           }),
                     ),

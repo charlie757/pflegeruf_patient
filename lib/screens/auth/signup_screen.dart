@@ -122,7 +122,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     textInputType: TextInputType.phone,
                     inputFormatters: [
                       FilteringTextInputFormatter.digitsOnly,
-                      LengthLimitingTextInputFormatter(10)
+                      LengthLimitingTextInputFormatter(12)
                     ],
                     errorMsg: myProvider.phoneValidationMsg,
                     onChanged: (val) {

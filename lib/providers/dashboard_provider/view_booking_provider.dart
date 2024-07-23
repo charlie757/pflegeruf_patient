@@ -16,17 +16,20 @@ class ViewBookingProvider extends ChangeNotifier {
     commentController.clear();
   }
 
-  callApiFunction(String id) async {
-    model = null;
-    notifyListeners();
-    showCircleProgressDialog(navigatorKey.currentContext!);
+  callApiFunction(String id, bool isLoading) async {
+    if(isLoading){
+      model = null;
+      notifyListeners();
+      showCircleProgressDialog(navigatorKey.currentContext!);
+
+    }
     var map = {
       'booking_id': id,
     };
     ApiService.multiPartApiMethod(
             url: ApiUrl.bookingDetailsUrl, body: map, isErrorMessageShow: true)
         .then((value) {
-      Navigator.pop(navigatorKey.currentContext!);
+     isLoading? Navigator.pop(navigatorKey.currentContext!):null;
       if (value != null) {
         model = ViewBookingModel.fromJson(value);
         notifyListeners();
@@ -37,6 +40,7 @@ class ViewBookingProvider extends ChangeNotifier {
   addRatingApiFunction(
     String productId,
     String userId,
+      String bookingId
   ) {
     showCircleProgressDialog(navigatorKey.currentContext!);
     var data = {
@@ -56,6 +60,7 @@ class ViewBookingProvider extends ChangeNotifier {
       Navigator.pop(navigatorKey.currentContext!);
       if (value != null) {
         Navigator.pop(navigatorKey.currentContext!);
+        callApiFunction(bookingId, false);
         clearValues();
         Utils.successSnackBar(value['status'], navigatorKey.currentContext!);
       } else {

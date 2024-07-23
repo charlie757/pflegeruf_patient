@@ -179,7 +179,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       textInputType: TextInputType.phone,
                       inputFormatters: [
                         FilteringTextInputFormatter.digitsOnly,
-                        LengthLimitingTextInputFormatter(10)
+                        LengthLimitingTextInputFormatter(12)
                       ],
                       errorMsg: myProvider.phoneValidationMsg,
                       onChanged: (val) {
@@ -260,7 +260,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
       alignment: Alignment.center,
       child: Stack(
         children: [
-          provider.profileModel!.data!.details!.displayProfileImage.isNotEmpty
+          provider.profileModel!=null&&provider.profileModel!.data!=null&&
+              provider.profileModel!.data!.details!.displayProfileImage.isNotEmpty
               ? ClipRRect(
                   borderRadius: BorderRadius.circular(50),
                   child: NetworkImageHelper(
@@ -333,7 +334,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Navigator.pop(context);
                         },
                         yesTap: () {
-                          Utils.logOut();
+                          Provider.of<ProfileProvider>(context,listen: false).logoutApiFunction();
                         });
                   },
                   child: Container(

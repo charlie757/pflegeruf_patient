@@ -169,6 +169,26 @@ class ProfileProvider extends ChangeNotifier {
     });
   }
 
+
+  logoutApiFunction() async {
+    showCircleProgressDialog(navigatorKey.currentContext!);
+    var data = {'': ''};
+    print(data);
+    String body = Uri(queryParameters: data).query;
+    ApiService.apiMethod(
+      url: ApiUrl.logoutUrl,
+      body: body,
+      method: checkApiMethod(httpMethod.post),
+      isErrorMessageShow: false,
+    ).then((value) {
+      Navigator.pop(navigatorKey.currentContext!);
+      if (value != null) {
+        Utils.logOut();
+        notifyListeners();
+      }
+    });
+  }
+
   uploadProfileImageApiFunction() async {
     List<int> imageBytes = imgFile!.readAsBytesSync();
     String base64Image = base64Encode(imageBytes);
