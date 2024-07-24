@@ -16,7 +16,8 @@ import 'package:get/get.dart';
 
 class RequiredQuestionProvider extends ChangeNotifier {
   final nameController = TextEditingController();
-  final addressController = TextEditingController();
+  final lastNameController = TextEditingController();
+  // final addressController = TextEditingController();
   final postalCodeController = TextEditingController();
   final streetController = TextEditingController();
   final cityController = TextEditingController();
@@ -26,7 +27,7 @@ class RequiredQuestionProvider extends ChangeNotifier {
 
   /// to show the textfield error
   String? namevalidationMsg = '';
-  String? addressValidationMsg = '';
+  String? lastNameValidationMsg = '';
   String? postalCodeValidationMsg = '';
   String? streetValidationMsg = '';
   String? cityValidationMsg = '';
@@ -35,14 +36,13 @@ class RequiredQuestionProvider extends ChangeNotifier {
 
   clearValues() {
     namevalidationMsg = '';
-    addressValidationMsg = '';
+    lastNameValidationMsg = '';
     postalCodeValidationMsg = '';
     streetValidationMsg = '';
     cityValidationMsg = '';
     insuranceNoValidationMsg = '';
     birthDateValidationMsg = '';
     nameController.clear();
-    addressController.clear();
     postalCodeController.clear();
     streetController.clear();
     cityController.clear();
@@ -58,15 +58,15 @@ class RequiredQuestionProvider extends ChangeNotifier {
 
   checkValidation(String id, String title) {
     if (AppValidation.nameValidator(nameController.text) == null &&
-        AppValidation.addressValidator(addressController.text) == null &&
+        AppValidation.addressValidator(lastNameController.text) == null &&
         AppValidation.postalCodeValidator(postalCodeController.text) == null &&
         AppValidation.streetValidator(streetController.text) == null &&
         AppValidation.cityValidator(cityController.text) == null &&
         AppValidation.insuranceNoValidator(insuranceController.text) == null &&
         AppValidation.birthDateValidator(birthDateController.text) == null) {
       namevalidationMsg = AppValidation.nameValidator(nameController.text);
-      addressValidationMsg =
-          AppValidation.addressValidator(addressController.text);
+      lastNameValidationMsg =
+          AppValidation.addressValidator(lastNameController.text);
       postalCodeValidationMsg =
           AppValidation.postalCodeValidator(postalCodeController.text);
       streetValidationMsg =
@@ -84,8 +84,8 @@ class RequiredQuestionProvider extends ChangeNotifier {
       }
     } else {
       namevalidationMsg = AppValidation.nameValidator(nameController.text);
-      addressValidationMsg =
-          AppValidation.addressValidator(addressController.text);
+      lastNameValidationMsg =
+          AppValidation.addressValidator(lastNameController.text);
       postalCodeValidationMsg =
           AppValidation.postalCodeValidator(postalCodeController.text);
       streetValidationMsg =
@@ -105,7 +105,7 @@ class RequiredQuestionProvider extends ChangeNotifier {
       'title': title,
       'service': id,
       'name': nameController.text,
-      'address': addressController.text,
+      'last_name': lastNameController.text,
       'street': streetController.text,
       'postal_code': postalCodeController.text,
       'city': cityController.text,

@@ -217,6 +217,13 @@ class _ViewBookingScreenState extends State<ViewBookingScreen> {
                   : ''),
           ScreenSize.height(14),
           customRowDetailsWidget(
+              title: StringKey.bookingTime.tr,
+              subTitle: provider.model!.data!.myListing!.bookingDate != null
+                  ? TimeFormat.convertBookingTime(
+                  provider.model!.data!.myListing!.bookingDate)
+                  : ''),
+          ScreenSize.height(14),
+          customRowDetailsWidget(
               title: StringKey.bookedFor.tr,
               subTitle: provider.model!.data!.myListing!.service != null
                   ? provider.model!.data!.myListing!.service!.name

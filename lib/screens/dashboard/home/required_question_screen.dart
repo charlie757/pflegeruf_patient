@@ -58,7 +58,7 @@ class _RequiredQuestionScreenState extends State<RequiredQuestionScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 getText(
-                    title: "1. ${StringKey.name.tr}",
+                    title: "1. ${StringKey.firstName.tr}",
                     size: 14,
                     fontFamily: FontFamily.poppinsSemiBold,
                     color: AppColor.textBlackColor,
@@ -66,7 +66,7 @@ class _RequiredQuestionScreenState extends State<RequiredQuestionScreen> {
                 ScreenSize.height(5),
                 CustomTextfield(
                   controller: myProvider.nameController,
-                  hintText: StringKey.enterYourName.tr,
+                  hintText: StringKey.enterFirstName.tr,
                   textInputAction: TextInputAction.next,
                   errorMsg: myProvider.namevalidationMsg,
                   onChanged: (val) {
@@ -76,27 +76,47 @@ class _RequiredQuestionScreenState extends State<RequiredQuestionScreen> {
                   },
                 ),
                 ScreenSize.height(20),
+
                 getText(
-                    title: "2. ${StringKey.address.tr}",
+                    title: "2. ${StringKey.lastName.tr}",
                     size: 14,
                     fontFamily: FontFamily.poppinsSemiBold,
                     color: AppColor.textBlackColor,
                     fontWeight: FontWeight.w500),
                 ScreenSize.height(5),
                 CustomTextfield(
-                  controller: myProvider.addressController,
-                  hintText: StringKey.enterYourAddress.tr,
+                  controller: myProvider.lastNameController,
+                  hintText: StringKey.enterLastName.tr,
                   textInputAction: TextInputAction.next,
-                  errorMsg: myProvider.addressValidationMsg,
+                  errorMsg: myProvider.lastNameValidationMsg,
                   onChanged: (val) {
-                    myProvider.addressValidationMsg =
-                        AppValidation.addressValidator(val);
+                    myProvider.lastNameValidationMsg =
+                        AppValidation.nameValidator(val);
                     setState(() {});
                   },
                 ),
                 ScreenSize.height(20),
                 getText(
-                    title: "3. ${StringKey.postalCode.tr}",
+                    title: "3. ${StringKey.street.tr}",
+                    size: 14,
+                    fontFamily: FontFamily.poppinsSemiBold,
+                    color: AppColor.textBlackColor,
+                    fontWeight: FontWeight.w500),
+                ScreenSize.height(5),
+                CustomTextfield(
+                  controller: myProvider.streetController,
+                  hintText: StringKey.enterYourStreet.tr,
+                  errorMsg: myProvider.streetValidationMsg,
+                  textInputAction: TextInputAction.next,
+                  onChanged: (val) {
+                    myProvider.streetValidationMsg =
+                        AppValidation.streetValidator(val);
+                    setState(() {});
+                  },
+                ),
+                ScreenSize.height(20),
+                getText(
+                    title: "4. ${StringKey.postalCode.tr}",
                     size: 14,
                     fontFamily: FontFamily.poppinsSemiBold,
                     color: AppColor.textBlackColor,
@@ -115,25 +135,6 @@ class _RequiredQuestionScreenState extends State<RequiredQuestionScreen> {
                   onChanged: (val) {
                     myProvider.postalCodeValidationMsg =
                         AppValidation.postalCodeValidator(val);
-                    setState(() {});
-                  },
-                ),
-                ScreenSize.height(20),
-                getText(
-                    title: "4. ${StringKey.street.tr}",
-                    size: 14,
-                    fontFamily: FontFamily.poppinsSemiBold,
-                    color: AppColor.textBlackColor,
-                    fontWeight: FontWeight.w500),
-                ScreenSize.height(5),
-                CustomTextfield(
-                  controller: myProvider.streetController,
-                  hintText: StringKey.enterYourStreet.tr,
-                  errorMsg: myProvider.streetValidationMsg,
-                  textInputAction: TextInputAction.next,
-                  onChanged: (val) {
-                    myProvider.streetValidationMsg =
-                        AppValidation.streetValidator(val);
                     setState(() {});
                   },
                 ),

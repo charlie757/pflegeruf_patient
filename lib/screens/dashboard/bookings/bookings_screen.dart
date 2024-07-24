@@ -253,6 +253,12 @@ class _BookingsScreenState extends State<BookingsScreen> {
                               ? TimeFormat.convertBookingDate(model.bookingDate)
                               : ''),
                       ScreenSize.height(9),
+              customRowDetailsWidget(
+              title: StringKey.bookingTime.tr,
+              subTitle: model.bookingDate != null
+              ? TimeFormat.convertBookingTime(model.bookingDate)
+                  : ''),
+              ScreenSize.height(9),
                       customRowDetailsWidget(
                           title: StringKey.serviceName.tr,
                           subTitle:
@@ -265,12 +271,8 @@ class _BookingsScreenState extends State<BookingsScreen> {
   }
 
   completeBookingsWidget(BookingsProvier provier) {
-    return provier.activeList.isEmpty
-        ? Align(
-            alignment: Alignment.center,
-            child: noDataWidget(),
-          )
-        : ListView.separated(
+    return provier.completeBookingModel!=null&&provier.completeBookingModel!.data!=null&& provier.completeBookingModel!.data!.myListing!!=null?
+        ListView.separated(
             separatorBuilder: (context, sp) {
               return ScreenSize.height(10);
             },
@@ -350,13 +352,23 @@ class _BookingsScreenState extends State<BookingsScreen> {
                               : ''),
                       ScreenSize.height(9),
                       customRowDetailsWidget(
+                          title: StringKey.bookingTime.tr,
+                          subTitle: model.statusCreatedAt != null
+                              ? TimeFormat.convertBookingTime(
+                              model.statusCreatedAt)
+                              : ''),
+                      ScreenSize.height(9),
+                      customRowDetailsWidget(
                           title: StringKey.serviceName.tr,
                           subTitle: model.productTitle ?? ''),
                     ],
                   ),
                 ),
               );
-            });
+            }):Align(
+      alignment: Alignment.center,
+      child: noDataWidget(),
+    );
   }
 
   pendingBookingsWidget(BookingsProvier provier) {
@@ -388,6 +400,12 @@ class _BookingsScreenState extends State<BookingsScreen> {
                     title: StringKey.bookingDate.tr,
                     subTitle: model.bookingDate != null
                         ? TimeFormat.convertBookingDate(model.bookingDate)
+                        : ''),
+                ScreenSize.height(14),
+                customRowDetailsWidget(
+                    title: StringKey.bookingTime.tr,
+                    subTitle: model.bookingDate != null
+                        ? TimeFormat.convertBookingTime(model.bookingDate)
                         : ''),
                 ScreenSize.height(14),
                 customRowDetailsWidget(
