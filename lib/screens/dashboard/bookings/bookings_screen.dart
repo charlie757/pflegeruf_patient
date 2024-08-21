@@ -6,7 +6,7 @@ import 'package:patient/helper/fontfamily.dart';
 import 'package:patient/helper/getText.dart';
 import 'package:patient/helper/network_image_helper.dart';
 import 'package:patient/helper/screensize.dart';
-import 'package:patient/languages/string_key.dart';
+import 'package:patient/languages/language_constants.dart';
 import 'package:patient/model/booking_model.dart';
 import 'package:patient/providers/dashboard_provider/bookings_provider.dart';
 import 'package:patient/screens/dashboard/bookings/view_booking_screen.dart';
@@ -33,7 +33,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
 
   callInitFunction() {
     final provider = Provider.of<BookingsProvier>(context, listen: false);
-    provider.isSelectedTabBar=0;
+    provider.isSelectedTabBar = 0;
     Future.delayed(Duration.zero, () {
       provider.callApiFunction(true);
     });
@@ -45,7 +45,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
       data: mediaQuery,
       child: Scaffold(
         backgroundColor: AppColor.whiteColor,
-        appBar: appBar(StringKey.bookings.tr, false),
+        appBar: appBar(getTranslated('bookings', context)!.tr, false),
         body: Consumer<BookingsProvier>(builder: (context, myProvider, child) {
           return Padding(
             padding: const EdgeInsets.only(top: 25),
@@ -82,7 +82,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
               child: Column(
                 children: [
                   getText(
-                      title: StringKey.active.tr,
+                      title: getTranslated('active', context)!.tr,
                       size: 14,
                       fontFamily: FontFamily.poppinsMedium,
                       color: provier.isSelectedTabBar == 0
@@ -111,7 +111,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
               child: Column(
                 children: [
                   getText(
-                      title: StringKey.pending.tr,
+                      title: getTranslated('pending', context)!.tr,
                       size: 14,
                       fontFamily: FontFamily.poppinsMedium,
                       color: provier.isSelectedTabBar == 1
@@ -140,7 +140,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
               child: Column(
                 children: [
                   getText(
-                      title: StringKey.completed.tr,
+                      title: getTranslated('completed', context)!.tr,
                       size: 14,
                       fontFamily: FontFamily.poppinsMedium,
                       color: provier.isSelectedTabBar == 2
@@ -249,19 +249,19 @@ class _BookingsScreenState extends State<BookingsScreen> {
                       ),
                       ScreenSize.height(20),
                       customRowDetailsWidget(
-                          title: StringKey.bookingDate.tr,
+                          title: getTranslated('bookingDate', context)!.tr,
                           subTitle: model.bookingDate != null
                               ? TimeFormat.convertBookingDate(model.bookingDate)
                               : ''),
                       ScreenSize.height(9),
-              customRowDetailsWidget(
-              title: StringKey.bookingTime.tr,
-              subTitle: model.bookingDate != null
-              ? TimeFormat.convertBookingTime(model.bookingDate)
-                  : ''),
-              ScreenSize.height(9),
                       customRowDetailsWidget(
-                          title: StringKey.serviceName.tr,
+                          title: getTranslated('bookingTime', context)!.tr,
+                          subTitle: model.bookingDate != null
+                              ? TimeFormat.convertBookingTime(model.bookingDate)
+                              : ''),
+                      ScreenSize.height(9),
+                      customRowDetailsWidget(
+                          title: getTranslated('serviceName', context)!.tr,
                           subTitle:
                               model.service != null ? model.service!.name : ''),
                     ],
@@ -272,8 +272,11 @@ class _BookingsScreenState extends State<BookingsScreen> {
   }
 
   completeBookingsWidget(BookingsProvier provier) {
-    return provier.completeBookingModel!=null&&provier.completeBookingModel!.data!=null&& provier.completeBookingModel!.data!.myListing!=null&&provier.completeBookingModel!.data!.myListing!.isNotEmpty?
-        ListView.separated(
+    return provier.completeBookingModel != null &&
+            provier.completeBookingModel!.data != null &&
+            provier.completeBookingModel!.data!.myListing != null &&
+            provier.completeBookingModel!.data!.myListing!.isNotEmpty
+        ? ListView.separated(
             separatorBuilder: (context, sp) {
               return ScreenSize.height(10);
             },
@@ -346,92 +349,95 @@ class _BookingsScreenState extends State<BookingsScreen> {
                       ),
                       ScreenSize.height(20),
                       customRowDetailsWidget(
-                          title: StringKey.bookingDate.tr,
+                          title: getTranslated('bookingDate', context)!.tr,
                           subTitle: model.statusCreatedAt != null
                               ? TimeFormat.convertBookingDate(
                                   model.statusCreatedAt)
                               : ''),
                       ScreenSize.height(9),
                       customRowDetailsWidget(
-                          title: StringKey.bookingTime.tr,
+                          title: getTranslated('bookingTime', context)!.tr,
                           subTitle: model.statusCreatedAt != null
                               ? TimeFormat.convertBookingTime(
-                              model.statusCreatedAt)
+                                  model.statusCreatedAt)
                               : ''),
                       ScreenSize.height(9),
                       customRowDetailsWidget(
-                          title: StringKey.serviceName.tr,
+                          title: getTranslated('serviceName', context)!.tr,
                           subTitle: model.productTitle ?? ''),
                     ],
                   ),
                 ),
               );
-            }):Align(
-      alignment: Alignment.center,
-      child: noDataWidget(),
-    );
+            })
+        : Align(
+            alignment: Alignment.center,
+            child: noDataWidget(),
+          );
   }
 
   pendingBookingsWidget(BookingsProvier provier) {
     return provier.pendingList.isEmpty
         ? Align(
-      alignment: Alignment.center,
-      child: noDataWidget(),
-    )
+            alignment: Alignment.center,
+            child: noDataWidget(),
+          )
         : ListView.separated(
-        separatorBuilder: (context, sp) {
-          return ScreenSize.height(10);
-        },
-        itemCount: provier.pendingList.length,
-        shrinkWrap: true,
-        padding:
-            const EdgeInsets.only(left: 15, right: 15, top: 40, bottom: 40),
-        itemBuilder: (context, index) {
-          var model = BookingModel.fromJson(provier.pendingList[index]);
-          return Container(
-            decoration: BoxDecoration(
-                color: AppColor.whiteColor,
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  BoxShadow(
-                      offset: const Offset(0, 2),
-                      color: AppColor.blackColor.withOpacity(.2),
-                      blurRadius: 10)
-                ]),
+            separatorBuilder: (context, sp) {
+              return ScreenSize.height(10);
+            },
+            itemCount: provier.pendingList.length,
+            shrinkWrap: true,
             padding:
-                const EdgeInsets.only(left: 20, top: 30, bottom: 30, right: 20),
-            child: Column(
-              children: [
-                customRowDetailsWidget(
-                    title: StringKey.bookingDate.tr,
-                    subTitle: model.bookingDate != null
-                        ? TimeFormat.convertBookingDate(model.bookingDate)
-                        : ''),
-                ScreenSize.height(14),
-                customRowDetailsWidget(
-                    title: StringKey.bookingTime.tr,
-                    subTitle: model.bookingDate != null
-                        ? TimeFormat.convertBookingTime(model.bookingDate)
-                        : ''),
-                ScreenSize.height(14),
-                customRowDetailsWidget(
-                    title: StringKey.bookedFor.tr,
-                    subTitle: model.service != null ? model.service!.name : ''),
-                ScreenSize.height(14),
-                customRowDetailsWidget(
-                    title: StringKey.patientName.tr,
-                    subTitle:
-                        model.patient != null ? model.patient!.bookingName ?? "" : ''),
-                ScreenSize.height(14),
-                customRowDetailsWidget(
-                    title: StringKey.patientAddress.tr,
-                    subTitle: model.patient != null
-                        ? "${model.patient!.address}, ${model.patient!.street ?? ""}, ${model.patient!.city ?? ""}, ${model.patient!.postalCode.toString()}"
-                        : ''),
-              ],
-            ),
-          );
-        });
+                const EdgeInsets.only(left: 15, right: 15, top: 40, bottom: 40),
+            itemBuilder: (context, index) {
+              var model = BookingModel.fromJson(provier.pendingList[index]);
+              return Container(
+                decoration: BoxDecoration(
+                    color: AppColor.whiteColor,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                          offset: const Offset(0, 2),
+                          color: AppColor.blackColor.withOpacity(.2),
+                          blurRadius: 10)
+                    ]),
+                padding: const EdgeInsets.only(
+                    left: 20, top: 30, bottom: 30, right: 20),
+                child: Column(
+                  children: [
+                    customRowDetailsWidget(
+                        title: getTranslated('bookingDate', context)!.tr,
+                        subTitle: model.bookingDate != null
+                            ? TimeFormat.convertBookingDate(model.bookingDate)
+                            : ''),
+                    ScreenSize.height(14),
+                    customRowDetailsWidget(
+                        title: getTranslated('bookingTime', context)!.tr,
+                        subTitle: model.bookingDate != null
+                            ? TimeFormat.convertBookingTime(model.bookingDate)
+                            : ''),
+                    ScreenSize.height(14),
+                    customRowDetailsWidget(
+                        title: getTranslated('bookedFor', context)!.tr,
+                        subTitle:
+                            model.service != null ? model.service!.name : ''),
+                    ScreenSize.height(14),
+                    customRowDetailsWidget(
+                        title: getTranslated('patientName', context)!.tr,
+                        subTitle: model.patient != null
+                            ? model.patient!.bookingName ?? ""
+                            : ''),
+                    ScreenSize.height(14),
+                    customRowDetailsWidget(
+                        title: getTranslated('patientAddress', context)!.tr,
+                        subTitle: model.patient != null
+                            ? "${model.patient!.address}, ${model.patient!.street ?? ""}, ${model.patient!.city ?? ""}, ${model.patient!.postalCode.toString()}"
+                            : ''),
+                  ],
+                ),
+              );
+            });
   }
 
   customRowDetailsWidget({required String title, required String subTitle}) {

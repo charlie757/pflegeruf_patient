@@ -1,9 +1,11 @@
+import 'package:get/get.dart';
+import 'package:patient/languages/language_constants.dart';
 import 'package:patient/utils/utils.dart';
 
 class AppValidation {
   static String? firstNameValidator(val) {
     if (val.isEmpty) {
-      return 'Enter your first name';
+      return getTranslated('enterFirstName', navigatorKey.currentContext!)!.tr;
     } else {
       return null;
 
@@ -13,7 +15,7 @@ class AppValidation {
 
   static String? lastNameValidator(val) {
     if (val.isEmpty) {
-      return 'Enter your last name';
+      return getTranslated('enterLastName', navigatorKey.currentContext!)!.tr;
     } else {
       return null;
 
@@ -23,9 +25,13 @@ class AppValidation {
 
   static String? phoneNumberValidator(val) {
     if (val.isEmpty) {
-      return 'Enter your phone number';
+      return getTranslated(
+              'enterYourPhonenUmber', navigatorKey.currentContext!)!
+          .tr;
     } else if (val.length < 10) {
-      return 'Enter valid phone number';
+      return getTranslated(
+              'enteValidPhoneNumber', navigatorKey.currentContext!)!
+          .tr;
     } else {
       return null;
 
@@ -36,9 +42,9 @@ class AppValidation {
   static String? emailValidator(val) {
     RegExp regExp = RegExp(Utils.emailPattern.trim());
     if (val.isEmpty) {
-      return 'Enter your email';
+      return getTranslated('enterYourEmail', navigatorKey.currentContext!)!.tr;
     } else if (!regExp.hasMatch(val)) {
-      return 'Enter valid email';
+      return getTranslated('enterValidEmail', navigatorKey.currentContext!)!.tr;
     } else {
       return null;
 
@@ -49,9 +55,11 @@ class AppValidation {
   static String? passwordValidator(val) {
     RegExp regExp = RegExp(Utils.passwordPattern.trim());
     if (val.isEmpty) {
-      return 'Enter your password';
+      return getTranslated('enterYourPasword', navigatorKey.currentContext!)!
+          .tr;
     } else if (!regExp.hasMatch(val)) {
-      return 'Password should contain at least one upper case, one lower case, one digit, one Special character';
+      return getTranslated('passwordValidation', navigatorKey.currentContext!)!
+          .tr;
     } else {
       return null;
 
@@ -62,12 +70,16 @@ class AppValidation {
   static String? reEnterpasswordValidator(currentValue, previousValue) {
     RegExp regExp = RegExp(Utils.passwordPattern.trim());
     if (currentValue.isEmpty) {
-      return 'Enter your password';
+      return getTranslated('enterYourPasword', navigatorKey.currentContext!)!
+          .tr;
     } else if (!regExp.hasMatch(currentValue)) {
-      return 'Password should contain at least one upper case, one lower case, one digit, one Special character';
+      return getTranslated('passwordValidation', navigatorKey.currentContext!)!
+          .tr;
     } else if (previousValue.isNotEmpty) {
       if (currentValue != previousValue) {
-        return 'Password should be same';
+        return getTranslated(
+                'passwordShouldBeSame', navigatorKey.currentContext!)!
+            .tr;
       }
       return null;
     } else {
@@ -79,7 +91,7 @@ class AppValidation {
 
   static String? nameValidator(val) {
     if (val.isEmpty) {
-      return 'Enter your name';
+      return getTranslated('enterYourName', navigatorKey.currentContext!)!.tr;
     } else {
       return null;
 
@@ -89,7 +101,8 @@ class AppValidation {
 
   static String? addressValidator(val) {
     if (val.isEmpty) {
-      return 'Enter your address';
+      return getTranslated('enterYourAddress', navigatorKey.currentContext!)!
+          .tr;
     } else {
       return null;
     }
@@ -97,9 +110,12 @@ class AppValidation {
 
   static String? postalCodeValidator(val) {
     if (val.isEmpty) {
-      return 'Enter your postal code';
+      return getTranslated('enterYourPostalCode', navigatorKey.currentContext!)!
+          .tr;
     } else if (val.length < 5) {
-      return 'Enter valid postal code';
+      return getTranslated(
+              'enterValidPostalCode', navigatorKey.currentContext!)!
+          .tr;
     } else {
       return null;
     }
@@ -107,7 +123,7 @@ class AppValidation {
 
   static String? streetValidator(val) {
     if (val.isEmpty) {
-      return 'Enter your street';
+      return getTranslated('enterYourStreet', navigatorKey.currentContext!)!.tr;
     } else {
       return null;
     }
@@ -115,7 +131,7 @@ class AppValidation {
 
   static String? cityValidator(val) {
     if (val.isEmpty) {
-      return 'Enter your city';
+      return getTranslated('enterYourCity', navigatorKey.currentContext!)!.tr;
     } else {
       return null;
     }
@@ -123,7 +139,9 @@ class AppValidation {
 
   static String? insuranceNoValidator(val) {
     if (val.isEmpty) {
-      return 'Enter your insurance no';
+      return getTranslated(
+              'enterYourInsuranceNo', navigatorKey.currentContext!)!
+          .tr;
     } else {
       return null;
     }
@@ -131,7 +149,8 @@ class AppValidation {
 
   static String? birthDateValidator(val) {
     if (val.isEmpty) {
-      return 'Select your birth date';
+      return getTranslated('selectYourBirthDate', navigatorKey.currentContext!)!
+          .tr;
     } else {
       return null;
     }

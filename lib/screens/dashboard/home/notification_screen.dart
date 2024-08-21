@@ -4,8 +4,8 @@ import 'package:patient/helper/appimages.dart';
 import 'package:patient/helper/fontfamily.dart';
 import 'package:patient/helper/getText.dart';
 import 'package:patient/helper/screensize.dart';
-import 'package:patient/languages/string_key.dart';
 import 'package:get/get.dart';
+import 'package:patient/languages/language_constants.dart';
 import 'package:patient/providers/dashboard_provider/notification_provider.dart';
 import 'package:patient/utils/no_data.dart';
 import 'package:patient/utils/time_format.dart';
@@ -72,7 +72,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
             ),
             centerTitle: true,
             title: getText(
-                title: StringKey.notification.tr,
+                title: getTranslated('notification', context)!.tr,
                 size: 20,
                 fontFamily: FontFamily.poppinsSemiBold,
                 color: AppColor.textBlackColor,

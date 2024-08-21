@@ -7,14 +7,13 @@ import 'package:patient/helper/fontfamily.dart';
 import 'package:patient/helper/getText.dart';
 import 'package:patient/helper/network_image_helper.dart';
 import 'package:patient/helper/screensize.dart';
-import 'package:patient/languages/string_key.dart';
+import 'package:patient/languages/language_constants.dart';
 import 'package:patient/providers/dashboard_provider/dashboard_provider.dart';
 import 'package:patient/providers/dashboard_provider/home_provider.dart';
 import 'package:patient/providers/dashboard_provider/notification_provider.dart';
 import 'package:patient/providers/dashboard_provider/profile_provider.dart';
 import 'package:patient/screens/dashboard/home/notification_screen.dart';
 import 'package:patient/screens/dashboard/home/view_service_screen.dart';
-import 'package:patient/utils/no_data.dart';
 import 'package:patient/utils/utils.dart';
 import 'package:provider/provider.dart';
 import 'package:get/get.dart';
@@ -38,7 +37,8 @@ class _HomeScreenState extends State<HomeScreen> {
   callInitFunction() {
     final myProvider = Provider.of<HomeProvider>(context, listen: false);
     myProvider.homeApiFunction();
-    Provider.of<NotificationProvider>(context,listen: false).unreadNotificationApiFunction();
+    Provider.of<NotificationProvider>(context, listen: false)
+        .unreadNotificationApiFunction();
   }
 
   @override
@@ -86,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Flexible(
                     child: getText(
                         title:
-                            '${StringKey.welcome.tr}, ${profileProvider.profileModel != null && profileProvider.profileModel!.data != null && profileProvider.profileModel!.data!.details != null ? (profileProvider.profileModel!.data!.details!.firstName.toString().substring(0).toUpperCase()[0] + profileProvider.profileModel!.data!.details!.firstName.toString().substring(1)) : ''}',
+                            '${getTranslated('welcome', context)!.tr}, ${profileProvider.profileModel != null && profileProvider.profileModel!.data != null && profileProvider.profileModel!.data!.details != null ? (profileProvider.profileModel!.data!.details!.firstName.toString().substring(0).toUpperCase()[0] + profileProvider.profileModel!.data!.details!.firstName.toString().substring(1)) : ''}',
                         size: 16,
                         fontFamily: FontFamily.poppinsSemiBold,
                         color: AppColor.whiteColor,
@@ -245,7 +245,7 @@ class _HomeScreenState extends State<HomeScreen> {
         Padding(
           padding: const EdgeInsets.only(left: 20, right: 20),
           child: getText(
-              title: StringKey.serviceForYou.tr,
+              title: getTranslated('serviceForYou', context)!.tr,
               size: 22,
               fontFamily: FontFamily.poppinsSemiBold,
               color: AppColor.textBlackColor,

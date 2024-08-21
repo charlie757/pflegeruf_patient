@@ -11,7 +11,7 @@ import 'package:patient/helper/customtextfield.dart';
 import 'package:patient/helper/fontfamily.dart';
 import 'package:patient/helper/getText.dart';
 import 'package:patient/helper/screensize.dart';
-import 'package:patient/languages/string_key.dart';
+import 'package:patient/languages/language_constants.dart';
 import 'package:patient/providers/auth_provider/signup_provider.dart';
 import 'package:patient/screens/auth/login_screen.dart';
 import 'package:patient/utils/app_validation.dart';
@@ -44,7 +44,7 @@ class _SignupScreenState extends State<SignupScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: AppColor.whiteColor,
-      appBar: appBar(StringKey.signup.tr, false),
+      appBar: appBar(getTranslated('signup', context)!.tr, false),
       body: Consumer<SignupProvider>(builder: (context, myProvider, child) {
         return SingleChildScrollView(
           child: Padding(
@@ -54,7 +54,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   getText(
-                      title: StringKey.firstName.tr,
+                      title: getTranslated('firstName', context)!.tr,
                       size: 14,
                       fontFamily: FontFamily.poppinsSemiBold,
                       color: AppColor.textBlackColor,
@@ -62,7 +62,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   ScreenSize.height(5),
                   CustomTextfield(
                     controller: myProvider.firstNameController,
-                    hintText: StringKey.enterFirstName.tr,
+                    hintText: getTranslated('enterFirstName', context)!.tr,
                     isReadOnly: myProvider.isLoading,
                     textInputAction: TextInputAction.next,
                     errorMsg: myProvider.firstNamevalidationMsg,
@@ -74,7 +74,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
                   ScreenSize.height(25),
                   getText(
-                      title: StringKey.lastName.tr,
+                      title: getTranslated('lastName', context)!.tr,
                       size: 14,
                       fontFamily: FontFamily.poppinsSemiBold,
                       color: AppColor.textBlackColor,
@@ -82,7 +82,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   ScreenSize.height(5),
                   CustomTextfield(
                     controller: myProvider.lastNameController,
-                    hintText: StringKey.enterLastName.tr,
+                    hintText: getTranslated('enterLastName', context)!.tr,
                     isReadOnly: myProvider.isLoading,
                     errorMsg: myProvider.lastNamevalidationMsg,
                     textInputAction: TextInputAction.next,
@@ -94,7 +94,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
                   ScreenSize.height(25),
                   getText(
-                      title: StringKey.email.tr,
+                      title: getTranslated('email', context)!.tr,
                       size: 14,
                       fontFamily: FontFamily.poppinsSemiBold,
                       color: AppColor.textBlackColor,
@@ -102,7 +102,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   ScreenSize.height(5),
                   CustomTextfield(
                     controller: myProvider.emailController,
-                    hintText: StringKey.enterYourEmail.tr,
+                    hintText: getTranslated('enterYourEmail', context)!.tr,
                     isReadOnly: myProvider.isLoading,
                     errorMsg: myProvider.emailValidationMsg,
                     textInputAction: TextInputAction.next,
@@ -114,7 +114,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
                   ScreenSize.height(25),
                   getText(
-                      title: StringKey.phoneNumber.tr,
+                      title: getTranslated('phoneNumber', context)!.tr,
                       size: 14,
                       fontFamily: FontFamily.poppinsSemiBold,
                       color: AppColor.textBlackColor,
@@ -122,10 +122,14 @@ class _SignupScreenState extends State<SignupScreen> {
                   ScreenSize.height(5),
                   CustomTextfield(
                     controller: myProvider.phoneController,
-                    hintText: StringKey.enterYourPhonenUmber.tr,
+                    hintText:
+                        getTranslated('enterYourPhonenUmber', context)!.tr,
                     isReadOnly: myProvider.isLoading,
                     textInputAction: TextInputAction.next,
-                    textInputType: Platform.isAndroid? TextInputType.phone:const TextInputType.numberWithOptions(signed: true, decimal: true),
+                    textInputType: Platform.isAndroid
+                        ? TextInputType.phone
+                        : const TextInputType.numberWithOptions(
+                            signed: true, decimal: true),
                     inputFormatters: [
                       FilteringTextInputFormatter.digitsOnly,
                       LengthLimitingTextInputFormatter(12)
@@ -139,7 +143,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
                   ScreenSize.height(25),
                   getText(
-                      title: StringKey.password.tr,
+                      title: getTranslated('password', context)!.tr,
                       size: 14,
                       fontFamily: FontFamily.poppinsSemiBold,
                       color: AppColor.textBlackColor,
@@ -147,7 +151,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   ScreenSize.height(5),
                   CustomTextfield(
                     controller: myProvider.passwordController,
-                    hintText: StringKey.enterYourPasword.tr,
+                    hintText: getTranslated('enterYourPasword', context)!.tr,
                     isReadOnly: myProvider.isLoading,
                     textInputAction: TextInputAction.next,
                     isObscureText: myProvider.isVisiblePassword,
@@ -176,7 +180,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
                   ScreenSize.height(25),
                   getText(
-                      title: StringKey.reEnterPassword.tr,
+                      title: getTranslated('reEnterPassword', context)!.tr,
                       size: 14,
                       fontFamily: FontFamily.poppinsSemiBold,
                       color: AppColor.textBlackColor,
@@ -184,7 +188,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   ScreenSize.height(5),
                   CustomTextfield(
                     controller: myProvider.reEnterPasswordController,
-                    hintText: StringKey.reEnterYourPassword.tr,
+                    hintText: getTranslated('reEnterYourPassword', context)!.tr,
                     isReadOnly: myProvider.isLoading,
                     textInputAction: TextInputAction.done,
                     isObscureText: myProvider.isVisibleReEnterPassword,
@@ -218,7 +222,9 @@ class _SignupScreenState extends State<SignupScreen> {
                       ScreenSize.width(10),
                       Flexible(
                         child: getText(
-                            title: StringKey.acceptTermsAndPrivacyPolicy.tr,
+                            title: getTranslated(
+                                    'acceptTermsAndPrivacyPolicy', context)!
+                                .tr,
                             size: 9,
                             fontFamily: FontFamily.poppinsMedium,
                             color: AppColor.textBlackColor.withOpacity(.7),
@@ -230,7 +236,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   Padding(
                     padding: const EdgeInsets.only(left: 17, right: 17),
                     child: AppButton(
-                        title: StringKey.signup.tr,
+                        title: getTranslated('signup', context)!.tr,
                         height: 54,
                         width: double.infinity,
                         isLoading: myProvider.isLoading,
@@ -248,7 +254,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   Align(
                     alignment: Alignment.center,
                     child: Text.rich(TextSpan(
-                        text: StringKey.alredyHaveAccount.tr,
+                        text: getTranslated('alredyHaveAccount', context)!.tr,
                         style: TextStyle(
                             fontSize: 12,
                             fontFamily: FontFamily.poppinsSemiBold,
@@ -263,7 +269,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                           const LoginScreen())
                                       : Navigator.pop(context);
                                 },
-                              text: " ${StringKey.logIn.tr}",
+                              text: " ${getTranslated('logIn', context)!.tr}",
                               style: TextStyle(
                                   fontSize: 14,
                                   fontFamily: FontFamily.poppinsSemiBold,

@@ -7,7 +7,7 @@ import 'package:patient/helper/fontfamily.dart';
 import 'package:patient/helper/getText.dart';
 import 'package:patient/helper/network_image_helper.dart';
 import 'package:patient/helper/screensize.dart';
-import 'package:patient/languages/string_key.dart';
+import 'package:patient/languages/language_constants.dart';
 import 'package:patient/providers/dashboard_provider/profile_provider.dart';
 import 'package:patient/providers/dashboard_provider/view_booking_provider.dart';
 import 'package:patient/utils/no_data.dart';
@@ -36,7 +36,7 @@ class _ViewBookingScreenState extends State<ViewBookingScreen> {
     final provider = Provider.of<ViewBookingProvider>(context, listen: false);
     provider.clearValues();
     Future.delayed(Duration.zero, () {
-      provider.callApiFunction(widget.bookingId,true);
+      provider.callApiFunction(widget.bookingId, true);
     });
   }
 
@@ -83,23 +83,42 @@ class _ViewBookingScreenState extends State<ViewBookingScreen> {
                                       ),
                                 ScreenSize.height(34),
                                 userDetails(myProvider),
-                                myProvider.model!=null&&myProvider.model!.data!=null&&myProvider.model!.data!.myListing!=null&&myProvider.model!.data!.myListing!.bookingMessage2.isNotEmpty?
-                                completeBookingMsgWidget(myProvider):Container(),
-                                myProvider.model!=null&&myProvider.model!.data!=null&&myProvider.model!.data!.myListing!=null&&
-                                    myProvider.model!.data!.myListing!.patient!=null&&myProvider.model!.data!.myListing!.patient!.ratedByPatient.toString().toLowerCase()!='yes'?
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 38, right: 38,top: 50),
-                                  child: AppButton(
-                                      title: StringKey.giveReview.tr,
-                                      height: 54,
-                                      width: double.infinity,
-                                      buttonColor: AppColor.appTheme,
-                                      onTap: () {
-                                        openRatingBottomSheet(
-                                            myProvider, profileProvider);
-                                      }),
-                                ):Container()
+                                myProvider.model != null &&
+                                        myProvider.model!.data != null &&
+                                        myProvider.model!.data!.myListing !=
+                                            null &&
+                                        myProvider.model!.data!.myListing!
+                                            .bookingMessage2.isNotEmpty
+                                    ? completeBookingMsgWidget(myProvider)
+                                    : Container(),
+                                myProvider.model != null &&
+                                        myProvider.model!.data != null &&
+                                        myProvider.model!.data!.myListing !=
+                                            null &&
+                                        myProvider.model!.data!.myListing!
+                                                .patient !=
+                                            null &&
+                                        myProvider.model!.data!.myListing!
+                                                .patient!.ratedByPatient
+                                                .toString()
+                                                .toLowerCase() !=
+                                            'yes'
+                                    ? Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 38, right: 38, top: 50),
+                                        child: AppButton(
+                                            title: getTranslated(
+                                                    'giveReview', context)!
+                                                .tr,
+                                            height: 54,
+                                            width: double.infinity,
+                                            buttonColor: AppColor.appTheme,
+                                            onTap: () {
+                                              openRatingBottomSheet(
+                                                  myProvider, profileProvider);
+                                            }),
+                                      )
+                                    : Container()
                               ],
                             )),
                       )
@@ -129,79 +148,92 @@ class _ViewBookingScreenState extends State<ViewBookingScreen> {
     );
   }
 
-
-  completeBookingMsgWidget(ViewBookingProvider myProvider){
+  completeBookingMsgWidget(ViewBookingProvider myProvider) {
     return Padding(
-      padding: const EdgeInsets.only(top: 33,left: 30,right: 30),
+      padding: const EdgeInsets.only(top: 33, left: 30, right: 30),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          getText(title: StringKey.nurseFinalMessage.tr,size: 14,
+          getText(
+              title: getTranslated('nurseFinalMessage', context)!.tr,
+              size: 14,
               fontFamily: FontFamily.poppinsSemiBold,
               color: AppColor.textBlackColor,
               fontWeight: FontWeight.w600),
           ScreenSize.height(20),
           Container(
             width: double.infinity,
-            padding:const EdgeInsets.symmetric(horizontal: 16,vertical: 18),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
             decoration: BoxDecoration(
-              color: AppColor.whiteColor,
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                  offset:const Offset(0, -1),
-                  color: AppColor.blackColor.withOpacity(.2),
-                  blurRadius: 5
-                )
-              ]
-            ),
-            child: getText(title: myProvider.model!.data!.myListing!.bookingMessage2,
-                size: 12, fontFamily: FontFamily.poppinsRegular,
-                color: AppColor.lightTextColor, fontWeight: FontWeight.w400),
+                color: AppColor.whiteColor,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                      offset: const Offset(0, -1),
+                      color: AppColor.blackColor.withOpacity(.2),
+                      blurRadius: 5)
+                ]),
+            child: getText(
+                title: myProvider.model!.data!.myListing!.bookingMessage2,
+                size: 12,
+                fontFamily: FontFamily.poppinsRegular,
+                color: AppColor.lightTextColor,
+                fontWeight: FontWeight.w400),
           ),
           ScreenSize.height(20),
           GestureDetector(
-            onTap: (){
-              Utils.openUrl(myProvider.model!.data!.myListing!.nurseDoc.toString());
+            onTap: () {
+              Utils.openUrl(
+                  myProvider.model!.data!.myListing!.nurseDoc.toString());
             },
             child: Container(
-              width: double.infinity,
-              padding:const EdgeInsets.symmetric(horizontal: 16,vertical: 18),
-              decoration: BoxDecoration(
-                  color: AppColor.whiteColor,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                        offset:const Offset(0, -1),
-                        color: AppColor.blackColor.withOpacity(.2),
-                        blurRadius: 5
-                    )]
-              ),
-              child: Row(
-                children: [
-                  Image.asset(AppImages.documentIcon,height: 20,width: 20,),
-                  ScreenSize.width(5),
-                  Expanded(
-                    child: Text(myProvider.model!.data!.myListing!.nurseDoc.toString().split('/').last,
-                    maxLines: 1,overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                        fontSize: 12, fontFamily: FontFamily.poppinsMedium,
-                        color: AppColor.blackColor, fontWeight: FontWeight.w600
-                    )
+                width: double.infinity,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
+                decoration: BoxDecoration(
+                    color: AppColor.whiteColor,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                          offset: const Offset(0, -1),
+                          color: AppColor.blackColor.withOpacity(.2),
+                          blurRadius: 5)
+                    ]),
+                child: Row(
+                  children: [
+                    Image.asset(
+                      AppImages.documentIcon,
+                      height: 20,
+                      width: 20,
                     ),
-                  ),
-                  ScreenSize.width(5),
-                  Image.asset(AppImages.downloadIcon,height: 20,width: 20,),
-                ],
-              )
-            ),
+                    ScreenSize.width(5),
+                    Expanded(
+                      child: Text(
+                          myProvider.model!.data!.myListing!.nurseDoc
+                              .toString()
+                              .split('/')
+                              .last,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              fontSize: 12,
+                              fontFamily: FontFamily.poppinsMedium,
+                              color: AppColor.blackColor,
+                              fontWeight: FontWeight.w600)),
+                    ),
+                    ScreenSize.width(5),
+                    Image.asset(
+                      AppImages.downloadIcon,
+                      height: 20,
+                      width: 20,
+                    ),
+                  ],
+                )),
           ),
-
         ],
       ),
     );
   }
-
 
   userDetails(ViewBookingProvider provider) {
     return Column(
@@ -287,27 +319,27 @@ class _ViewBookingScreenState extends State<ViewBookingScreen> {
       child: Column(
         children: [
           customRowDetailsWidget(
-              title: StringKey.bookingDate.tr,
+              title: getTranslated('bookingDate', context)!.tr,
               subTitle: provider.model!.data!.myListing!.bookingDate != null
                   ? TimeFormat.convertBookingDate(
                       provider.model!.data!.myListing!.bookingDate)
                   : ''),
           ScreenSize.height(14),
           customRowDetailsWidget(
-              title: StringKey.bookingTime.tr,
+              title: getTranslated('bookingTime', context)!.tr,
               subTitle: provider.model!.data!.myListing!.bookingDate != null
                   ? TimeFormat.convertBookingTime(
-                  provider.model!.data!.myListing!.bookingDate)
+                      provider.model!.data!.myListing!.bookingDate)
                   : ''),
           ScreenSize.height(14),
           customRowDetailsWidget(
-              title: StringKey.bookedFor.tr,
+              title: getTranslated('bookedFor', context)!.tr,
               subTitle: provider.model!.data!.myListing!.service != null
                   ? provider.model!.data!.myListing!.service!.name
                   : ''),
           ScreenSize.height(14),
           customRowDetailsWidget(
-              title: StringKey.patientName.tr,
+              title: getTranslated('patientName', context)!.tr,
               subTitle: provider.model!.data!.myListing!.patient != null
                   ? provider.model!.data!.myListing!.patient!.bookingName
                           .toString()
@@ -320,7 +352,7 @@ class _ViewBookingScreenState extends State<ViewBookingScreen> {
                   : ''),
           ScreenSize.height(14),
           customRowDetailsWidget(
-              title: StringKey.patientAddress.tr,
+              title: getTranslated('patientAddress', context)!.tr,
               subTitle: provider.model!.data!.myListing!.patient != null
                   ? "${provider.model!.data!.myListing!.patient!.address}, ${provider.model!.data!.myListing!.patient!.street ?? ""}, ${provider.model!.data!.myListing!.patient!.city ?? ""}, ${provider.model!.data!.myListing!.patient!.postalCode.toString()}"
                   : ''),
@@ -427,12 +459,12 @@ class _ViewBookingScreenState extends State<ViewBookingScreen> {
                                 ),
                                 ScreenSize.height(4),
                                 getText(
-                                 title: '${provider.model!.data!.myListing!.nurse != null && provider.model!.data!.myListing!.nurse!.rating != null ? provider.model!.data!.myListing!.nurse!.rating.toString() : ''} reviews',
-                                      size: 12,
-                                      fontFamily: FontFamily.poppinsMedium,
-                                      color: Color(0xff606573),
-                                      fontWeight: FontWeight.w400),
-
+                                    title:
+                                        '${provider.model!.data!.myListing!.nurse != null && provider.model!.data!.myListing!.nurse!.rating != null ? provider.model!.data!.myListing!.nurse!.rating.toString() : ''} reviews',
+                                    size: 12,
+                                    fontFamily: FontFamily.poppinsMedium,
+                                    color: Color(0xff606573),
+                                    fontWeight: FontWeight.w400),
                               ],
                             ),
                           )
@@ -441,14 +473,16 @@ class _ViewBookingScreenState extends State<ViewBookingScreen> {
                     ),
                     ScreenSize.height(30),
                     getText(
-                        title: StringKey.leaveAReview.tr,
+                        title: getTranslated('leaveAReview', context)!.tr,
                         size: 22,
                         fontFamily: FontFamily.poppinsSemiBold,
                         color: AppColor.textBlackColor,
                         fontWeight: FontWeight.w600),
                     ScreenSize.height(6),
                     getText(
-                        title: StringKey.howYourRateAndExperience.tr,
+                        title:
+                            getTranslated('howYourRateAndExperience', context)!
+                                .tr,
                         size: 13,
                         fontFamily: FontFamily.poppinsRegular,
                         color: const Color(0xff606573),
@@ -473,7 +507,7 @@ class _ViewBookingScreenState extends State<ViewBookingScreen> {
                         }),
                     ScreenSize.height(35),
                     getText(
-                        title: StringKey.yourComment.tr,
+                        title: getTranslated('yourComment', context)!.tr,
                         size: 15,
                         fontFamily: FontFamily.poppinsSemiBold,
                         color: AppColor.appTheme,
@@ -487,22 +521,26 @@ class _ViewBookingScreenState extends State<ViewBookingScreen> {
                         right: 17,
                       ),
                       child: AppButton(
-                          title: StringKey.submitYourReview.tr,
+                          title: getTranslated('submitYourReview', context)!.tr,
                           height: 54,
                           width: double.infinity,
                           buttonColor: AppColor.appTheme,
                           onTap: () {
                             if (provider.ratingStar < 0) {
-                              Utils.errorSnackBar('Add rating', context);
+                              Utils.errorSnackBar(
+                                  getTranslated('addRating', context)!.tr,
+                                  context);
                             } else if (provider
                                 .commentController.text.isEmpty) {
-                              EasyLoading.showToast('Enter your comment');
+                              EasyLoading.showToast(
+                                  getTranslated('yourComment', context)!.tr);
                             } else {
                               provider.addRatingApiFunction(
                                   provider.model!.data!.myListing!.bookingId
                                       .toString(),
                                   provider.model!.data!.myListing!.nurse!.id
-                                      .toString(), widget.bookingId);
+                                      .toString(),
+                                  widget.bookingId);
                             }
                           }),
                     ),
@@ -527,7 +565,7 @@ class _ViewBookingScreenState extends State<ViewBookingScreen> {
           fontWeight: FontWeight.w500,
           fontFamily: FontFamily.poppinsMedium),
       decoration: InputDecoration(
-          hintText: 'ex. you guys are awsome',
+          hintText: getTranslated('guysAwesomeHintText', context)!.tr,
           hintStyle: TextStyle(
               fontSize: 11,
               color: AppColor.textBlackColor.withOpacity(.6),

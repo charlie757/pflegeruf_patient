@@ -5,7 +5,8 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:patient/helper/appcolor.dart';
-import 'package:patient/languages/languages.dart';
+import 'package:patient/languages/app_localization.dart';
+import 'package:patient/languages/custom_delgate.dart';
 import 'package:patient/providers/auth_provider/change_password_provider.dart';
 import 'package:patient/providers/auth_provider/forgot_verification_provider.dart';
 import 'package:patient/providers/auth_provider/update_language_provider.dart';
@@ -19,15 +20,18 @@ import 'package:patient/providers/dashboard_provider/notification_provider.dart'
 import 'package:patient/providers/dashboard_provider/profile_provider.dart';
 import 'package:patient/providers/dashboard_provider/view_booking_provider.dart';
 import 'package:patient/providers/dashboard_provider/view_service_provider.dart';
+import 'package:patient/providers/localization_provider.dart';
 import 'package:patient/providers/onboarding_provider.dart';
 import 'package:patient/providers/dashboard_provider/required_question_provider.dart';
 import 'package:patient/providers/auth_provider/signup_provider.dart';
 import 'package:patient/screens/splash_screen.dart';
+import 'package:patient/utils/constants.dart';
 import 'package:patient/utils/location_service.dart';
 import 'package:patient/utils/notification_service.dart';
 import 'package:patient/utils/session_manager.dart';
 import 'package:patient/utils/utils.dart';
 
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 
@@ -42,7 +46,24 @@ void main() async {
     DeviceOrientation.portraitDown,
   ]);
   getFCMToken();
-  runApp(const MyApp());
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (_) => OnboardingProvider()),
+    ChangeNotifierProvider(create: (_) => LoginProvider()),
+    ChangeNotifierProvider(create: (_) => SignupProvider()),
+    ChangeNotifierProvider(create: (_) => ForgotPasswordProvider()),
+    ChangeNotifierProvider(create: (_) => EmailVerificationProvider()),
+    ChangeNotifierProvider(create: (_) => ForgotVerificationProvider()),
+    ChangeNotifierProvider(create: (_) => ChangePasswordProvider()),
+    ChangeNotifierProvider(create: (_) => DashboardProvider()),
+    ChangeNotifierProvider(create: (_) => RequiredQuestionProvider()),
+    ChangeNotifierProvider(create: (_) => ProfileProvider()),
+    ChangeNotifierProvider(create: (_) => BookingsProvier()),
+    ChangeNotifierProvider(create: (_) => ViewBookingProvider()),
+    ChangeNotifierProvider(create: (_) => HomeProvider()),
+    ChangeNotifierProvider(create: (_) => UpdateLanguageProvider()),
+    ChangeNotifierProvider(create: (_) => ViewServiceProvider()),
+    ChangeNotifierProvider(create: (_) => NotificationProvider()),
+  ], child: const MyApp()));
 }
 
 Future<void> backgroundHandler(RemoteMessage message) async {
@@ -84,40 +105,36 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    List<Locale> locals = [];
+    for (var language in Constants.languages) {
+      locals.add(Locale(language.languageCode!, language.countryCode));
+    }
+    // Provider.of<LocalizationProvider>(context).loadCurrentLanguage();
+    print("object${Provider.of<LocalizationProvider>(context).locale}");
+
     notificationService.initialize();
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => OnboardingProvider()),
-        ChangeNotifierProvider(create: (_) => LoginProvider()),
-        ChangeNotifierProvider(create: (_) => SignupProvider()),
-        ChangeNotifierProvider(create: (_) => ForgotPasswordProvider()),
-        ChangeNotifierProvider(create: (_) => EmailVerificationProvider()),
-        ChangeNotifierProvider(create: (_) => ForgotVerificationProvider()),
-        ChangeNotifierProvider(create: (_) => ChangePasswordProvider()),
-        ChangeNotifierProvider(create: (_) => DashboardProvider()),
-        ChangeNotifierProvider(create: (_) => RequiredQuestionProvider()),
-        ChangeNotifierProvider(create: (_) => ProfileProvider()),
-        ChangeNotifierProvider(create: (_) => BookingsProvier()),
-        ChangeNotifierProvider(create: (_) => ViewBookingProvider()),
-        ChangeNotifierProvider(create: (_) => HomeProvider()),
-        ChangeNotifierProvider(create: (_) => UpdateLanguageProvider()),
-        ChangeNotifierProvider(create: (_) => ViewServiceProvider()),
-        ChangeNotifierProvider(create: (_) => NotificationProvider()),
+    return GetMaterialApp(
+      navigatorKey: navigatorKey,
+      title: 'Pflegeruf Patient',
+      fallbackLocale: const Locale('de'),
+      locale: Provider.of<LocalizationProvider>(context).locale,
+      localizationsDelegates: [
+        AppLocalization.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        FallbackLocalizationDelegate()
       ],
-      child: GetMaterialApp(
-        navigatorKey: navigatorKey,
-        title: 'Pflegeruf Patient',
-        translations: Languages(),
-        locale: Locale(selectedLanguage),
-        fallbackLocale: const Locale('en'),
-        theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-            useMaterial3: true,
-            scaffoldBackgroundColor: AppColor.whiteColor),
-        debugShowCheckedModeBanner: false,
-        home: const SplashSCreen(),
-        builder: EasyLoading.init(),
-      ),
+      supportedLocales: [
+        Locale(Provider.of<LocalizationProvider>(context).locale.languageCode)
+      ],
+      theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+          scaffoldBackgroundColor: AppColor.whiteColor),
+      debugShowCheckedModeBanner: false,
+      home: const SplashSCreen(),
+      builder: EasyLoading.init(),
     );
   }
 }

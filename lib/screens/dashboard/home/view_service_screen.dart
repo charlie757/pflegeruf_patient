@@ -7,7 +7,7 @@ import 'package:patient/helper/appcolor.dart';
 import 'package:patient/helper/fontfamily.dart';
 import 'package:patient/helper/getText.dart';
 import 'package:patient/helper/screensize.dart';
-import 'package:patient/languages/string_key.dart';
+import 'package:patient/languages/language_constants.dart';
 import 'package:patient/providers/dashboard_provider/view_service_provider.dart';
 import 'package:patient/screens/dashboard/home/required_question_screen.dart';
 import 'package:get/get.dart';
@@ -95,7 +95,9 @@ class _ViewServiceScreenState extends State<ViewServiceScreen> {
                                 //     fontWeight: FontWeight.w400),
                                 ScreenSize.height(27),
                                 getText(
-                                    title: StringKey.description.tr,
+                                    title:
+                                        getTranslated('description', context)!
+                                            .tr,
                                     size: 18,
                                     fontFamily: FontFamily.poppinsRegular,
                                     color: AppColor.appTheme,
@@ -120,7 +122,9 @@ class _ViewServiceScreenState extends State<ViewServiceScreen> {
                                   padding: const EdgeInsets.only(
                                       left: 7, right: 17, bottom: 40),
                                   child: AppButton(
-                                      title: StringKey.continueTitle.tr,
+                                      title: getTranslated(
+                                              'continueTitle', context)!
+                                          .tr,
                                       height: 54,
                                       width: double.infinity,
                                       buttonColor: AppColor.appTheme,

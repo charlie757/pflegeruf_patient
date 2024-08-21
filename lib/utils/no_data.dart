@@ -4,8 +4,9 @@ import 'package:patient/helper/appimages.dart';
 import 'package:patient/helper/fontfamily.dart';
 import 'package:patient/helper/getText.dart';
 import 'package:patient/helper/screensize.dart';
-import 'package:patient/languages/string_key.dart';
 import 'package:get/get.dart';
+import 'package:patient/languages/language_constants.dart';
+import 'package:patient/utils/utils.dart';
 
 Widget noDataWidget() {
   return Column(
@@ -18,7 +19,7 @@ Widget noDataWidget() {
       ),
       ScreenSize.height(24),
       getText(
-          title: StringKey.noData.tr,
+          title: getTranslated('noData', navigatorKey.currentContext!)!.tr,
           size: 16,
           fontFamily: FontFamily.poppinsRegular,
           color: AppColor.blackColor,

@@ -7,7 +7,7 @@ import 'package:patient/helper/appcolor.dart';
 import 'package:patient/helper/appimages.dart';
 import 'package:patient/helper/fontfamily.dart';
 import 'package:patient/helper/screensize.dart';
-import 'package:patient/languages/string_key.dart';
+import 'package:patient/languages/language_constants.dart';
 import 'package:patient/utils/app_validation.dart';
 import 'package:patient/utils/session_manager.dart';
 import 'package:patient/utils/showcircleprogessdialog.dart';
@@ -78,7 +78,9 @@ class RequiredQuestionProvider extends ChangeNotifier {
           AppValidation.birthDateValidator(birthDateController.text);
 
       if (insuranceType == 0) {
-        EasyLoading.showToast('Select insurance type');
+        EasyLoading.showToast(
+            getTranslated('selectInsuranceType', navigatorKey.currentContext!)!
+                .tr);
       } else {
         callApiFunction(id, title);
       }
@@ -162,7 +164,7 @@ class RequiredQuestionProvider extends ChangeNotifier {
                     ),
                     ScreenSize.height(42),
                     Text(
-                      StringKey.requestSentSuccessfully.tr,
+                      getTranslated('requestSentSuccessfully', context)!.tr,
                       style: TextStyle(
                           decoration: TextDecoration.none,
                           fontSize: 14,
@@ -175,7 +177,7 @@ class RequiredQuestionProvider extends ChangeNotifier {
                     Padding(
                       padding: const EdgeInsets.only(left: 7, right: 7),
                       child: AppButton(
-                          title: StringKey.backToHome.tr,
+                          title: getTranslated('backToHome', context)!.tr,
                           height: 50,
                           width: double.infinity,
                           buttonColor: AppColor.appTheme,

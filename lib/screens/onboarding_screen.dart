@@ -5,7 +5,7 @@ import 'package:patient/helper/appcolor.dart';
 import 'package:patient/helper/fontfamily.dart';
 import 'package:patient/helper/getText.dart';
 import 'package:patient/helper/screensize.dart';
-import 'package:patient/languages/string_key.dart';
+import 'package:patient/languages/language_constants.dart';
 import 'package:patient/providers/onboarding_provider.dart';
 import 'package:patient/utils/utils.dart';
 import 'package:provider/provider.dart';
@@ -48,8 +48,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   child: Column(
                     children: [
                       getText(
-                          title: myProvier.onboardingList[myProvier.currentIndex]
-                              ['title'],
+                          title: myProvier
+                              .onboardingList[myProvier.currentIndex]['title'],
                           size: 23,
                           fontFamily: FontFamily.poppinsMedium,
                           color: AppColor.whiteColor,
@@ -67,8 +67,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       ScreenSize.height(35),
                       Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: List.generate(myProvier.onboardingList.length,
-                              (index) {
+                          children: List.generate(
+                              myProvier.onboardingList.length, (index) {
                             return myProvier.currentIndex == index
                                 ? indicator(false)
                                 : indicator(true);
@@ -76,8 +76,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       const Spacer(),
                       AppButton(
                           title: myProvier.currentIndex == 2
-                              ? StringKey.getStarted.tr
-                              : StringKey.next.tr,
+                              ? getTranslated('getStarted', context)!.tr
+                              : getTranslated('next', context)!.tr,
                           height: 54,
                           width: double.infinity,
                           buttonColor: AppColor.whiteColor,
