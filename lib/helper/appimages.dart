@@ -13,4 +13,6 @@ class AppImages {
   static const bellIcon = 'assets/icons/bellIcon.png';
   static const calendarIcon = 'assets/icons/calendar.png';
   static const noDataIcon = 'assets/icons/nodataicon.png';
+  static const downloadIcon = 'assets/icons/download.png';
+  static const documentIcon = 'assets/icons/document.png';
 }

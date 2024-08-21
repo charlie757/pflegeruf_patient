@@ -259,7 +259,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.only(left: 32, right: 32),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     childAspectRatio: MediaQuery.of(context).size.width /
-                        (MediaQuery.of(context).size.height / 1.4),
+                        (MediaQuery.of(context).size.height / 1.2),
                     crossAxisCount: 3,
                     mainAxisSpacing: 24,
                     crossAxisSpacing: 20),
@@ -296,7 +296,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               height: 40.0,
                               width: 40.0,
                             )),
-                        ScreenSize.height(8),
+                        ScreenSize.height(7),
                         Text(
                           provider
                               .homeModel!.data!.category![index].categoryName,

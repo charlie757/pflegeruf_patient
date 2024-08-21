@@ -105,6 +105,7 @@ class SignupProvider extends ChangeNotifier {
   }
 
   callApiFunction(String route) {
+    Utils.hideTextField();
     updateLoading(true);
     var data = {
       "p_user_name": firstNameController.text,

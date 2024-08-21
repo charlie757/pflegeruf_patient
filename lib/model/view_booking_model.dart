@@ -55,6 +55,8 @@ class MyListing {
   dynamic bookingDate;
   dynamic bookingStatus;
   dynamic bookingMessage;
+  dynamic bookingMessage2;
+  dynamic nurseDoc;
   Patient? patient;
   Service? service;
   Nurse? nurse;
@@ -65,6 +67,8 @@ class MyListing {
       this.bookingDate,
       this.bookingStatus,
       this.bookingMessage,
+        this.bookingMessage2,
+        this.nurseDoc,
       this.patient,
       this.service,
       this.nurse});
@@ -75,6 +79,8 @@ class MyListing {
     bookingDate = json['booking_date'];
     bookingStatus = json['booking_status'];
     bookingMessage = json['booking_message'];
+    bookingMessage2= json['booking_message2'];
+    nurseDoc = json['nurse_doc'];
     patient =
         json['patient'] != null ? Patient.fromJson(json['patient']) : null;
     service =
@@ -89,6 +95,8 @@ class MyListing {
     data['booking_date'] = bookingDate;
     data['booking_status'] = bookingStatus;
     data['booking_message'] = bookingMessage;
+    data['booking_message2'] = bookingMessage2;
+    data['nurse_doc'] = nurseDoc;
     if (patient != null) {
       data['patient'] = patient!.toJson();
     }
@@ -105,6 +113,8 @@ class MyListing {
 class Patient {
   dynamic id;
   dynamic name;
+  dynamic bookingName;
+  dynamic profileName;
   dynamic photo;
   dynamic insurance;
   dynamic insuranceNumber;
@@ -118,6 +128,8 @@ class Patient {
   Patient(
       {this.id,
       this.name,
+        this.profileName,
+        this.bookingName,
       this.photo,
       this.insurance,
       this.insuranceNumber,
@@ -131,6 +143,8 @@ class Patient {
   Patient.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
+    bookingName= json['booking_name'];
+    profileName = json['profile_name'];
     photo = json['photo'];
     insurance = json['insurance'];
     insuranceNumber = json['insurance_number'];
@@ -147,6 +161,8 @@ class Patient {
     final Map<String, dynamic> data = Map<String, dynamic>();
     data['id'] = id;
     data['name'] = name;
+    data['booking_name'] = bookingName;
+    data['profile_name'] = profileName;
     data['photo'] = photo;
     data['insurance'] = insurance;
     data['insurance_number'] = insuranceNumber;

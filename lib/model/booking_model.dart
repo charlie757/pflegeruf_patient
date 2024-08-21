@@ -50,6 +50,8 @@ class BookingModel {
 class Patient {
   dynamic id;
   dynamic name;
+  dynamic bookingName;
+  dynamic profileName;
   dynamic photo;
   dynamic address;
   dynamic street;
@@ -60,6 +62,8 @@ class Patient {
   Patient(
       {this.id,
       this.name,
+        this.bookingName,
+        this.profileName,
       this.photo,
       this.address,
       this.street,
@@ -70,6 +74,8 @@ class Patient {
   Patient.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
+    bookingName= json['booking_name'];
+    profileName = json['profile_name'];
     photo = json['photo'];
     address = json['address'];
     street = json['street'];
@@ -82,6 +88,8 @@ class Patient {
     final Map<String, dynamic> data = Map<String, dynamic>();
     data['id'] = id;
     data['name'] = name;
+    data['booking_name'] = bookingName;
+    data['profile_name'] = profileName;
     data['photo'] = photo;
     data['address'] = address;
     data['street'] = street;

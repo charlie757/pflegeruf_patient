@@ -8,6 +8,7 @@ import 'package:patient/providers/dashboard_provider/profile_provider.dart';
 import 'package:patient/screens/auth/login_screen.dart';
 import 'package:patient/utils/session_manager.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 MediaQueryData mediaQuery = MediaQuery.of(navigatorKey.currentState!.context)
@@ -116,4 +117,14 @@ class Utils {
     Navigator.pushAndRemoveUntil(navigatorKey.currentContext!, CupertinoPageRoute(builder: (context)=>const LoginScreen()), (route)=>false);
     // AppRoutes.pushReplacementNavigation(const LoginScreen());
   }
+
+  static openUrl(String url)async{
+    // const url = url;
+    if(await canLaunch(url)){
+      await launch(url);
+    }else {
+      throw 'Could not launch $url';
+    }
+  }
+
 }

@@ -75,6 +75,7 @@ const englishEN = {
       "Are You Sure you want to Delete Your Account?",
   StringKey.youWantToLogout: "Are You Sure you want to Logout?",
   StringKey.no: "No",
+  StringKey.nurseFinalMessage:"Nurse final message for you",
   StringKey.yes: "Yes",
   StringKey.bookings: "Bookings",
   StringKey.active: "Active",

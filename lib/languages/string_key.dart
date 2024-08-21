@@ -39,6 +39,7 @@ class StringKey {
   static const enterNewPassword = "enterNewPassword";
   static const save = "save";
   static const welcome = "welcome";
+  static const nurseFinalMessage = "nurseFinalMessage";
 
   /// required question
   static const requiredQuestion = "requiredQuestion";

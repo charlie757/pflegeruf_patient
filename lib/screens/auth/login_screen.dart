@@ -74,6 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     /// if api is calling
                     controller: myProvider.emailController,
                     hintText: StringKey.enterYourEmail.tr,
+                    textInputType: TextInputType.text,
                     errorMsg: myProvider.emailValidationMsg,
                     onChanged: (val) {
                       myProvider.emailValidationMsg =
@@ -95,6 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                     /// if api is calling
                     hintText: StringKey.enterYourPasword.tr,
+                    textInputType: TextInputType.text,
                     isObscureText: myProvider.isVisiblePassword,
                     errorMsg: myProvider.passwordValidationMsg,
                     onChanged: (val) {

@@ -5,6 +5,8 @@ import 'package:patient/config/approutes.dart';
 import 'package:patient/screens/auth/forgot_verification_screen.dart';
 import 'package:patient/utils/app_validation.dart';
 
+import '../../utils/utils.dart';
+
 class ForgotPasswordProvider extends ChangeNotifier {
   final emailController = TextEditingController();
   bool isLoading = false;
@@ -32,6 +34,7 @@ class ForgotPasswordProvider extends ChangeNotifier {
   }
 
   callApiFunction() {
+    Utils.hideTextField();
     updateLoading(true);
     var data = {"username": emailController.text, 'appType': '1'};
     String body = Uri(queryParameters: data).query;

@@ -172,6 +172,7 @@ class _ForgotVerificationScreenState extends State<ForgotVerificationScreen> {
                   }
                 },
                 onChanged: (val) {
+                  print(val);
                   if (val.isNotEmpty) {
                     provider.showUnderlineOtp2 = true;
                     FocusScope.of(context)

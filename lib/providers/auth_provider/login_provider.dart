@@ -66,6 +66,7 @@ class LoginProvider extends ChangeNotifier {
 
   callApiFunction() {
     /// set the values
+    Utils.hideTextField();
     SessionManager.setUserEmail = emailController.text;
     SessionManager.setuserPassword = passwordController.text;
     updateLoading(true);

@@ -156,14 +156,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             AppValidation.emailValidator(val);
                         setState(() {});
                       },
-                      icon: GestureDetector(
-                        onTap: () {},
-                        child: Icon(
-                          Icons.edit,
-                          color: AppColor.textBlackColor.withOpacity(.3),
-                          size: 20,
-                        ),
-                      ),
+                      // icon: GestureDetector(
+                      //   onTap: () {},
+                      //   child: Icon(
+                      //     Icons.edit,
+                      //     color: AppColor.textBlackColor.withOpacity(.3),
+                      //     size: 20,
+                      //   ),
+                      // ),
                     ),
                     ScreenSize.height(20),
                     getText(
@@ -176,7 +176,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     CustomTextfield(
                       controller: myProvider.phoneController,
                       hintText: StringKey.enterYourPhonenUmber.tr,
-                      textInputType: TextInputType.phone,
+                      textInputType:Platform.isAndroid? TextInputType.phone:const TextInputType.numberWithOptions(signed: true, decimal: true),
                       inputFormatters: [
                         FilteringTextInputFormatter.digitsOnly,
                         LengthLimitingTextInputFormatter(12)

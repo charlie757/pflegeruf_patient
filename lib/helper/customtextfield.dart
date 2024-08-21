@@ -25,7 +25,7 @@ class CustomTextfield extends StatelessWidget {
       this.isObscureText = false,
       this.isReadOnly = false,
       this.inputFormatters,
-      this.textInputType = TextInputType.name,
+      this.textInputType = TextInputType.text,
       this.errorMsg = '',
       this.onChanged,
       this.textInputAction});

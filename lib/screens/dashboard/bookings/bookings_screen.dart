@@ -33,6 +33,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
 
   callInitFunction() {
     final provider = Provider.of<BookingsProvier>(context, listen: false);
+    provider.isSelectedTabBar=0;
     Future.delayed(Duration.zero, () {
       provider.callApiFunction(true);
     });
@@ -271,7 +272,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
   }
 
   completeBookingsWidget(BookingsProvier provier) {
-    return provier.completeBookingModel!=null&&provier.completeBookingModel!.data!=null&& provier.completeBookingModel!.data!.myListing!!=null?
+    return provier.completeBookingModel!=null&&provier.completeBookingModel!.data!=null&& provier.completeBookingModel!.data!.myListing!=null&&provier.completeBookingModel!.data!.myListing!.isNotEmpty?
         ListView.separated(
             separatorBuilder: (context, sp) {
               return ScreenSize.height(10);
@@ -372,7 +373,12 @@ class _BookingsScreenState extends State<BookingsScreen> {
   }
 
   pendingBookingsWidget(BookingsProvier provier) {
-    return ListView.separated(
+    return provier.pendingList.isEmpty
+        ? Align(
+      alignment: Alignment.center,
+      child: noDataWidget(),
+    )
+        : ListView.separated(
         separatorBuilder: (context, sp) {
           return ScreenSize.height(10);
         },
@@ -415,7 +421,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
                 customRowDetailsWidget(
                     title: StringKey.patientName.tr,
                     subTitle:
-                        model.patient != null ? model.patient!.name ?? "" : ''),
+                        model.patient != null ? model.patient!.bookingName ?? "" : ''),
                 ScreenSize.height(14),
                 customRowDetailsWidget(
                     title: StringKey.patientAddress.tr,

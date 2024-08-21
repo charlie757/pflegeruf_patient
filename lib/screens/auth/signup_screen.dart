@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -62,6 +64,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     controller: myProvider.firstNameController,
                     hintText: StringKey.enterFirstName.tr,
                     isReadOnly: myProvider.isLoading,
+                    textInputAction: TextInputAction.next,
                     errorMsg: myProvider.firstNamevalidationMsg,
                     onChanged: (val) {
                       myProvider.firstNamevalidationMsg =
@@ -82,6 +85,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     hintText: StringKey.enterLastName.tr,
                     isReadOnly: myProvider.isLoading,
                     errorMsg: myProvider.lastNamevalidationMsg,
+                    textInputAction: TextInputAction.next,
                     onChanged: (val) {
                       myProvider.lastNamevalidationMsg =
                           AppValidation.lastNameValidator(val);
@@ -101,6 +105,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     hintText: StringKey.enterYourEmail.tr,
                     isReadOnly: myProvider.isLoading,
                     errorMsg: myProvider.emailValidationMsg,
+                    textInputAction: TextInputAction.next,
                     onChanged: (val) {
                       myProvider.emailValidationMsg =
                           AppValidation.emailValidator(val);
@@ -119,7 +124,8 @@ class _SignupScreenState extends State<SignupScreen> {
                     controller: myProvider.phoneController,
                     hintText: StringKey.enterYourPhonenUmber.tr,
                     isReadOnly: myProvider.isLoading,
-                    textInputType: TextInputType.phone,
+                    textInputAction: TextInputAction.next,
+                    textInputType: Platform.isAndroid? TextInputType.phone:const TextInputType.numberWithOptions(signed: true, decimal: true),
                     inputFormatters: [
                       FilteringTextInputFormatter.digitsOnly,
                       LengthLimitingTextInputFormatter(12)
@@ -143,6 +149,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     controller: myProvider.passwordController,
                     hintText: StringKey.enterYourPasword.tr,
                     isReadOnly: myProvider.isLoading,
+                    textInputAction: TextInputAction.next,
                     isObscureText: myProvider.isVisiblePassword,
                     errorMsg: myProvider.passwordValidationMsg,
                     onChanged: (val) {
@@ -179,6 +186,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     controller: myProvider.reEnterPasswordController,
                     hintText: StringKey.reEnterYourPassword.tr,
                     isReadOnly: myProvider.isLoading,
+                    textInputAction: TextInputAction.done,
                     isObscureText: myProvider.isVisibleReEnterPassword,
                     errorMsg: myProvider.reEnterPasswordValidationMsg,
                     onChanged: (val) {

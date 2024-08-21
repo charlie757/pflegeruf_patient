@@ -9,6 +9,7 @@ class NotificationProvider extends ChangeNotifier {
   NotificationModel? model;
   int unreadNotificationCount = 0;
   getNotificationApiFunction() async {
+    model =null;
     showCircleProgressDialog(navigatorKey.currentContext!);
     var data = {'': ''};
     String body = Uri(queryParameters: data).query;
