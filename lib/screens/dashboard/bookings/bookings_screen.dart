@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:patient/config/approutes.dart';
 import 'package:patient/helper/appBar.dart';
 import 'package:patient/helper/appcolor.dart';
+import 'package:patient/helper/appimages.dart';
 import 'package:patient/helper/fontfamily.dart';
 import 'package:patient/helper/getText.dart';
 import 'package:patient/helper/network_image_helper.dart';
@@ -205,15 +206,18 @@ class _BookingsScreenState extends State<BookingsScreen> {
                         children: [
                           ClipRRect(
                             borderRadius: BorderRadius.circular(10),
-                            child: model.nurse != null
+                            child: model.nurse != null&&
+                                model.nurse!.photo!=null&&
+                                model.nurse!.photo!.toString().isNotEmpty
                                 ? NetworkImageHelper(
                                     img: model.nurse!.photo,
                                     height: 70.0,
                                     width: 70.0,
                                   )
-                                : const SizedBox(
+                                :  SizedBox(
                                     height: 70,
                                     width: 70,
+                              child: Image.asset(AppImages.bottomIcon3),
                                   ),
                           ),
                           ScreenSize.width(15),
@@ -312,15 +316,18 @@ class _BookingsScreenState extends State<BookingsScreen> {
                         children: [
                           ClipRRect(
                             borderRadius: BorderRadius.circular(10),
-                            child: model.nurse != null
+                            child: model.nurse != null&&
+                                model.nurse!.displayProfileImage!=null&&
+                                model.nurse!.displayProfileImage.toString().isNotEmpty
                                 ? NetworkImageHelper(
                                     img: model.nurse!.displayProfileImage,
                                     height: 70.0,
                                     width: 70.0,
                                   )
-                                : const SizedBox(
+                                :  SizedBox(
                                     height: 70,
                                     width: 70,
+                              child: Image.asset(AppImages.bottomIcon3),
                                   ),
                           ),
                           ScreenSize.width(15),

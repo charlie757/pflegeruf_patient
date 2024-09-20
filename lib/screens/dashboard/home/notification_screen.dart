@@ -79,7 +79,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 fontWeight: FontWeight.w600),
           ),
           body: myProvider.model != null
-              ? myProvider.model!.data!.isEmpty
+              ? myProvider.model!.data!.isEmpty||myProvider.model!.data==null
                   ? Align(alignment: Alignment.center, child: noDataWidget())
                   : ListView.separated(
                       separatorBuilder: (context, sp) {

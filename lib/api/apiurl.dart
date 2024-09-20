@@ -1,5 +1,6 @@
 class ApiUrl {
   static String baseUrl = 'https://forthprodigital.in/demo/caringapp/Api/';
+  static String pagesBaseUrl = 'https://pflegeruf.app/pages/';
   static String loginUrl = '${baseUrl}user/login';
   static String signUpUrl = '${baseUrl}user/signup';
   static String signUpResendUrl = '${baseUrl}user/resend-signup-code';
@@ -25,4 +26,6 @@ class ApiUrl {
   static String completedBookingListUrl =
       '${baseUrl}Mylisting/booking-list-completed-patient';
   static String logoutUrl = '${baseUrl}User/logout';
+  static String privacyPolicyUrl = '${pagesBaseUrl}privacy-policy';
+  static String termsConditionUrl = '${pagesBaseUrl}terms-and-conditions';
 }

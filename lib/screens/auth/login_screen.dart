@@ -155,6 +155,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       buttonColor: AppColor.appTheme,
                       isLoading: myProvider.isLoading,
                       onTap: () {
+                        getLocationPermission();
                         myProvider.isLoading
                             ? null
                             : myProvider.checkValidation();

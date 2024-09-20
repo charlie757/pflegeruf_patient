@@ -60,7 +60,9 @@ class _ViewBookingScreenState extends State<ViewBookingScreen> {
                             padding: const EdgeInsets.only(bottom: 43),
                             child: Column(
                               children: [
-                                myProvider.model!.data!.myListing!.nurse != null
+                                myProvider.model!.data!.myListing!.nurse != null&&
+                                    myProvider.model!.data!.myListing!.nurse!.photo!=null&&
+                                    myProvider.model!.data!.myListing!.nurse!.photo!.toString().isNotEmpty
                                     ? ClipRRect(
                                         borderRadius: const BorderRadius.only(
                                             bottomLeft: Radius.circular(15),
@@ -75,11 +77,12 @@ class _ViewBookingScreenState extends State<ViewBookingScreen> {
                                           width: double.infinity,
                                         ),
                                       )
-                                    : SizedBox(
+                                    : Container(
                                         height:
                                             MediaQuery.of(context).size.height *
                                                 .5,
                                         width: double.infinity,
+                                  child: Image.asset(AppImages.bottomIcon3),
                                       ),
                                 ScreenSize.height(34),
                                 userDetails(myProvider),
@@ -181,6 +184,7 @@ class _ViewBookingScreenState extends State<ViewBookingScreen> {
                 fontWeight: FontWeight.w400),
           ),
           ScreenSize.height(20),
+          myProvider.model!.data!.myListing!.nurseDoc!=null&&myProvider.model!.data!.myListing!.nurseDoc.isNotEmpty?
           GestureDetector(
             onTap: () {
               Utils.openUrl(
@@ -229,7 +233,7 @@ class _ViewBookingScreenState extends State<ViewBookingScreen> {
                     ),
                   ],
                 )),
-          ),
+          ):Container(),
         ],
       ),
     );
@@ -401,7 +405,8 @@ class _ViewBookingScreenState extends State<ViewBookingScreen> {
                           ClipRRect(
                             borderRadius: BorderRadius.circular(100),
                             child:
-                                provider.model!.data!.myListing!.nurse != null
+                                provider.model!.data!.myListing!.nurse != null&&provider.model!.data!.myListing!.nurse!.photo!=null
+                                    &&provider.model!.data!.myListing!.nurse!.photo!.toString().isNotEmpty
                                     ? NetworkImageHelper(
                                         img: provider.model!.data!.myListing!
                                             .nurse!.photo,
@@ -412,6 +417,7 @@ class _ViewBookingScreenState extends State<ViewBookingScreen> {
                                         height: 100,
                                         width: 100,
                                         color: Colors.grey.shade300,
+                                  child: Image.asset(AppImages.bottomIcon3),
                                       ),
                           ),
                           ScreenSize.width(21),

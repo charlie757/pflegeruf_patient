@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:patient/api/apiurl.dart';
 import 'package:patient/config/approutes.dart';
 import 'package:patient/helper/appBar.dart';
 import 'package:patient/helper/appbutton.dart';
@@ -220,16 +221,48 @@ class _SignupScreenState extends State<SignupScreen> {
                     children: [
                       customCheckBox(myProvider),
                       ScreenSize.width(10),
-                      Flexible(
-                        child: getText(
-                            title: getTranslated(
-                                    'acceptTermsAndPrivacyPolicy', context)!
-                                .tr,
-                            size: 9,
-                            fontFamily: FontFamily.poppinsMedium,
-                            color: AppColor.textBlackColor.withOpacity(.7),
-                            fontWeight: FontWeight.w500),
-                      )
+                     Flexible(child: Text.rich(TextSpan(
+                       text: "${getTranslated(
+                           'iAcceptTheGeneral', context)!
+                           .tr} ",style: TextStyle(
+                         fontSize: 9, fontFamily: FontFamily.poppinsMedium, color: AppColor.textBlackColor.withOpacity(.7), fontWeight: FontWeight.w500
+                     ),children: [
+                       TextSpan(
+                         recognizer: TapGestureRecognizer()..onTap = () {
+                           Utils.openUrl(ApiUrl.termsConditionUrl);
+                         },
+                         text:"${getTranslated(
+                             'ternsCondition', context)!
+                             .tr} ",
+                           style: TextStyle(
+                             decoration: TextDecoration.underline,
+                           fontSize: 9, fontFamily: FontFamily.poppinsMedium, color: AppColor.appTheme, fontWeight: FontWeight.w500
+                       ),children: [
+                         TextSpan(
+                           text:  "${getTranslated(
+                               'andThe', context)!
+                               .tr} ",style: TextStyle(
+                             decoration: TextDecoration.none,
+                             fontSize: 9, fontFamily: FontFamily.poppinsMedium, color: AppColor.textBlackColor.withOpacity(.7), fontWeight: FontWeight.w500
+                         ),children: [
+                           TextSpan(
+                               recognizer: TapGestureRecognizer()..onTap = () {
+                                 Utils.openUrl(ApiUrl.privacyPolicyUrl);
+                               },
+                             text: getTranslated(
+                                 'privacyPolicy', context)!
+                                 .tr,
+                             style: TextStyle(
+                                 decoration: TextDecoration.underline,
+                                 fontSize: 9, fontFamily: FontFamily.poppinsMedium, color: AppColor.appTheme, fontWeight: FontWeight.w500
+                             )
+                           )
+                         ]
+                         )
+                       ]
+                       )
+                     ]
+                     )))
                     ],
                   ),
                   ScreenSize.height(60),

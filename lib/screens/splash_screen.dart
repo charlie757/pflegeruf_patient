@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:patient/config/approutes.dart';
 import 'package:patient/helper/appimages.dart';
 import 'package:patient/screens/auth/login_screen.dart';

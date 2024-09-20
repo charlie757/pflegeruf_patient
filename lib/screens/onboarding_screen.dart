@@ -31,7 +31,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 // color: Colors.red,
                 duration: const Duration(milliseconds: 150),
                 curve: Curves.easeInOut,
-                height: MediaQuery.of(context).size.height / 2.5,
+                height: MediaQuery.of(context).size.height / 2.7,
                 child: Image.asset(
                     myProvier.onboardingList[myProvier.currentIndex]['img'])),
             Expanded(
@@ -44,7 +44,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           topLeft: Radius.circular(30),
                           topRight: Radius.circular(30))),
                   padding: const EdgeInsets.only(
-                      left: 30, right: 30, top: 60, bottom: 40),
+                      left: 30, right: 30, top: 30, bottom: 20),
                   child: Column(
                     children: [
                       getText(
@@ -53,8 +53,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           size: 23,
                           fontFamily: FontFamily.poppinsMedium,
                           color: AppColor.whiteColor,
-                          fontWeight: FontWeight.w700),
-                      ScreenSize.height(28),
+                          fontWeight: FontWeight.w700,textAlign: TextAlign.center,),
+                      ScreenSize.height(20),
                       getText(
                         title: myProvier.onboardingList[myProvier.currentIndex]
                             ['subTitle'],
@@ -64,7 +64,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         fontWeight: FontWeight.w500,
                         textAlign: TextAlign.center,
                       ),
-                      ScreenSize.height(35),
+                      const Spacer(),
                       Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: List.generate(
@@ -73,7 +73,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 ? indicator(false)
                                 : indicator(true);
                           })),
-                      const Spacer(),
+                      ScreenSize.height(20),
                       AppButton(
                           title: myProvier.currentIndex == 2
                               ? getTranslated('getStarted', context)!.tr

@@ -3,12 +3,15 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
+import '../../utils/location_service.dart';
+
 class DashboardProvider extends ChangeNotifier {
   int selectedIndex = 0;
   DateTime? currentBackPressTime;
   bool isPopScope = false;
 
   updateSelectedIndex(value) {
+    getLocationPermission();
     selectedIndex = value;
     notifyListeners();
   }

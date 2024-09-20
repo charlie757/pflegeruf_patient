@@ -47,6 +47,7 @@ void main() async {
   ]);
   getFCMToken();
   runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (_) => LocalizationProvider()),
     ChangeNotifierProvider(create: (_) => OnboardingProvider()),
     ChangeNotifierProvider(create: (_) => LoginProvider()),
     ChangeNotifierProvider(create: (_) => SignupProvider()),

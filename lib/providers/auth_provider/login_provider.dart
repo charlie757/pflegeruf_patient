@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:patient/api/apiservice.dart';
 import 'package:patient/api/apiurl.dart';
 import 'package:patient/config/approutes.dart';
@@ -10,6 +11,8 @@ import 'package:patient/utils/app_validation.dart';
 import 'package:patient/utils/location_service.dart';
 import 'package:patient/utils/session_manager.dart';
 import 'package:patient/utils/utils.dart';
+
+import '../../utils/constants.dart';
 
 class LoginProvider extends ChangeNotifier {
   LoginModel? loginModel;
@@ -66,48 +69,63 @@ class LoginProvider extends ChangeNotifier {
 
   callApiFunction() {
     /// set the values
-    Utils.hideTextField();
-    SessionManager.setUserEmail = emailController.text;
-    SessionManager.setuserPassword = passwordController.text;
-    updateLoading(true);
-    var data = {
-      "username": emailController.text,
-      "password": passwordController.text,
-      "device": Platform.isIOS ? 'ios' : 'android',
-      'latitude': SessionManager.lat,
-      'longitude': SessionManager.lng,
-      'fcm_key': SessionManager.fcmToken
-    };
-    String body = Uri(queryParameters: data).query;
-    print(body);
-    ApiService.apiMethod(
-      url: ApiUrl.loginUrl,
-      body: body,
-      method: checkApiMethod(httpMethod.post),
-    ).then((value) {
-      updateLoading(false);
-      if (value != null) {
-        loginModel = LoginModel.fromJson(value);
-        if (loginModel!.data!.status == true) {
-          /// check account type
-          if (loginModel!.data!.userDetails!.userAccountType == 1) {
-            if (SessionManager.keepMySignedIn) {
-              updateIsVisiblePassword(true);
+    getLocationPermission().then((val) {
+      print('object$val');
+      if (val == 'deniedForever') {
+        Geolocator.openAppSettings();
+      }
+      else if (val == 'deniedPermission') {
+        getLocationPermission();
+      }
+      else{
+        Constants.is401Error=false;
+        notifyListeners();
+        Utils.hideTextField();
+        SessionManager.setUserEmail = emailController.text;
+        SessionManager.setuserPassword = passwordController.text;
+        updateLoading(true);
+        var data = {
+          "username": emailController.text,
+          "password": passwordController.text,
+          "device": Platform.isIOS ? 'ios' : 'android',
+          'latitude': SessionManager.lat,
+          'longitude': SessionManager.lng,
+          'fcm_key': SessionManager.fcmToken
+        };
+        print(data);
+        String body = Uri(queryParameters: data).query;
+        print(body);
+        ApiService.apiMethod(
+          url: ApiUrl.loginUrl,
+          body: body,
+          method: checkApiMethod(httpMethod.post),
+        ).then((value) {
+          updateLoading(false);
+          if (value != null) {
+            loginModel = LoginModel.fromJson(value);
+            if (loginModel!.data!.status == true) {
+              /// check account type
+              if (loginModel!.data!.userDetails!.userAccountType == 1) {
+                if (SessionManager.keepMySignedIn) {
+                  updateIsVisiblePassword(true);
 
-              /// update the value
+                  /// update the value
+                }
+                SessionManager.setToken = loginModel!.data!.token;
+                AppRoutes.pushReplacementNavigation(const DashboardScreen());
+              } else {
+                Utils.errorSnackBar('User not found', navigatorKey.currentContext);
+              }
+            } else {
+              AppRoutes.pushCupertinoNavigation(EmailVerificationScreen(
+                email: emailController.text,
+              ));
+              Utils.errorSnackBar(loginModel!.message, navigatorKey.currentContext);
             }
-            SessionManager.setToken = loginModel!.data!.token;
-            AppRoutes.pushReplacementNavigation(const DashboardScreen());
-          } else {
-            Utils.errorSnackBar('User not found', navigatorKey.currentContext);
           }
-        } else {
-          AppRoutes.pushCupertinoNavigation(EmailVerificationScreen(
-            email: emailController.text,
-          ));
-          Utils.errorSnackBar(loginModel!.message, navigatorKey.currentContext);
-        }
+        });
+
       }
     });
-  }
+     }
 }

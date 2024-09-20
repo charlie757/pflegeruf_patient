@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:patient/api/apiservice.dart';
 import 'package:patient/api/apiurl.dart';
 import 'package:patient/helper/appbutton.dart';
@@ -13,6 +14,8 @@ import 'package:patient/utils/session_manager.dart';
 import 'package:patient/utils/showcircleprogessdialog.dart';
 import 'package:patient/utils/utils.dart';
 import 'package:get/get.dart';
+
+import '../../utils/location_service.dart';
 
 class RequiredQuestionProvider extends ChangeNotifier {
   final nameController = TextEditingController();
@@ -43,6 +46,7 @@ class RequiredQuestionProvider extends ChangeNotifier {
     insuranceNoValidationMsg = '';
     birthDateValidationMsg = '';
     nameController.clear();
+    lastNameController.clear();
     postalCodeController.clear();
     streetController.clear();
     cityController.clear();
@@ -102,38 +106,50 @@ class RequiredQuestionProvider extends ChangeNotifier {
   }
 
   callApiFunction(String id, String title) {
-    showCircleProgressDialog(navigatorKey.currentContext!);
-    var data = {
-      'title': title,
-      'service': id,
-      'name': nameController.text,
-      'last_name': lastNameController.text,
-      'street': streetController.text,
-      'postal_code': postalCodeController.text,
-      'city': cityController.text,
-      'insurance_type': insuranceType == 1 ? 'Private' : 'National',
-      'insurance_number': insuranceController.text.toString(),
-      'dob': birthDateController.text,
-      'lat': SessionManager.lat,
-      'lng': SessionManager.lng
-    };
-    print(data);
-    String body = Uri(queryParameters: data).query;
-    ApiService.apiMethod(
-      url: ApiUrl.nurseBookingUrl,
-      body: body,
-      method: checkApiMethod(httpMethod.post),
-      // isErrorMessageShow: false,
-    ).then((value) {
-      Navigator.pop(navigatorKey.currentContext!);
-      if (value != null) {
-        if (value['status'] == 'success') {
-          successDialogBox(navigatorKey.currentContext!);
-        }
-        notifyListeners();
+    getLocationPermission().then((val) {
+      print('object$val');
+      if (val == 'deniedForever') {
+        Geolocator.openAppSettings();
+      }
+      else if (val == 'deniedPermission') {
+        getLocationPermission();
+      }
+      else{
+        showCircleProgressDialog(navigatorKey.currentContext!);
+        var data = {
+          'title': title,
+          'service': id,
+          'name': nameController.text,
+          'last_name': lastNameController.text,
+          'street': streetController.text,
+          'postal_code': postalCodeController.text,
+          'city': cityController.text,
+          'insurance_type': insuranceType == 1 ? 'Private' : 'National',
+          'insurance_number': insuranceController.text.toString(),
+          'dob': birthDateController.text,
+          'lat': SessionManager.lat,
+          'lng': SessionManager.lng
+        };
+        print(data);
+        String body = Uri(queryParameters: data).query;
+        ApiService.apiMethod(
+          url: ApiUrl.nurseBookingUrl,
+          body: body,
+          method: checkApiMethod(httpMethod.post),
+          // isErrorMessageShow: false,
+        ).then((value) {
+          Navigator.pop(navigatorKey.currentContext!);
+          if (value != null) {
+            if (value['status'] == 'success') {
+              successDialogBox(navigatorKey.currentContext!);
+            }
+            notifyListeners();
+          }
+        });
+
       }
     });
-  }
+   }
 
   void successDialogBox(BuildContext context) {
     showGeneralDialog(

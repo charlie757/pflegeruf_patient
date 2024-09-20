@@ -10,6 +10,8 @@ import 'package:patient/utils/session_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'constants.dart';
+
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 MediaQueryData mediaQuery = MediaQuery.of(navigatorKey.currentState!.context)
     .copyWith(textScaleFactor: 1.0);
@@ -105,6 +107,7 @@ class Utils {
     homeProvider.clearValues();
     profileProvider.clearValuesOnLogout();
     SessionManager.setToken = '';
+    Constants.is401Error=true;
     Navigator.pushAndRemoveUntil(navigatorKey.currentContext!, CupertinoPageRoute(builder: (context)=>const  LoginScreen()), (route)=>false);
     // AppRoutes.pushReplacementNavigation(const LoginScreen());
   }
