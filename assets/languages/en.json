@@ -32,6 +32,10 @@
   "passwordShouldBeSame":"Password should be same",
   "acceptTermsAndPrivacyPolicy":
       "I accept the general terms & conditions and the privacy policy.",
+      "iAcceptTheGeneral":"I accept the general",
+      "ternsCondition":"terms & conditions",
+      "andThe":"and the",
+      "privacyPolicy":"privacy policy",
   "alredyHaveAccount": "Already have an account?",
   "enterEmailToCreateNewPassword":
       "Please enter your email address. You will receive\na link to create a new password via email.",
@@ -48,6 +52,8 @@
       "Set the new password for your account, so you\ncan login and access all the features",
   "reenternewPassword": "Re-enter your new password",
   "enterNewPassword": "Enter new pasword",
+  "bookForFree":"Book for a fee",
+  "inklMwst":"inkl. Mwst.",
   "save": "Save",
   "welcome": "Welcome",
   "requiredQuestion": "Required Question",
@@ -55,6 +61,8 @@
   "enterYourName": "Enter your name",
   "address": "Address",
   "enterYourAddress": "Enter your address",
+  "houseNumber":"House Number",
+  "enterYourHouseNumner":"Enter your house number",
   "postalCode": "Postal Code",
   "enterYourPostalCode": "Enter your postal code",
   "enterValidPostalCode":"Enter valid postal code",

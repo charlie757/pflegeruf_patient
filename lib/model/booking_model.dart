@@ -53,6 +53,7 @@ class Patient {
   dynamic bookingName;
   dynamic profileName;
   dynamic photo;
+  dynamic houseNumber;
   dynamic address;
   dynamic street;
   dynamic postalCode;
@@ -65,6 +66,7 @@ class Patient {
         this.bookingName,
         this.profileName,
       this.photo,
+      this.houseNumber,
       this.address,
       this.street,
       this.postalCode,
@@ -77,6 +79,7 @@ class Patient {
     bookingName= json['booking_name'];
     profileName = json['profile_name'];
     photo = json['photo'];
+    houseNumber = json['house_number'];
     address = json['address'];
     street = json['street'];
     postalCode = json['postal-code'];
@@ -92,6 +95,7 @@ class Patient {
     data['profile_name'] = profileName;
     data['photo'] = photo;
     data['address'] = address;
+     data['house_number']= houseNumber;
     data['street'] = street;
     data['postal-code'] = postalCode;
     data['city'] = city;

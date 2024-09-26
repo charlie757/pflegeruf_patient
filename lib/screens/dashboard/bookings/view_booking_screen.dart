@@ -308,6 +308,7 @@ class _ViewBookingScreenState extends State<ViewBookingScreen> {
   }
 
   bookingDetailsWidget(ViewBookingProvider provider) {
+    var model = provider.model!.data!.myListing!;
     return Container(
       margin: const EdgeInsets.only(left: 16, right: 14),
       decoration: BoxDecoration(
@@ -324,32 +325,32 @@ class _ViewBookingScreenState extends State<ViewBookingScreen> {
         children: [
           customRowDetailsWidget(
               title: getTranslated('bookingDate', context)!.tr,
-              subTitle: provider.model!.data!.myListing!.bookingDate != null
+              subTitle:model.bookingDate != null
                   ? TimeFormat.convertBookingDate(
-                      provider.model!.data!.myListing!.bookingDate)
+                      model.bookingDate)
                   : ''),
           ScreenSize.height(14),
           customRowDetailsWidget(
               title: getTranslated('bookingTime', context)!.tr,
-              subTitle: provider.model!.data!.myListing!.bookingDate != null
+              subTitle: model.bookingDate != null
                   ? TimeFormat.convertBookingTime(
-                      provider.model!.data!.myListing!.bookingDate)
+                      model.bookingDate)
                   : ''),
           ScreenSize.height(14),
           customRowDetailsWidget(
               title: getTranslated('bookedFor', context)!.tr,
-              subTitle: provider.model!.data!.myListing!.service != null
-                  ? provider.model!.data!.myListing!.service!.name
+              subTitle: model.service != null
+                  ? model.service!.name
                   : ''),
           ScreenSize.height(14),
           customRowDetailsWidget(
               title: getTranslated('patientName', context)!.tr,
-              subTitle: provider.model!.data!.myListing!.patient != null
-                  ? provider.model!.data!.myListing!.patient!.bookingName
+              subTitle: model.patient != null
+                  ? model.patient!.bookingName
                           .toString()
                           .substring(0)
                           .toUpperCase()[0] +
-                      provider.model!.data!.myListing!.patient!.bookingName
+                      model.patient!.bookingName
                           .toString()
                           .substring(1)
                           .toLowerCase()
@@ -357,8 +358,8 @@ class _ViewBookingScreenState extends State<ViewBookingScreen> {
           ScreenSize.height(14),
           customRowDetailsWidget(
               title: getTranslated('patientAddress', context)!.tr,
-              subTitle: provider.model!.data!.myListing!.patient != null
-                  ? "${provider.model!.data!.myListing!.patient!.address}, ${provider.model!.data!.myListing!.patient!.street ?? ""}, ${provider.model!.data!.myListing!.patient!.city ?? ""}, ${provider.model!.data!.myListing!.patient!.postalCode.toString()}"
+              subTitle:model.patient != null
+                  ? "${model.patient!.houseNumber??''}, ${model.patient!.address.toString().isEmpty?'':"${model.patient!.address},"} ${model.patient!.street ?? ""}, ${model.patient!.city ?? ""}, ${model.patient!.postalCode.toString()}"
                   : ''),
         ],
       ),

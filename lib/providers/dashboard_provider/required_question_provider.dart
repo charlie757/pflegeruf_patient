@@ -23,6 +23,7 @@ class RequiredQuestionProvider extends ChangeNotifier {
   // final addressController = TextEditingController();
   final postalCodeController = TextEditingController();
   final streetController = TextEditingController();
+  final houseNumberController = TextEditingController();
   final cityController = TextEditingController();
   final insuranceController = TextEditingController();
   final birthDateController = TextEditingController();
@@ -33,6 +34,7 @@ class RequiredQuestionProvider extends ChangeNotifier {
   String? lastNameValidationMsg = '';
   String? postalCodeValidationMsg = '';
   String? streetValidationMsg = '';
+  String? houseValidationMsg = '';
   String? cityValidationMsg = '';
   String? insuranceNoValidationMsg = '';
   String? birthDateValidationMsg = '';
@@ -41,6 +43,7 @@ class RequiredQuestionProvider extends ChangeNotifier {
     namevalidationMsg = '';
     lastNameValidationMsg = '';
     postalCodeValidationMsg = '';
+    houseValidationMsg = '';
     streetValidationMsg = '';
     cityValidationMsg = '';
     insuranceNoValidationMsg = '';
@@ -49,6 +52,7 @@ class RequiredQuestionProvider extends ChangeNotifier {
     lastNameController.clear();
     postalCodeController.clear();
     streetController.clear();
+    houseNumberController.clear();
     cityController.clear();
     insuranceController.clear();
     birthDateController.clear();
@@ -65,6 +69,7 @@ class RequiredQuestionProvider extends ChangeNotifier {
         AppValidation.addressValidator(lastNameController.text) == null &&
         AppValidation.postalCodeValidator(postalCodeController.text) == null &&
         AppValidation.streetValidator(streetController.text) == null &&
+        AppValidation.houseValidator(houseNumberController.text)==null&&
         AppValidation.cityValidator(cityController.text) == null &&
         AppValidation.insuranceNoValidator(insuranceController.text) == null &&
         AppValidation.birthDateValidator(birthDateController.text) == null) {
@@ -75,6 +80,7 @@ class RequiredQuestionProvider extends ChangeNotifier {
           AppValidation.postalCodeValidator(postalCodeController.text);
       streetValidationMsg =
           AppValidation.streetValidator(streetController.text);
+          houseValidationMsg = AppValidation.houseValidator(houseNumberController.text);
       cityValidationMsg = AppValidation.cityValidator(cityController.text);
       insuranceNoValidationMsg =
           AppValidation.insuranceNoValidator(insuranceController.text);
@@ -96,6 +102,7 @@ class RequiredQuestionProvider extends ChangeNotifier {
           AppValidation.postalCodeValidator(postalCodeController.text);
       streetValidationMsg =
           AppValidation.streetValidator(streetController.text);
+          houseValidationMsg = AppValidation.houseValidator(houseNumberController.text);
       cityValidationMsg = AppValidation.cityValidator(cityController.text);
       insuranceNoValidationMsg =
           AppValidation.insuranceNoValidator(insuranceController.text);
@@ -122,6 +129,7 @@ class RequiredQuestionProvider extends ChangeNotifier {
           'name': nameController.text,
           'last_name': lastNameController.text,
           'street': streetController.text,
+          'house_number':houseNumberController.text,
           'postal_code': postalCodeController.text,
           'city': cityController.text,
           'insurance_type': insuranceType == 1 ? 'Private' : 'National',

@@ -129,6 +129,14 @@ class AppValidation {
     }
   }
 
+  static String? houseValidator(val) {
+    if (val.isEmpty) {
+      return getTranslated('enterYourHouseNumner', navigatorKey.currentContext!)!.tr;
+    } else {
+      return null;
+    }
+  }
+
   static String? cityValidator(val) {
     if (val.isEmpty) {
       return getTranslated('enterYourCity', navigatorKey.currentContext!)!.tr;

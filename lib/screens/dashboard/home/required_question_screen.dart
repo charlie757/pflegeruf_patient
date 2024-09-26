@@ -114,7 +114,26 @@ class _RequiredQuestionScreenState extends State<RequiredQuestionScreen> {
                 ),
                 ScreenSize.height(20),
                 getText(
-                    title: "4. ${getTranslated('postalCode', context)!.tr}",
+                    title: "4. ${getTranslated('houseNumber', context)!.tr}",
+                    size: 14,
+                    fontFamily: FontFamily.poppinsSemiBold,
+                    color: AppColor.textBlackColor,
+                    fontWeight: FontWeight.w500),
+                ScreenSize.height(5),
+                CustomTextfield(
+                  controller: myProvider.houseNumberController,
+                  hintText: getTranslated('enterYourHouseNumner', context)!.tr,
+                  errorMsg: myProvider.houseValidationMsg,
+                  textInputAction: TextInputAction.next,
+                  onChanged: (val) {
+                    myProvider.houseValidationMsg =
+                        AppValidation.houseValidator(val);
+                    setState(() {});
+                  },
+                ),
+                ScreenSize.height(20),
+                getText(
+                    title: "5. ${getTranslated('postalCode', context)!.tr}",
                     size: 14,
                     fontFamily: FontFamily.poppinsSemiBold,
                     color: AppColor.textBlackColor,
@@ -138,7 +157,7 @@ class _RequiredQuestionScreenState extends State<RequiredQuestionScreen> {
                 ),
                 ScreenSize.height(20),
                 getText(
-                    title: "5. ${getTranslated('city', context)!.tr}",
+                    title: "6. ${getTranslated('city', context)!.tr}",
                     size: 14,
                     fontFamily: FontFamily.poppinsSemiBold,
                     color: AppColor.textBlackColor,
@@ -157,7 +176,7 @@ class _RequiredQuestionScreenState extends State<RequiredQuestionScreen> {
                 ),
                 ScreenSize.height(20),
                 getText(
-                    title: "5. ${getTranslated('insurance', context)!.tr}",
+                    title: "7. ${getTranslated('insurance', context)!.tr}",
                     size: 14,
                     fontFamily: FontFamily.poppinsSemiBold,
                     color: AppColor.textBlackColor,
@@ -219,7 +238,7 @@ class _RequiredQuestionScreenState extends State<RequiredQuestionScreen> {
                 ),
                 ScreenSize.height(33),
                 getText(
-                    title: "7. ${getTranslated('insuranceNo', context)!.tr}",
+                    title: "8. ${getTranslated('insuranceNo', context)!.tr}",
                     size: 14,
                     fontFamily: FontFamily.poppinsSemiBold,
                     color: AppColor.textBlackColor,
@@ -244,7 +263,7 @@ class _RequiredQuestionScreenState extends State<RequiredQuestionScreen> {
                 ),
                 ScreenSize.height(20),
                 getText(
-                    title: "8. ${getTranslated('birthDate', context)!.tr}",
+                    title: "9. ${getTranslated('birthDate', context)!.tr}",
                     size: 14,
                     fontFamily: FontFamily.poppinsSemiBold,
                     color: AppColor.textBlackColor,

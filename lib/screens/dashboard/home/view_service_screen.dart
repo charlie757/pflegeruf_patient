@@ -117,6 +117,29 @@ class _ViewServiceScreenState extends State<ViewServiceScreen> {
                                   letterSpacing: .3,
                                   lineHeight: 1.5,
                                 ),
+                                ScreenSize.height(15),
+                                Text.rich(TextSpan(
+                                  text: "${getTranslated('bookForFree', context)!}: ",
+                                  style: TextStyle(
+                                    fontSize: 13,color: AppColor.blackColor,
+                                    fontWeight: FontWeight.w600,fontFamily: FontFamily.poppinsSemiBold
+                                  ),children: [
+                                    TextSpan(
+                                      text: '35 Euro ',
+                                      style: TextStyle( fontSize: 14,color: AppColor.blackColor,
+                                    fontWeight: FontWeight.w600,fontFamily: FontFamily.poppinsSemiBold),
+                                    children: [
+                                    TextSpan(
+                                      text: getTranslated('inklMwst', context)!,
+                                      style: TextStyle(
+                                        fontSize: 13,color: AppColor.blackColor,
+                                    fontWeight: FontWeight.w600,fontFamily: FontFamily.poppinsSemiBold
+                                      )
+                                    )  
+                                    ]
+                                    ),
+                                  ]
+                                )),
                                 ScreenSize.height(50),
                                 Padding(
                                   padding: const EdgeInsets.only(
