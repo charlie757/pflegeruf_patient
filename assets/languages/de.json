@@ -91,6 +91,7 @@
     "pending": "offen",
     "bookingDate": "Buchungsdatum",
     "bookingTime": "Buchungszeit",
+    "nurseFinalMessage":"Letzte Nachricht der Krankenschwester an Sie",
     "serviceName": "Buchungsname",
     "bookedFor": "Gebucht für",
     "patientName": "Patientenname",
