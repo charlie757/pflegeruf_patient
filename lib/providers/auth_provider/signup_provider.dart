@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:patient/api/apiservice.dart';
 import 'package:patient/api/apiurl.dart';
 import 'package:patient/config/approutes.dart';
+import 'package:patient/languages/language_constants.dart';
 import 'package:patient/screens/auth/email_verification_screen.dart';
 import 'package:patient/utils/app_validation.dart';
 import 'package:patient/utils/session_manager.dart';
@@ -84,7 +86,7 @@ class SignupProvider extends ChangeNotifier {
           reEnterPasswordController.text, passwordController.text);
       if (!isChecked) {
         Utils.errorSnackBar(
-            'Accept terms & condition', navigatorKey.currentContext);
+            getTranslated("acceptTermsCondition", navigatorKey.currentContext!)!.tr, navigatorKey.currentContext);
       } else {
         callApiFunction(route);
       }

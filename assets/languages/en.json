@@ -115,5 +115,6 @@
   "completed": "Completed",
   "addRating":"Add rating",
   "guysAwesomeHintText":"ex. you guys are awsome",
-  "selectInsuranceType":"Select insurance type"
+  "selectInsuranceType":"Select insurance type",
+  "acceptTermsCondition":"Accept terms & condition"
 }

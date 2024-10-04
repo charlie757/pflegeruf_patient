@@ -104,7 +104,7 @@ class ApiService {
         return json.decode(response.body);
       }
       /// in case of user not found
-      else if(dataAll['code']==422||dataAll['authStatus']==false) {
+      else if(dataAll['authStatus']==false) {
         Utils.errorSnackBar(
             dataAll['message'], navigatorKey.currentContext);
         if(Constants.is401Error==false&&url!=ApiUrl.loginUrl){

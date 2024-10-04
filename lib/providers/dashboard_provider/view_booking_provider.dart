@@ -62,7 +62,7 @@ class ViewBookingProvider extends ChangeNotifier {
         Navigator.pop(navigatorKey.currentContext!);
         callApiFunction(bookingId, false);
         clearValues();
-        Utils.successSnackBar(value['status'], navigatorKey.currentContext!);
+        Utils.successSnackBar(value['message'], navigatorKey.currentContext!);
       } else {
         Navigator.pop(navigatorKey.currentContext!);
         print('object$value...');
