@@ -116,5 +116,6 @@
   "addRating":"Add rating",
   "guysAwesomeHintText":"ex. you guys are awsome",
   "selectInsuranceType":"Select insurance type",
-  "acceptTermsCondition":"Accept terms & condition"
+  "acceptTermsCondition":"Accept terms & condition",
+  "userNotFound":"User not found"
 }

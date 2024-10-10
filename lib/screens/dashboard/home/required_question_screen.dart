@@ -358,7 +358,7 @@ class _RequiredQuestionScreenState extends State<RequiredQuestionScreen> {
         helpText: "Select Birthday Date",
         context: context,
         initialDate: selectedDate,
-        firstDate: DateTime(1935, 1),
+        firstDate: DateTime(1900, 1),
         lastDate: DateTime(
             DateTime.now().year, DateTime.now().month, DateTime.now().day));
 

@@ -1,9 +1,11 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 import 'package:patient/api/apiservice.dart';
 import 'package:patient/api/apiurl.dart';
 import 'package:patient/config/approutes.dart';
+import 'package:patient/languages/language_constants.dart';
 import 'package:patient/model/login_model.dart';
 import 'package:patient/screens/auth/email_verification_screen.dart';
 import 'package:patient/screens/dashboard/dashboard_screen.dart';
@@ -114,7 +116,7 @@ class LoginProvider extends ChangeNotifier {
                 SessionManager.setToken = loginModel!.data!.token;
                 AppRoutes.pushReplacementNavigation(const DashboardScreen());
               } else {
-                Utils.errorSnackBar('User not found', navigatorKey.currentContext);
+                Utils.errorSnackBar(getTranslated("userNotFound", navigatorKey.currentContext!)!.tr, navigatorKey.currentContext);
               }
             } else {
               AppRoutes.pushCupertinoNavigation(EmailVerificationScreen(
