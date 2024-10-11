@@ -110,7 +110,6 @@ class LoginProvider extends ChangeNotifier {
               if (loginModel!.data!.userDetails!.userAccountType == 1) {
                 if (SessionManager.keepMySignedIn) {
                   updateIsVisiblePassword(true);
-
                   /// update the value
                 }
                 SessionManager.setToken = loginModel!.data!.token;

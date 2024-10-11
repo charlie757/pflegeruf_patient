@@ -254,6 +254,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ScreenSize.height(28),
         provider.homeModel != null &&
                 provider.homeModel!.data != null &&
+                provider.homeModel!.data!.category!=null&&
                 provider.homeModel!.data!.category!.isNotEmpty
             ? GridView.builder(
                 padding: const EdgeInsets.only(left: 32, right: 32),
