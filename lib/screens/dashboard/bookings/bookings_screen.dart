@@ -290,6 +290,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
                 const EdgeInsets.only(left: 15, right: 15, top: 40, bottom: 40),
             itemBuilder: (context, index) {
               var model = provier.completeBookingModel!.data!.myListing![index];
+              print(model.statusCreatedAt);
               return GestureDetector(
                 onTap: () {
                   AppRoutes.pushCupertinoNavigation(ViewBookingScreen(
